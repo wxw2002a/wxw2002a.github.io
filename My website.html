@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Xiwei Wang - Portfolio</title>
+  <style>
+    /* —— 重置 & 基础 —— */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+    body {
+      /* 半透明遮罩 + 背景图 */
+      background:
+        linear-gradient(rgba(245,245,247,0.4), rgba(245,245,247,0.4)),
+        url('Toronto.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #1d1d1f;
+      overflow-x: hidden;
+    }
+
+    /* —— 链接 —— */
+    a {
+      text-decoration: none;
+      color: #0071e3;
+      transition: color 0.3s;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* —— 容器 & 玻璃卡片 —— */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+    }
+    .glass-card {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* —— 固定导航 —— */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      padding: 1rem;
+    }
+    nav a {
+      position: relative;
+      font-weight: 600;
+      color: #1d1d1f;
+      padding: 0.5rem 0;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 2px;
+      background: #0071e3;
+      transition: width 0.3s;
+    }
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+
+    /* —— Hero 首屏 —— */
+    section {
+      min-height: 100vh;
+      padding-top: 100px; /* 留出 header 空间 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    #hero {
+      text-align: center;
+      background: transparent;
+    }
+    /* 去掉白色背景，只保留居中布局 */
+    #hero .hero-text {
+      display: inline-block;
+      padding: 0;
+      background: none;
+      backdrop-filter: none;
+    }
+    /* 恢复常规字体粗细 */
+    #hero h1 {
+      margin: 0;
+      font-size: 3.5rem;
+      font-weight: 600;
+      color: #000;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    }
+    #hero p {
+      margin: 0.5rem 0 0;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #333;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+    }
+    /* 滚动提示箭头 */
+    .scroll-down {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      width: 24px;
+      height: 24px;
+      border-bottom: 3px solid #000;
+      border-right: 3px solid #000;
+      transform: translateX(-50%) rotate(45deg);
+      animation: scroll-indicator 1.5s infinite;
+      opacity: 0.6;
+    }
+    @keyframes scroll-indicator {
+      0%   { transform: translateX(-50%) rotate(45deg) translateY(0); }
+      50%  { transform: translateX(-50%) rotate(45deg) translateY(10px); }
+      100% { transform: translateX(-50%) rotate(45deg) translateY(0); }
+    }
+
+    /* —— 其他区块样式 —— */
+    h2 {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    p, li {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    ul {
+      list-style: disc inside;
+      margin-top: 0.5rem;
+    }
+    .two-column {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .two-column > div {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    /* —— 淡入动画 —— */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* —— 页脚 —— */
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(10px);
+      color: #6e6e73;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#hero" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="hero" class="fade-in">
+    <div class="container hero-text">
+      <h1>Xiwei Wang</h1>
+      <p>Master's Student in Electrical &amp; Computer Engineering | Software &amp; AI Enthusiast</p>
+    </div>
+    <div class="scroll-down"></div>
+  </section>
+
+  <section id="about" class="fade-in">
+    <div class="container glass-card">
+      <h2>About Me</h2>
+      <p>Hello! I'm Xiwei, pursuing my Master's at University of Waterloo (Sep 2025 – Dec 2026). My background is in Electronic Science &amp; Technology, and I build AI-driven systems and embedded applications.</p>
+    </div>
+  </section>
+
+  <section id="education" class="fade-in">
+    <div class="container glass-card">
+      <h2>Education</h2>
+      <div class="two-column">
+        <div>
+          <h3>University of Waterloo</h3>
+          <p><strong>Master of Engineering, Electrical &amp; Computer Engineering</strong><br/>Sep 2025 – Dec 2026 (anticipated)</p>
+        </div>
+        <div>
+          <h3>Yanshan University</h3>
+          <p><strong>Bachelor of Science, Electronic Science &amp; Technology</strong><br/>Sep 2021 – Jun 2025<br/>GPA: 86/100, Scholarship Awarded Twice</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="fade-in">
+    <div class="container glass-card">
+      <h2>Experience</h2>
+      <div>
+        <h3>Application Intern, Harbin Institute of Technology Wuhu Robot Technology Research Institute</h3>
+        <p><em>Industrial Internet Division</em> (Present)</p>
+        <ul>
+          <li>Built a Windows desktop UI in C++ integrating real-time camera feeds and region-based image annotation.</li>
+          <li>Integrated AI-based sound classification (YAMNet) with customizable thresholds for anomaly detection.</li>
+        </ul>
+      </div>
+      <hr/>
+      <div>
+        <h3>Application Intern, Sinopec Group</h3>
+        <p><em>Information Center</em> (Jul 2024 – Aug 2024)</p>
+        <ul>
+          <li>Developed unmanned warehouse digital storage system and Robot Control System using Python.</li>
+          <li>Used Scikit-learn for demand prediction and Stable-Baseline3 (PPO) for AGV scheduling and path planning.</li>
+          <li>Implemented QR-code recognition (Pyzbar) and continuous system optimization and fault diagnosis.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="fade-in">
+    <div class="container glass-card">
+      <h2>Projects</h2>
+      <div>
+        <h3>Handwritten Digit Recognition (MNIST)</h3>
+        <p>Built a multi-layer perceptron with TensorFlow &amp; Keras. Used Flatten, Dense (&gt;100 units), and Dropout layers to achieve high accuracy on handwritten digits.</p>
+      </div>
+      <div>
+        <h3>Classic Snake Game on Arduino</h3>
+        <p>Designed in C++ using Arduino IDE. Utilized u8g2 graphics library for OLED display and implemented game logic for movement, collision, and scoring.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade-in">
+    <div class="container glass-card">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:wangxiwei2002@gmail.com">wangxiwei2002@gmail.com</a><br/>Phone: +86 15056633197</p>
+      <p>Languages: English (Fluent), Chinese (Native)</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Xiwei Wang</p>
+    </div>
+  </footer>
+
+  <script>
+    // 平滑滚动 & 导航高亮
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+    // Fade‑in 动画
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
