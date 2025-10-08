@@ -100,6 +100,30 @@
     body.night .tag{ color:#d8ecff; background:#ffffff14; }
     .about-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:clamp(18px,3.5vw,26px)}
     @media (max-width:980px){ .about-grid{grid-template-columns:1fr} }
+    .react-labs{display:grid; grid-template-columns:minmax(260px,1fr) minmax(320px,1.15fr); gap:clamp(18px,3vw,28px); align-items:stretch}
+    @media (max-width:980px){ .react-labs{grid-template-columns:1fr} }
+    .react-copy{display:flex; flex-direction:column; gap:16px}
+    .react-tips{margin:0; padding-left:18px; font-size:13px; color:var(--muted)}
+    .aurora-card{padding:0; overflow:hidden; display:flex; border-radius:22px}
+    .aurora-react-root{flex:1; display:flex}
+    .aurora-stage{position:relative; display:flex; flex:1; min-height:300px; border-radius:22px; overflow:hidden; background:linear-gradient(135deg, rgba(15,23,42,.85), rgba(76,29,149,.55))}
+    body.day .aurora-stage{background:linear-gradient(135deg, rgba(218,244,255,.9), rgba(255,228,247,.72))}
+    .aurora-stage::before{content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:.82;
+      background:radial-gradient(circle at 18% 22%, rgba(34,211,238,.22), transparent 48%),
+                 radial-gradient(circle at 82% 18%, rgba(244,114,182,.2), transparent 55%),
+                 radial-gradient(circle at 50% 78%, rgba(167,139,250,.18), transparent 58%);
+    }
+    .aurora-canvas{width:100%; height:100%; display:block}
+    .aurora-overlay{position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-end; padding:20px; pointer-events:none;
+      background:linear-gradient(180deg, rgba(11,15,23,0) 0%, rgba(11,15,23,.7) 100%);
+    }
+    body.day .aurora-overlay{background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.78) 100%); color:#0b0f17}
+    .metric-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(110px,1fr)); gap:12px; width:100%; max-width:360px}
+    .metric{border:1px solid #ffffff36; border-radius:14px; padding:12px 14px; backdrop-filter:blur(10px); background:rgba(15,23,42,.32)}
+    body.day .metric{background:rgba(255,255,255,.56); border-color:#0b0f1720; color:#0b0f17}
+    .metric-label{font-size:11px; letter-spacing:.08em; text-transform:uppercase; opacity:.75}
+    .metric-value{font-size:20px; font-weight:700; margin-top:4px}
+    .metric-sub{font-size:12px; opacity:.65; margin-top:2px}
     footer{color:#b6c5e2; font-size:12px; text-align:center; padding:36px 0 64px}
     canvas#fx{ position:fixed; inset:0; z-index:-7; }
     @media (max-width:600px){
@@ -184,6 +208,23 @@
           <li style="margin:8px 0"><span style="font-weight:700">📍</span><span data-i18n="status.location">Toronto / Waterloo</span></li>
         </ul>
       </aside>
+    </section>
+
+    <section id="react-labs">
+      <h2 data-i18n="lab.title">React Aurora Lab</h2>
+      <div class="react-labs">
+        <article class="glass react-copy">
+          <span class="pill" data-i18n="lab.pill">⚡ React lightfield experiment</span>
+          <p class="muted" data-i18n="lab.desc">A React-driven aurora playground that bends layered light ribbons with your input.</p>
+          <ul class="react-tips muted">
+            <li data-i18n="lab.tip1">Move your pointer across the canvas to steer the glow.</li>
+            <li data-i18n="lab.tip2">Toggle the day/night switch to morph the palette in real time.</li>
+          </ul>
+        </article>
+        <div class="aurora-card glass">
+          <div id="react-aurora-root" class="aurora-react-root"></div>
+        </div>
+      </div>
     </section>
 
     <section id="experience">
@@ -405,6 +446,21 @@
           about:{ title:'About',
             p:'I design and build production-minded tools for inspection & automation. My recent work focuses on <b>C/C++ real-time UI on Windows</b>, <b>Java low-latency servers on Linux</b>, and <b>CUDA kernels</b> for computer vision. I care about interaction craft—contrast, spacing, motion budget—and deliver UIs that stay responsive under load. Outside dev, I enjoy profiling weird performance bottlenecks and making tiny tools that remove manual steps from the workflow.' },
           contact:{ title:'Contact', email:'Email', phone:'Phone' }
+          ,lab:{
+            title:'React Aurora Lab',
+            pill:'⚡ React lightfield experiment',
+            desc:'A React-driven aurora playground that bends layered light ribbons with your input.',
+            tip1:'Move your pointer across the canvas to steer the glow.',
+            tip2:'Toggle the day/night switch to morph the palette in real time.',
+            metrics:{
+              flux:'Flux Density',
+              coherence:'Coherence',
+              mode:'Mode',
+              day:'Daylight bloom',
+              night:'Starlight bloom',
+              interaction:'Pointer energy reacts to velocity'
+            }
+          }
         },
         zh:{ brand:'熙蔚', name:'王熙蔚',
           nav:{about:'关于',experience:'经历',projects:'项目',education:'教育',contact:'联系'},
@@ -436,8 +492,24 @@
           about:{ title:'关于',
             p:'我喜欢做面向生产的检验/自动化工具。近期专注 <b>C/C++ 实时界面</b>、<b>Linux/Java 低延迟服务</b> 与 <b>CUDA 核心</b>；在意对比度、留白与动效预算，让 UI 在负载下也稳定响应。闲暇会做性能剖析与小工具来消除重复劳动。' },
           contact:{ title:'联系', email:'邮箱', phone:'电话' }
+          ,lab:{
+            title:'React 极光实验室',
+            pill:'⚡ React 光场实验',
+            desc:'React 驱动的极光画布，会随着你的操作折射多层光带。',
+            tip1:'在画布上移动指针，驱动光带弯折。',
+            tip2:'切换昼夜模式，实时看到配色变化。',
+            metrics:{
+              flux:'能流密度',
+              coherence:'相干度',
+              mode:'模式',
+              day:'日光绽放',
+              night:'星光绽放',
+              interaction:'指针速度越快能量越高'
+            }
+          }
         }
       };
+      window.__i18n=t;
       const pref=localStorage.getItem('lang')||'en';
       applyLang(pref);
       document.getElementById('lang-toggle').addEventListener('click', ()=>{
@@ -452,7 +524,242 @@
           const val=key.split('.').reduce((o,k)=>o&&o[k], dict);
           if(val){ (typeof val==='string' && val.includes('<')) ? (el.innerHTML=val) : (el.textContent=val); }
         });
+        document.dispatchEvent(new CustomEvent('i18n:change',{detail:{lang}}));
       }
+    })();
+  </script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script>
+    (function(){
+      const mount=document.getElementById('react-aurora-root');
+      if(!mount||!window.React||!window.ReactDOM) return;
+      const {useEffect,useRef,useState,useMemo}=React;
+
+      function useLang(){
+        const [lang,setLang]=useState(document.documentElement.lang||'en');
+        useEffect(()=>{
+          const handler=e=>setLang((e&&e.detail&&e.detail.lang)||document.documentElement.lang||'en');
+          document.addEventListener('i18n:change', handler);
+          return ()=>document.removeEventListener('i18n:change', handler);
+        },[]);
+        return lang;
+      }
+
+      function useTheme(){
+        const [theme,setTheme]=useState(document.body.classList.contains('night')?'night':'day');
+        useEffect(()=>{
+          const observer=new MutationObserver(()=>{
+            setTheme(document.body.classList.contains('night')?'night':'day');
+          });
+          observer.observe(document.body,{attributes:true, attributeFilter:['class']});
+          return ()=>observer.disconnect();
+        },[]);
+        return theme;
+      }
+
+      const fallbackCopy={metrics:{flux:'Flux', coherence:'Coherence', mode:'Mode', day:'Day', night:'Night', interaction:'Pointer energy'}};
+
+      function AuroraShowcase(){
+        const canvasRef=useRef(null);
+        const pointerRef=useRef({x:0,y:0,active:false,speed:0});
+        const energyRef=useRef({flux:0, coherence:100});
+        const [metrics,setMetrics]=useState({flux:0, coherence:100});
+        const theme=useTheme();
+        const lang=useLang();
+        const copy=useMemo(()=>{
+          const base=window.__i18n && window.__i18n[lang] && window.__i18n[lang].lab;
+          if(!base) return fallbackCopy;
+          return {
+            ...base,
+            metrics:{...fallbackCopy.metrics, ...(base.metrics||{})}
+          };
+        },[lang]);
+
+        useEffect(()=>{
+          const canvas=canvasRef.current;
+          if(!canvas) return;
+          const pointer=pointerRef.current;
+          pointer.active=false;
+          pointer.speed=0;
+          const ctx=canvas.getContext('2d');
+          let frameId;
+          let dpr=window.devicePixelRatio||1;
+          let width=0, height=0;
+          const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+          const setSize=()=>{
+            const rect=canvas.parentElement.getBoundingClientRect();
+            dpr=window.devicePixelRatio||1;
+            width=rect.width;
+            height=rect.height;
+            canvas.width=width*dpr;
+            canvas.height=height*dpr;
+            canvas.style.width=width+'px';
+            canvas.style.height=height+'px';
+          };
+          setSize();
+          window.addEventListener('resize', setSize);
+
+          if(reduceMotion){
+            const gradient=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+            if(theme==='night'){
+              gradient.addColorStop(0,'rgba(59,130,246,0.35)');
+              gradient.addColorStop(1,'rgba(139,92,246,0.25)');
+            }else{
+              gradient.addColorStop(0,'rgba(56,189,248,0.4)');
+              gradient.addColorStop(1,'rgba(244,114,182,0.3)');
+            }
+            ctx.fillStyle=gradient;
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            energyRef.current={flux:0, coherence:100};
+            setMetrics({flux:0, coherence:100});
+            return ()=>{
+              window.removeEventListener('resize', setSize);
+            };
+          }
+
+          const palette=theme==='night'
+            ? [
+                {inner:'rgba(94, 234, 212, 0.35)', outer:'rgba(14, 165, 233, 0)'},
+                {inner:'rgba(167, 139, 250, 0.36)', outer:'rgba(79, 70, 229, 0)'},
+                {inner:'rgba(244, 114, 182, 0.36)', outer:'rgba(236, 72, 153, 0)'}
+              ]
+            : [
+                {inner:'rgba(14, 165, 233, 0.42)', outer:'rgba(125, 211, 252, 0)'},
+                {inner:'rgba(236, 72, 153, 0.38)', outer:'rgba(251, 191, 36, 0)'},
+                {inner:'rgba(168, 85, 247, 0.32)', outer:'rgba(192, 132, 252, 0)'}
+              ];
+
+          const ribbons=Array.from({length:18}, (_,index)=>({
+            radius:110+Math.random()*90,
+            xAmp:0.28+Math.random()*0.24,
+            yAmp:0.18+Math.random()*0.26,
+            speed:0.5+Math.random()*0.55,
+            offset:Math.random()*Math.PI*2,
+            wobble:0.2+Math.random()*0.35,
+            phase:Math.random()*Math.PI*2,
+            paletteIndex:index%palette.length
+          }));
+
+          const handlePointerMove=e=>{
+            const rect=canvas.getBoundingClientRect();
+            const nextX=(e.clientX-rect.left)*dpr;
+            const nextY=(e.clientY-rect.top)*dpr;
+            const dx=nextX-pointer.x;
+            const dy=nextY-pointer.y;
+            const speed=Math.sqrt(dx*dx+dy*dy)/(dpr*1.2);
+            pointer.x=nextX;
+            pointer.y=nextY;
+            pointer.speed=Math.min(10,speed);
+            pointer.active=true;
+          };
+          const handlePointerLeave=()=>{
+            pointer.active=false;
+            pointer.speed=0;
+          };
+
+          canvas.addEventListener('pointermove', handlePointerMove);
+          canvas.addEventListener('pointerdown', handlePointerMove);
+          canvas.addEventListener('pointerleave', handlePointerLeave);
+
+          const draw=time=>{
+            const t=time*0.0006;
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.globalCompositeOperation='lighter';
+            let fluxAccumulator=0;
+            ribbons.forEach(orb=>{
+              const x=(width/2+Math.cos(t*orb.speed+orb.offset)*width*orb.xAmp)*dpr;
+              const y=(height/2+Math.sin(t*(orb.speed*0.82+0.12)+orb.phase)*height*orb.yAmp)*dpr;
+              const baseRadius=orb.radius+Math.sin(t*2.2+orb.phase)*28;
+              const radius=Math.max(36,baseRadius)*dpr;
+              const gradient=ctx.createRadialGradient(x,y,0,x,y,radius);
+              const paletteColor=palette[orb.paletteIndex];
+              gradient.addColorStop(0,paletteColor.inner);
+              gradient.addColorStop(1,paletteColor.outer);
+              ctx.fillStyle=gradient;
+              ctx.beginPath();
+              ctx.arc(x,y,radius,0,Math.PI*2);
+              ctx.fill();
+              fluxAccumulator+=radius;
+            });
+
+            ctx.globalCompositeOperation='screen';
+            if(pointer.active){
+              const intensity=Math.min(1,0.3+pointer.speed/8);
+              const spread=Math.max(canvas.width,canvas.height)*0.45;
+              const gradient=ctx.createRadialGradient(pointer.x,pointer.y,0,pointer.x,pointer.y,spread);
+              if(theme==='night'){
+                gradient.addColorStop(0,`rgba(34, 211, 238, ${0.32+intensity*0.3})`);
+                gradient.addColorStop(1,'rgba(15, 23, 42, 0)');
+              }else{
+                gradient.addColorStop(0,`rgba(59, 130, 246, ${0.28+intensity*0.32})`);
+                gradient.addColorStop(1,'rgba(255, 255, 255, 0)');
+              }
+              ctx.fillStyle=gradient;
+              ctx.beginPath();
+              ctx.arc(pointer.x,pointer.y,spread,0,Math.PI*2);
+              ctx.fill();
+            }
+            ctx.globalCompositeOperation='source-over';
+
+            const speed=pointer.speed||0;
+            const flux=Math.min(999, fluxAccumulator/(ribbons.length*18)+speed*12);
+            const coherence=Math.max(18, 100-speed*14);
+            energyRef.current={flux, coherence};
+
+            frameId=requestAnimationFrame(draw);
+          };
+          frameId=requestAnimationFrame(draw);
+
+          return ()=>{
+            cancelAnimationFrame(frameId);
+            window.removeEventListener('resize', setSize);
+            canvas.removeEventListener('pointermove', handlePointerMove);
+            canvas.removeEventListener('pointerdown', handlePointerMove);
+            canvas.removeEventListener('pointerleave', handlePointerLeave);
+          };
+        },[theme]);
+
+        useEffect(()=>{
+          const id=setInterval(()=>{
+            setMetrics({
+              flux:energyRef.current.flux||0,
+              coherence:energyRef.current.coherence||0
+            });
+          },180);
+          return ()=>clearInterval(id);
+        },[theme]);
+
+        const metricCopy=copy.metrics||fallbackCopy.metrics;
+        const modeLabel=theme==='night'
+          ? (metricCopy.night||fallbackCopy.metrics.night)
+          : (metricCopy.day||fallbackCopy.metrics.day);
+
+        return React.createElement('div',{className:'aurora-stage', role:'presentation'},
+          React.createElement('canvas',{ref:canvasRef, className:'aurora-canvas', 'aria-hidden':'true'}),
+          React.createElement('div',{className:'aurora-overlay'},
+            React.createElement('div',{className:'metric-grid'},
+              React.createElement('div',{className:'metric'},
+                React.createElement('span',{className:'metric-label'}, metricCopy.flux||fallbackCopy.metrics.flux),
+                React.createElement('span',{className:'metric-value'}, Math.round(metrics.flux).toString())
+              ),
+              React.createElement('div',{className:'metric'},
+                React.createElement('span',{className:'metric-label'}, metricCopy.coherence||fallbackCopy.metrics.coherence),
+                React.createElement('span',{className:'metric-value'}, Math.round(metrics.coherence).toString())
+              ),
+              React.createElement('div',{className:'metric'},
+                React.createElement('span',{className:'metric-label'}, metricCopy.mode||fallbackCopy.metrics.mode),
+                React.createElement('span',{className:'metric-value'}, modeLabel),
+                React.createElement('span',{className:'metric-sub'}, metricCopy.interaction||fallbackCopy.metrics.interaction)
+              )
+            )
+          )
+        );
+      }
+
+      const root=ReactDOM.createRoot(mount);
+      root.render(React.createElement(AuroraShowcase));
     })();
   </script>
 </body>
