@@ -359,15 +359,6 @@ img {
   line-height: 1.05;
 }
 
-.hero-text h1 .hero-name {
-  display: inline-block;
-}
-
-body[data-lang="zh"] .lang-en,
-body[data-lang="en"] .lang-zh {
-  display: none;
-}
-
 .lead {
   font-size: clamp(1.1rem, 2vw, 1.4rem);
   max-width: 36rem;
