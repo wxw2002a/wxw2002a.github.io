@@ -4,599 +4,154 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title data-zh="叶斯婧 | 钢琴家" data-en="Bella(Sijing) Ye | Pianist">叶斯婧 | 钢琴家</title>
-  <meta name="description" data-zh="叶斯婧，钢琴家、作曲家、指挥与艺术总监，以肖邦诗性与高雅音色享誉国际舞台。" data-en="Bella(Sijing) Ye is a pianist, composer, conductor, and artistic director known for her poetic Chopin interpretations and refined tone on world stages." content="叶斯婧，钢琴家、作曲家、指挥与艺术总监，以肖邦诗性与高雅音色享誉国际舞台。">
+  <meta name="description" data-zh="叶斯婧，钢琴家、作曲家、指挥与艺术总监，以肖邦诗性与高雅音色享誉国际舞台。" data-en="Bella(Sijing) Ye is a pianist, composer, conductor, and artistic director known for poetic Chopin interpretations and refined tone on world stages." content="叶斯婧，钢琴家、作曲家、指挥与艺术总监，以肖邦诗性与高雅音色享誉国际舞台。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-lang="zh">
-  <div class="page">
-    <div class="ambient-orbs" aria-hidden="true">
-      <span class="orb orb-one"></span>
-      <span class="orb orb-two"></span>
-      <span class="orb orb-three"></span>
-      <span class="orb orb-four"></span>
-    </div>
-    <canvas class="stage-canvas" id="stage-canvas" aria-hidden="true"></canvas>
-    <div class="spotlight" aria-hidden="true"></div>
-
-    <header class="hero" id="top">
-      <div class="nav-bar" data-animate="reveal">
-        <nav class="nav">
-          <a href="#press">
-            <span class="lang lang-zh">媒体评论</span>
-            <span class="lang lang-en">Press</span>
-          </a>
-          <a href="#highlights">
-            <span class="lang lang-zh">荣誉里程</span>
-            <span class="lang lang-en">Highlights</span>
-          </a>
-          <a href="#journey">
-            <span class="lang lang-zh">艺术旅程</span>
-            <span class="lang lang-en">Journey</span>
-          </a>
-          <a href="#artist">
-            <span class="lang lang-zh">艺术家之路</span>
-            <span class="lang lang-en">Artist Path</span>
-          </a>
-          <a href="#mentors">
-            <span class="lang lang-zh">感恩导师</span>
-            <span class="lang lang-en">Mentors</span>
-          </a>
-          <a href="#footprints">
-            <span class="lang lang-zh">艺术足迹</span>
-            <span class="lang lang-en">Footprints</span>
-          </a>
-          <a href="#collaboration">
-            <span class="lang lang-zh">合作指挥</span>
-            <span class="lang lang-en">Collaborations</span>
-          </a>
-        </nav>
-        <div class="lang-toggle" role="group" aria-label="语言切换" data-label-zh="语言切换" data-label-en="Language">
-          <button class="lang-button is-active" type="button" data-lang="zh" aria-pressed="true">中文</button>
-          <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
-        </div>
-      </div>
-
-      <div class="floating-notes" aria-hidden="true">
-        <span style="--size: 14px; --top: 12%; --left: 6%; --delay: 0s;"></span>
-        <span style="--size: 10px; --top: 30%; --left: 18%; --delay: 1.2s;"></span>
-        <span style="--size: 18px; --top: 18%; --left: 78%; --delay: 0.6s;"></span>
-        <span style="--size: 12px; --top: 58%; --left: 72%; --delay: 1.6s;"></span>
-        <span style="--size: 16px; --top: 68%; --left: 10%; --delay: 2.2s;"></span>
-        <span style="--size: 9px; --top: 46%; --left: 88%; --delay: 2.8s;"></span>
-      </div>
-
-      <div class="hero-content">
-        <div class="hero-text" data-animate="reveal">
-          <p class="eyebrow">
-            <span class="lang lang-zh">钢琴家 / 作曲家 / 指挥 / 艺术总监</span>
-            <span class="lang lang-en">Pianist / Composer / Conductor / Artistic Director</span>
-          </p>
-          <h1>
-            <span class="hero-name lang lang-zh">叶斯婧</span>
-            <span class="hero-name lang lang-en">Bella(Sijing) Ye</span>
-          </h1>
-          <p class="lead">
-            <span class="lang lang-zh">以肖邦的诗性、沉著气质与澎湃张力著称。她的音乐兼具高雅音色与精湛技巧，被媒体誉为"一个真正的艺术家"。</span>
-            <span class="lang lang-en">Renowned for Chopin's poetic lyricism, composed poise, and surging intensity. Her sound blends elegance with virtuosity, and the press calls her "a true artist."</span>
-          </p>
-          <p class="hero-motto">
-            <span class="lang lang-zh">"气质、沉著与音乐能力给予作品全新的诠释。"</span>
-            <span class="lang lang-en">"Her poise, composure, and musicianship offer a fresh interpretation."</span>
-          </p>
-          <div class="hero-stats" data-stagger="0.08">
-            <div class="stat" data-animate="reveal">
-              <span>2007</span>
-              <p>
-                <span class="lang lang-zh">阿斯本国际音乐节钢琴协奏曲比赛第一名，史上最年轻获奖者</span>
-                <span class="lang lang-en">Aspen Music Festival Piano Concerto Competition First Prize, youngest winner in history</span>
-              </p>
-            </div>
-            <div class="stat" data-animate="reveal">
-              <span>2008</span>
-              <p>
-                <span class="lang lang-zh">美国吉娜.巴考厄国际钢琴比赛青年艺术家组金奖</span>
-                <span class="lang lang-en">Gold Prize, Gina Bachauer International Piano Competition (Young Artist Division)</span>
-              </p>
-            </div>
-            <div class="stat" data-animate="reveal">
-              <span>2016</span>
-              <p>
-                <span class="lang lang-zh">创办BAMA贝丽斯慕音乐艺术学校与国际音乐节</span>
-                <span class="lang lang-en">Founded BAMA Music Arts School and the BAMA International Music Festival</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <figure class="portrait" data-animate="reveal">
-          <div class="portrait-inner">
-            <img src="assets/yesijing.jpg" alt="叶斯婧在钢琴旁的肖像" data-alt-zh="叶斯婧在钢琴旁的肖像" data-alt-en="Portrait of Bella(Sijing) Ye at the piano" loading="lazy" decoding="async">
-          </div>
-          <figcaption>
-            <span class="lang lang-zh">肖邦气质的诗意质感，深沉而克制。</span>
-            <span class="lang lang-en">Poetic Chopin character — deep, restrained, luminous.</span>
-          </figcaption>
-        </figure>
-      </div>
-
-      <div class="soundwave" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span><span></span><span></span>
-      </div>
-
-      <div class="hero-ribbon" aria-hidden="true">
-        <div>
-          <span>
-            <span class="lang lang-zh">肖邦协奏曲</span>
-            <span class="lang lang-en">Chopin Concertos</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">纽约林肯中心</span>
-            <span class="lang lang-en">Lincoln Center, New York</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">迈阿密国际钢琴音乐节</span>
-            <span class="lang lang-en">Miami International Piano Festival</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">卡内基音乐厅</span>
-            <span class="lang lang-en">Carnegie Hall</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">肖邦协奏曲</span>
-            <span class="lang lang-en">Chopin Concertos</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">纽约林肯中心</span>
-            <span class="lang lang-en">Lincoln Center, New York</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">迈阿密国际钢琴音乐节</span>
-            <span class="lang lang-en">Miami International Piano Festival</span>
-          </span>
-          <span>
-            <span class="lang lang-zh">卡内基音乐厅</span>
-            <span class="lang lang-en">Carnegie Hall</span>
-          </span>
-        </div>
+  <div class="site" id="top">
+    <header class="site-header">
+      <a class="logo" href="#top" aria-label="Bella(Sijing) Ye">Bella(Sijing) Ye</a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#vision" data-i18n="nav.vision">艺术愿景</a>
+        <a href="#tour" data-i18n="nav.tour">巡演</a>
+        <a href="#videos" data-i18n="nav.videos">视频</a>
+        <a href="#founder" data-i18n="nav.founder">创办人</a>
+        <a href="#academy" data-i18n="nav.academy">学院与音乐节</a>
+        <a href="#press" data-i18n="nav.press">媒体与荣誉</a>
+        <a href="#gallery" data-i18n="nav.gallery">影像</a>
+        <a href="#contact" data-i18n="nav.contact">联系</a>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="语言切换" data-label-zh="语言切换" data-label-en="Language">
+        <button class="lang-button is-active" type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
       </div>
     </header>
 
     <main>
-      <section id="press" class="section press" data-animate="reveal">
-        <div class="section-title">
-          <h2>
-            <span class="lang lang-zh">媒体评论</span>
-            <span class="lang lang-en">Press</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">来自权威媒体的评价，描绘了她对肖邦的独特诠释与光芒。</span>
-            <span class="lang lang-en">Authoritative reviews illuminate her distinct Chopin interpretations and radiance.</span>
-          </p>
-        </div>
-        <div class="quote-grid" data-stagger="0.12">
-          <blockquote data-animate="reveal">
-            <p>
-              <span class="lang lang-zh">American Record Guide / Classical Music在评论肖邦协奏曲时写道："斯婧表现出的气质、沉著及音乐能力，让这首作品有了全新的诠释。"</span>
-              <span class="lang lang-en">American Record Guide / Classical Music wrote in its review of the Chopin Concerto: "Her poise, composure, and musical ability give this oft-performed work a new interpretation."</span>
-            </p>
-            <cite>American Record Guide / Classical Music</cite>
-          </blockquote>
-          <blockquote data-animate="reveal">
-            <p>
-              <span class="lang lang-zh">Miami Herald盛赞："这位年轻的艺术家绝对是天生的肖邦演奏者。她的高雅、精致、节奏感、准确度与音色，让我们想起阿图尔.鲁宾斯坦以及阿图罗.贝内代托.米开朗杰利。"</span>
-              <span class="lang lang-en">Miami Herald praised: "This young artist is unquestionably a born Chopin interpreter. Her elegance, refinement, sense of rhythm, accuracy, tone, and brilliant technique recall Artur Rubinstein and Arturo Benedetti Michelangeli."</span>
-            </p>
-            <cite>Miami Herald</cite>
-          </blockquote>
-        </div>
-        <p class="press-note">
-          <span class="lang lang-zh">她的演奏以优美高雅的音色、精湛成熟的诠释与澎湃热情感染力打动观众，被多家媒体称为"一个真正的艺术家"。</span>
-          <span class="lang lang-en">Her performances move audiences with refined tone, mature interpretation, and passionate intensity, earning the praise "a true artist."</span>
-        </p>
-      </section>
-
-      <section id="highlights" class="section highlights" data-animate="reveal">
-        <div class="section-title">
-          <h2>
-            <span class="lang lang-zh">荣誉里程</span>
-            <span class="lang lang-en">Highlights</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">从少年天赋到国际大奖，她的每一步都引向更广阔的舞台。</span>
-            <span class="lang lang-en">From early prodigy to international laureate, each step opened a wider stage.</span>
-          </p>
-        </div>
-        <div class="highlight-grid" data-stagger="0.1">
-          <article class="highlight-card" data-animate="reveal">
-            <h3>
-              <span class="lang lang-zh">耀眼启航</span>
-              <span class="lang lang-en">Brilliant Launch</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">6岁开始学琴，获香港音乐公开赛少年组金奖、斯坦威钢琴比赛中国总赛区冠军。10岁以第一名考入中央音乐学院附小六年级，后保送附中。</span>
-              <span class="lang lang-en">Begins piano at six; wins the Hong Kong Music Open Competition (Youth Gold) and the Steinway Piano Competition China Finals. At ten, enters the Central Conservatory of Music Primary School (Grade 6) in first place, later promoted to the middle school.</span>
-            </p>
-          </article>
-          <article class="highlight-card" data-animate="reveal">
-            <h3>
-              <span class="lang lang-zh">国际初绽</span>
-              <span class="lang lang-en">International Emergence</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">12岁在罗马尼亚Competition Jeunesses Musicales Bucharest越级夺冠，赴美国吉娜.巴考厄国际钢琴比赛获Junior组亚军，日本亚洲青年肖邦比赛获银奖。</span>
-              <span class="lang lang-en">At twelve, wins the Competition Jeunesses Musicales Bucharest in the 14-18 age group; earns Junior Second Prize at the Gina Bachauer International Piano Competition; wins Silver at the Japan Asia Youth Chopin Competition.</span>
-            </p>
-          </article>
-          <article class="highlight-card" data-animate="reveal">
-            <h3>
-              <span class="lang lang-zh">世界舞台</span>
-              <span class="lang lang-en">World Stage</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">13岁赴美首演，在迈阿密国际钢琴音乐节与乐队演奏《肖邦第一钢琴协奏曲》，被柯蒂斯音乐学院录取，并获茱莉亚预科全额奖学金。</span>
-              <span class="lang lang-en">At thirteen, makes her U.S. debut at the Miami International Piano Festival performing Chopin Piano Concerto No. 1, later admitted to the Curtis Institute of Music and awarded full scholarship to Juilliard Pre-College.</span>
-            </p>
-          </article>
-          <article class="highlight-card" data-animate="reveal">
-            <h3>
-              <span class="lang lang-zh">持续绽放</span>
-              <span class="lang lang-en">Continuing Ascent</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">2007阿斯本国际音乐节比赛第一名，2008美国吉娜.巴考厄国际钢琴比赛青年艺术家组金奖，成为邓泰山首位私人学生。</span>
-              <span class="lang lang-en">First Prize at the 2007 Aspen Music Festival Piano Concerto Competition; Gold Prize at the 2008 Gina Bachauer International Piano Competition (Young Artist Division); becomes Dang Thai Son's first private student.</span>
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section id="journey" class="section journey">
-        <div class="section-title" data-animate="reveal">
-          <h2>
-            <span class="lang lang-zh">艺术旅程</span>
-            <span class="lang lang-en">Artistic Journey</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">从国内巡演到世界名校，艺术道路清晰而坚定。</span>
-            <span class="lang lang-en">From national tours to the world's leading conservatories, her path is clear and steadfast.</span>
-          </p>
-        </div>
-        <div class="timeline" data-stagger="0.12">
-          <article class="timeline-item" data-animate="reveal">
-            <span class="time">
-              <span class="lang lang-zh">6-11岁</span>
-              <span class="lang lang-en">Ages 6-11</span>
-            </span>
-            <h3>
-              <span class="lang lang-zh">耀眼启航</span>
-              <span class="lang lang-en">Radiant Start</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">6岁开始学琴，获香港音乐公开赛少年组金奖、斯坦威钢琴比赛中国总赛区冠军。10岁赴北京师从鲍蕙荞，以第一名考入中央音乐学院附小六年级，后直接保送附中。11岁在佛山金马音乐厅举办个人独奏音乐会，并与厦门爱乐合作《贝多芬第一钢琴协奏曲》。</span>
-              <span class="lang lang-en">Started piano at six; won the Hong Kong Music Open Competition Youth Gold and the Steinway Piano Competition China Finals. At ten, moved to Beijing to study with Bao Huiqiao, entered the Central Conservatory of Music Primary School (Grade 6) in first place, later promoted to the middle school. At eleven, gave a solo recital at Foshan Jinma Concert Hall and performed Beethoven Piano Concerto No. 1 with Xiamen Philharmonic.</span>
-            </p>
-          </article>
-          <article class="timeline-item" data-animate="reveal">
-            <span class="time">
-              <span class="lang lang-zh">12岁</span>
-              <span class="lang lang-en">Age 12</span>
-            </span>
-            <h3>
-              <span class="lang lang-zh">华彩绽放</span>
-              <span class="lang lang-en">Colorful Bloom</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">在罗马尼亚Competition Jeunesses Musicales Bucharest越级参加14-18岁组并获冠军，同年获美国吉娜.巴考厄国际钢琴比赛Junior组亚军，并在日本亚洲青年肖邦比赛获银奖。</span>
-              <span class="lang lang-en">Won first prize at Competition Jeunesses Musicales Bucharest, competing above age in the 14-18 group. The same year, earned Junior Second Prize at the Gina Bachauer International Piano Competition and Silver at the Japan Asia Youth Chopin Competition.</span>
-            </p>
-          </article>
-          <article class="timeline-item" data-animate="reveal">
-            <span class="time">
-              <span class="lang lang-zh">13岁</span>
-              <span class="lang lang-en">Age 13</span>
-            </span>
-            <h3>
-              <span class="lang lang-zh">美国首演</span>
-              <span class="lang lang-en">U.S. Debut</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">在迈阿密国际钢琴音乐节与迈阿密乐队演奏《肖邦第一钢琴协奏曲》，并举办多场独奏音乐会。被柯蒂斯音乐学院录取为Gary Graffman与Claude Frank学生，同时获茱莉亚预科全额奖学金、斯坦威钢琴赞助与PCS全额学费支持，师从Yoheved Kaplinsky。</span>
-              <span class="lang lang-en">Performed Chopin Piano Concerto No. 1 with the Miami orchestra at the Miami International Piano Festival and presented multiple solo recitals. Admitted to the Curtis Institute of Music as a student of Gary Graffman and Claude Frank, while also receiving a full scholarship to Juilliard Pre-College, Steinway sponsorship, and full tuition at PCS (Professional Children School), studying with Yoheved Kaplinsky.</span>
-            </p>
-          </article>
-          <article class="timeline-item" data-animate="reveal">
-            <span class="time">
-              <span class="lang lang-zh">14-16岁</span>
-              <span class="lang lang-en">Ages 14-16</span>
-            </span>
-            <h3>
-              <span class="lang lang-zh">高光突破</span>
-              <span class="lang lang-en">Breakthrough</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">2007阿斯本国际音乐节钢琴协奏曲比赛第一名，成为最年轻获奖者，与American Academy of Conducting at Aspen Orchestra在Aspen Benedict Music Tent演出并获大伟.兹曼高度评价。2008获美国吉娜.巴考厄国际钢琴比赛青年艺术家组金奖，受邀全美巡演，成为邓泰山首位私人学生。</span>
-              <span class="lang lang-en">Won First Prize at the 2007 Aspen Music Festival Piano Concerto Competition, becoming its youngest winner, and performed with the American Academy of Conducting at Aspen Orchestra at Aspen Benedict Music Tent, praised by conductor David Zinman. In 2008 she won the Gold Prize at the Gina Bachauer International Piano Competition (Young Artist Division), toured the U.S., and became Dang Thai Son's first private student.</span>
-            </p>
-          </article>
-          <article class="timeline-item" data-animate="reveal">
-            <span class="time">
-              <span class="lang lang-zh">17岁起</span>
-              <span class="lang lang-en">Age 17+</span>
-            </span>
-            <h3>
-              <span class="lang lang-zh">名校深造</span>
-              <span class="lang lang-en">Advanced Studies</span>
-            </h3>
-            <p>
-              <span class="lang lang-zh">2009获加拿大皇家音乐学院校长邀请免试并全额奖学金入学，获Dean's List奖，师从John Perry并取得最高演奏博士文凭。后受邀赴瑞士巴塞尔音乐学院就读最高演奏文凭，师从Filippo Gamba与Claudio Martinez Mehner。</span>
-              <span class="lang lang-en">In 2009, invited by the President of The Royal Conservatory of Music in Canada and admitted with full scholarship. Earned Dean's List honors, studied with John Perry, and completed the highest performance doctoral diploma. Later invited to pursue the highest performance diploma at Musik Akademie Basel, studying with Filippo Gamba and Claudio Martinez Mehner.</span>
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section id="artist" class="section artist">
-        <div class="section-title" data-animate="reveal">
-          <h2>
-            <span class="lang lang-zh">艺术家之路</span>
-            <span class="lang lang-en">Artist's Path</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">舞台、教育与音乐组织并行，她的影响力在全球持续延展。</span>
-            <span class="lang lang-en">Stage, education, and music initiatives evolve in parallel, expanding her global influence.</span>
-          </p>
-        </div>
-        <div class="artist-carousel" data-carousel>
-          <button
-            class="carousel-button carousel-prev"
-            type="button"
-            data-carousel-control="prev"
-            data-label-zh="上一张"
-            data-label-en="Previous"
-            aria-label="上一张"
-          >
-            <span aria-hidden="true">←</span>
-          </button>
-          <div class="carousel-track" data-stagger="0.1" role="group" aria-label="Artist Path" tabindex="0">
-            <article class="card" data-animate="reveal">
-              <h3>
-                <span class="lang lang-zh">艺术家之路</span>
-                <span class="lang lang-en">On Stage</span>
-              </h3>
-              <p>
-                <span class="lang lang-zh">自2006年起受邀在迈阿密举办多场独奏音乐会，并与乐队合作协奏曲音乐会，后受聘为迈阿密国际钢琴音乐节常任艺术家。2013应作曲家德沃夏克曾侄孙John Dvorak邀请参赛Marta Hidy协奏曲大赛并获冠军，与多伦多交响乐团首演。2015起担任迈阿密国际钢琴音乐节大师班北美及亚洲区首席代表，2017录制首张肖邦专辑。</span>
-                <span class="lang lang-en">Since 2006, invited to present solo recitals in Miami and perform concertos with orchestra, later appointed resident artist of the Miami International Piano Festival. In 2013, invited by composer John Dvorak (grandnephew of Dvorak) to compete in the Marta Hidy Concerto Competition, winning first prize and premiering with the Toronto Symphony Orchestra. From 2015, served as North America and Asia representative for festival masterclasses, and recorded her first Chopin album in 2017.</span>
-              </p>
-            </article>
-            <article class="card" data-animate="reveal">
-              <h3>
-                <span class="lang lang-zh">作曲与指挥</span>
-                <span class="lang lang-en">Composition & Conducting</span>
-              </h3>
-              <p>
-                <span class="lang lang-zh">除钢琴演奏外，斯婧的作曲与指挥亦备受肯定。指挥受到多伦多爱乐前首席指挥Uri Mayer高度评价并破例收为私人学生，多次获瑞士、法国指挥家Rodolfo-Fischer赞扬。</span>
-                <span class="lang lang-en">Beyond piano performance, her composition and conducting are widely praised. Her conducting was highly acclaimed by Uri Mayer, former principal conductor of the Toronto Philharmonic, who accepted her as a private student. She has also received acclaim from Swiss and French conductor Rodolfo Fischer.</span>
-              </p>
-            </article>
-            <article class="card" data-animate="reveal">
-              <h3>
-                <span class="lang lang-zh">教学与机构</span>
-                <span class="lang lang-en">Education & Institutions</span>
-              </h3>
-              <p>
-                <span class="lang lang-zh">2016创办贝丽斯慕音乐艺术学校BAMA及BAMA国际音乐节，任艺术总监。BAMA国际音乐节将迎来十周年庆典，将在纽约卡内基音乐厅与法国巴黎Kawaii音乐厅举办大师班与音乐会庆祝。BAMA在2024年于深圳开办分校，目前学员超300名，多名学生获全额奖学金进入欧美及中国著名音乐学院。斯婧已连续5年被北美斯坦威评为Top Music Teacher，2025受邀担任长江学院派艺术家。</span>
-                <span class="lang lang-en">In 2016, founded the BAMA Music Arts School and the BAMA International Music Festival, serving as Artistic Director. The festival will celebrate its 10th anniversary with masterclasses and concerts at Carnegie Hall in New York and Kawai Hall in Paris. BAMA opened a Shenzhen campus in 2024 with over 300 students; many win international prizes and full scholarships to leading conservatories in Europe, North America, and China. She has been named a North American Steinway Top Music Teacher for five consecutive years and was invited as a Changjiang Academy arts faculty artist in 2025.</span>
-              </p>
-            </article>
-            <article class="card" data-animate="reveal">
-              <h3>
-                <span class="lang lang-zh">赛事与评审</span>
-                <span class="lang lang-en">Competitions & Jury</span>
-              </h3>
-              <p>
-                <span class="lang lang-zh">2020发起并联合创办Aegio国际钢琴比赛，担任音乐总监。赛事获阿林克-阿格里奇基金会认证并成为成员，目前在北美、欧洲和澳洲设有15个分赛区。她多次担任国际比赛评委与评委主席，包括莫斯科萧邦青少年国际钢琴比赛总决赛、多伦多协奏曲大赛、奥地利Elevato国际钢琴比赛、香港青少年国际钢琴比赛、波兰IOPC-阿图尔.鲁宾斯坦钢琴奖、日本名古屋国际青少年钢琴比赛、李斯特青少年国际钢琴大赛、加拿大AEGIO国际钢琴大赛等。</span>
-                <span class="lang lang-en">In 2020, she co-founded the Aegio International Piano Competition and serves as Music Director. The competition is accredited by the Alink-Argerich Foundation and has 15 regional divisions across North America, Europe, and Australia. She frequently serves as juror and jury chair for major competitions, including the Moscow Chopin International Youth Piano Competition Finals, Orchestra Toronto Concerto Competition, Austria Elevato International Piano Competition, Hong Kong International Youth Piano Competition, Poland IOPC Artur Rubinstein Piano Prize, Nagoya International Youth Piano Competition, Liszt International Youth Piano Competition, and the AEGIO International Piano Competition.</span>
-              </p>
-            </article>
+      <section class="hero" aria-label="Hero">
+        <div class="hero-text" data-animate="reveal">
+          <p class="eyebrow" data-i18n="hero.roles">钢琴家 / 作曲家 / 指挥 / 艺术总监</p>
+          <h1 class="hero-title" data-i18n="hero.name">叶斯婧</h1>
+          <p class="hero-lead" data-i18n="hero.statement">以肖邦的诗性、沉静气质与澎湃张力著称。</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#videos" data-i18n="hero.ctaPrimary">观看作品</a>
+            <a class="btn btn-ghost" href="#tour" data-i18n="hero.ctaSecondary">巡演行程</a>
           </div>
-          <button
-            class="carousel-button carousel-next"
-            type="button"
-            data-carousel-control="next"
-            data-label-zh="下一张"
-            data-label-en="Next"
-            aria-label="下一张"
-          >
-            <span aria-hidden="true">→</span>
+          <div class="hero-highlights" data-render="heroHighlights" data-stagger="0.08"></div>
+        </div>
+        <div class="hero-media" data-animate="reveal">
+          <figure class="hero-portrait">
+            <img src="assets/yesijing.jpg" alt="叶斯婧在钢琴旁的肖像" data-alt-zh="叶斯婧在钢琴旁的肖像" data-alt-en="Portrait of Bella(Sijing) Ye at the piano" loading="lazy" decoding="async">
+            <figcaption data-i18n="hero.caption">诗性与克制并存的舞台能量。</figcaption>
+          </figure>
+          <button class="video-trigger" type="button" data-video-url="https://youtu.be/HZklqHtJXUY?si=OVhi9kSFiX1TPXYB" aria-label="Watch">
+            <span data-i18n="hero.videoButton">观看代表作</span>
           </button>
         </div>
       </section>
 
-      <section id="mentors" class="section mentors" data-animate="reveal">
-        <div class="section-title">
-          <h2>
-            <span class="lang lang-zh">感恩导师</span>
-            <span class="lang lang-en">Mentors</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">一路名师相伴，形成独具一格的艺术理解与成熟精湛的艺术思维。</span>
-            <span class="lang lang-en">Guided by distinguished mentors, she developed a singular artistic vision and refined musical thinking.</span>
-          </p>
+      <section id="vision" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="vision.eyebrow">艺术愿景</p>
+          <h2 data-i18n="vision.title">将舞台、教育与组织力融为同一艺术语言</h2>
+          <p data-i18n="vision.subtitle">以音乐为核心，将创作、演出与教育共同推进。</p>
         </div>
-        <div class="mentor-list" data-stagger="0.05">
-          <span>鲍蕙荞</span>
-          <span>Leon Fleisher</span>
-          <span>Gary Graffman</span>
-          <span>Dang Thai Son</span>
-          <span>Abbey Simon</span>
-          <span>Anton Kuerti</span>
-          <span>Yoheved Kaplinsky</span>
-          <span>Claude Frank</span>
-          <span>John Perry</span>
-          <span>Filippo Gamba</span>
-          <span>Claudio Martinez Mehner</span>
+        <div class="vision-grid">
+          <div class="vision-copy" data-render="visionParagraphs" data-animate="reveal"></div>
+          <div class="vision-pillars" data-render="visionPillars" data-stagger="0.08"></div>
         </div>
       </section>
 
-      <section id="footprints" class="section footprints" data-animate="reveal">
-        <div class="section-title">
-          <h2>
-            <span class="lang lang-zh">艺术足迹</span>
-            <span class="lang lang-en">Performance Footprints</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">足迹遍及亚洲、欧洲与北美，独奏音乐会与大师班持续回响。</span>
-            <span class="lang lang-en">Her recitals and masterclasses have resonated across Asia, Europe, and North America.</span>
-          </p>
+      <section id="tour" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="tour.eyebrow">Tour</p>
+          <h2 data-i18n="tour.title">巡演行程</h2>
+          <p data-i18n="tour.subtitle">官方行程与演出资讯。</p>
         </div>
-        <ul class="list-columns">
-          <li>
-            <span class="lang lang-zh">纽约林肯中心</span>
-            <span class="lang lang-en">Lincoln Center, New York</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">迈阿密林肯剧院</span>
-            <span class="lang lang-en">Lincoln Theatre, Miami</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">纽约卡内基音乐厅 Weill Recital Hall</span>
-            <span class="lang lang-en">Carnegie Hall, Weill Recital Hall</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">迈阿密大剧院</span>
-            <span class="lang lang-en">Miami Grand Theater</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">马来西亚双子塔音乐厅</span>
-            <span class="lang lang-en">Petronas Twin Towers Concert Hall, Malaysia</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">日本名古屋大学音乐厅</span>
-            <span class="lang lang-en">Nagoya University Concert Hall, Japan</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">波兰Lodz音乐大学音乐厅</span>
-            <span class="lang lang-en">Lodz Academy of Music Concert Hall, Poland</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">波兰华沙肖邦音乐厅</span>
-            <span class="lang lang-en">Chopin Hall, Warsaw</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">上海音乐厅</span>
-            <span class="lang lang-en">Shanghai Concert Hall</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">Aspen Benedict Music Tent</span>
-            <span class="lang lang-en">Aspen Benedict Music Tent</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">伯明翰大学</span>
-            <span class="lang lang-en">University of Birmingham</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">奥兰多</span>
-            <span class="lang lang-en">Orlando</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">博卡拉顿</span>
-            <span class="lang lang-en">Boca Raton</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">大斯普林</span>
-            <span class="lang lang-en">Big Spring</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">沃斯堡 Bass Music Hall</span>
-            <span class="lang lang-en">Bass Performance Hall, Fort Worth</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">加拿大多伦多 Koerner音乐厅</span>
-            <span class="lang lang-en">Koerner Hall, Toronto</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">多伦多演艺中心音乐厅</span>
-            <span class="lang lang-en">Toronto Centre for the Arts</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">北京中山音乐堂</span>
-            <span class="lang lang-en">Beijing Zhongshan Music Hall</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">北京音乐厅</span>
-            <span class="lang lang-en">Beijing Concert Hall</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">香港大会堂</span>
-            <span class="lang lang-en">Hong Kong City Hall</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">罗马尼亚布加勒斯特 Atheneum Roman Music Hall</span>
-            <span class="lang lang-en">Romanian Athenaeum, Bucharest</span>
-          </li>
-          <li>
-            <span class="lang lang-zh">德国Cochem艺术交流音乐厅</span>
-            <span class="lang lang-en">Cochem Arts Exchange Concert Hall, Germany</span>
-          </li>
-        </ul>
+        <div class="tour-list" data-render="tour" data-animate="reveal"></div>
       </section>
 
-      <section id="collaboration" class="section collaboration" data-animate="reveal">
-        <div class="section-title">
-          <h2>
-            <span class="lang lang-zh">合作指挥与乐团</span>
-            <span class="lang lang-en">Collaborations</span>
-          </h2>
-          <p>
-            <span class="lang lang-zh">与多位指挥及乐团合作，共同打造兼具诗意与张力的现场演绎。</span>
-            <span class="lang lang-en">Collaborating with conductors and orchestras, shaping performances of poetic intensity.</span>
-          </p>
+      <section id="videos" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="videos.eyebrow">Video</p>
+          <h2 data-i18n="videos.title">视频精选</h2>
+          <p data-i18n="videos.subtitle">舞台片段、讲座与合作项目。</p>
         </div>
-        <div class="collab-grid" data-stagger="0.1">
-          <article class="collab-card" data-animate="reveal">
-            <h3>
-              <span class="lang lang-zh">合作指挥</span>
-              <span class="lang lang-en">Conductors</span>
-            </h3>
-            <ul>
-              <li>Nahan Brock</li>
-              <li>John Giordano</li>
-              <li>Miguel Harth-Bedoya</li>
-              <li>Willam Noll</li>
-              <li>李心草</li>
-              <li>王时君</li>
-            </ul>
-          </article>
-          <article class="collab-card" data-animate="reveal">
-            <h3>
-              <span class="lang lang-zh">合作乐团</span>
-              <span class="lang lang-en">Orchestras</span>
-            </h3>
-            <ul>
-              <li>Fort Worth Symphony</li>
-              <li>Big Spring Symphony</li>
-              <li>Xia Men Philharmonic Orchestra</li>
-              <li>Miami International Piano Festival Orchestra</li>
-              <li>Toronto Orchestra</li>
-              <li>Toronto Festival Orchestra</li>
-              <li>Fifth Avenue Chamber Orchestra</li>
-            </ul>
-          </article>
+        <div class="video-feature" data-render="featuredVideo" data-animate="reveal"></div>
+        <div class="video-grid" data-render="videoList" data-stagger="0.08"></div>
+      </section>
+
+      <section id="founder" class="section">
+        <div class="founder-card" data-animate="reveal">
+          <div>
+            <p class="section-eyebrow" data-i18n="founder.eyebrow">Founder</p>
+            <h2 data-i18n="founder.title">Bellissimo Academy for Music and Arts 创办人</h2>
+            <p data-i18n="founder.body">以音乐教育与国际项目为核心，推动新一代音乐人才的培养与国际交流。</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.bamamusicarts.ca/about-founder" target="_blank" rel="noopener" data-i18n="founder.linkLabel">了解创办人故事</a>
         </div>
+      </section>
+
+      <section id="academy" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="academy.eyebrow">Academy & Festivals</p>
+          <h2 data-i18n="academy.title">学院、音乐节与组织项目</h2>
+          <p data-i18n="academy.subtitle">构建国际艺术社区与跨文化平台。</p>
+        </div>
+        <div class="academy-grid" data-render="academy" data-stagger="0.08"></div>
+        <div class="channel-grid" data-render="channels" data-stagger="0.08"></div>
+      </section>
+
+      <section id="press" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="press.eyebrow">Press</p>
+          <h2 data-i18n="press.title">媒体与荣誉</h2>
+          <p data-i18n="press.subtitle">来自国际媒体与音乐界的评价。</p>
+        </div>
+        <div class="press-grid" data-render="press" data-stagger="0.08"></div>
+        <div class="award-grid" data-render="awards" data-stagger="0.08"></div>
+      </section>
+
+      <section id="gallery" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="gallery.eyebrow">Gallery</p>
+          <h2 data-i18n="gallery.title">影像</h2>
+          <p data-i18n="gallery.subtitle">品牌视觉与舞台瞬间。</p>
+        </div>
+        <div class="gallery-grid" data-render="gallery" data-stagger="0.08"></div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="section-head" data-animate="reveal">
+          <p class="section-eyebrow" data-i18n="contact.eyebrow">Contact</p>
+          <h2 data-i18n="contact.title">联络与合作</h2>
+          <p data-i18n="contact.subtitle">预约演出、媒体与品牌合作。</p>
+        </div>
+        <div class="contact-grid" data-render="contact" data-animate="reveal"></div>
       </section>
     </main>
 
-    <footer class="footer">
-      <p>
-        <span class="lang lang-zh">叶斯婧 | 钢琴家、作曲家、指挥与艺术总监</span>
-        <span class="lang lang-en">Bella(Sijing) Ye | Pianist, Composer, Conductor & Artistic Director</span>
-      </p>
+    <footer class="site-footer">
+      <div>
+        <strong data-i18n="footer.name">叶斯婧 | Bella(Sijing) Ye</strong>
+        <span data-i18n="footer.roles">钢琴家 / 作曲家 / 指挥 / 艺术总监</span>
+      </div>
+      <p data-i18n="footer.note">所有内容可在 content.js 内统一替换。</p>
     </footer>
   </div>
 
+  <div class="video-modal" data-video-modal aria-hidden="true">
+    <div class="video-modal__backdrop" data-video-close></div>
+    <div class="video-modal__content" role="dialog" aria-label="Video">
+      <button class="video-modal__close" type="button" data-video-close aria-label="Close">×</button>
+      <iframe data-video-frame title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
