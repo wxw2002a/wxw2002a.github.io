@@ -1,157 +1,220 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-zh="叶斯婧 | 钢琴家" data-en="Bella(Sijing) Ye | Pianist">叶斯婧 | 钢琴家</title>
-  <meta name="description" data-zh="叶斯婧，钢琴家、作曲家、指挥与艺术总监，以肖邦诗性与高雅音色享誉国际舞台。" data-en="Bella(Sijing) Ye is a pianist, composer, conductor, and artistic director known for poetic Chopin interpretations and refined tone on world stages." content="叶斯婧，钢琴家、作曲家、指挥与艺术总监，以肖邦诗性与高雅音色享誉国际舞台。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Xiwei Wang - Portfolio</title>
+  <meta name="description" content="Xiwei Wang is a full-stack mobile and backend developer with experience in React Native, Node.js/Express, C++/Qt, and Django." />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
-<body data-lang="zh">
-  <div class="site" id="top">
-    <header class="site-header">
-      <a class="logo" href="#top" aria-label="Bella(Sijing) Ye">Bella(Sijing) Ye</a>
-      <nav class="site-nav" aria-label="Primary">
-        <a href="#vision" data-i18n="nav.vision">艺术愿景</a>
-        <a href="#tour" data-i18n="nav.tour">巡演</a>
-        <a href="#videos" data-i18n="nav.videos">视频</a>
-        <a href="#founder" data-i18n="nav.founder">创办人</a>
-        <a href="#academy" data-i18n="nav.academy">学院与音乐节</a>
-        <a href="#press" data-i18n="nav.press">媒体与荣誉</a>
-        <a href="#gallery" data-i18n="nav.gallery">影像</a>
-        <a href="#contact" data-i18n="nav.contact">联系</a>
+<body class="day">
+  <div class="skyline" aria-hidden="true"></div>
+  <canvas id="fx"></canvas>
+  <div class="bg" aria-hidden="true"></div>
+
+  <header class="nav">
+    <div class="container nav-row">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#22d3ee" />
+              <stop offset=".6" stop-color="#f472b6" />
+              <stop offset="1" stop-color="#a78bfa" />
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="30" fill="url(#g)" />
+          <path d="M18 20l11 12-11 12M46 20L35 32l11 12" stroke="#0b0f17" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        </svg>
+        <span data-i18n="hero.name">Xiwei Wang</span>
+      </div>
+      <nav class="links">
+        <a href="#education" data-i18n="nav.education">Education</a>
+        <a href="#experience" data-i18n="nav.internships">Internships</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
-      <div class="lang-toggle" role="group" aria-label="语言切换" data-label-zh="语言切换" data-label-en="Language">
-        <button class="lang-button is-active" type="button" data-lang="zh" aria-pressed="true">中文</button>
-        <button class="lang-button" type="button" data-lang="en" aria-pressed="false">EN</button>
+      <div class="btn-group">
+        <a class="btn" id="download-resume" href="Xiwei-Wang-Resume.pdf" download data-i18n="nav.resume">Resume</a>
+        <button class="btn ghost" id="lang-toggle" aria-label="Language Toggle">
+          <span data-i18n="nav.langToggle">EN/ZH</span>
+        </button>
+        <button class="btn ghost" id="mode-toggle" aria-label="Toggle Day Night Auto">
+          <span id="mode-label">Auto</span>
+        </button>
       </div>
-    </header>
-
-    <main>
-      <section class="hero" aria-label="Hero">
-        <div class="hero-text" data-animate="reveal">
-          <p class="eyebrow" data-i18n="hero.roles">钢琴家 / 作曲家 / 指挥 / 艺术总监</p>
-          <h1 class="hero-title" data-i18n="hero.name">叶斯婧</h1>
-          <p class="hero-lead" data-i18n="hero.statement">以肖邦的诗性、沉静气质与澎湃张力著称。</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#videos" data-i18n="hero.ctaPrimary">观看作品</a>
-            <a class="btn btn-ghost" href="#tour" data-i18n="hero.ctaSecondary">巡演行程</a>
-          </div>
-          <div class="hero-highlights" data-render="heroHighlights" data-stagger="0.08"></div>
-        </div>
-        <div class="hero-media" data-animate="reveal">
-          <figure class="hero-portrait">
-            <img src="assets/yesijing.jpg" alt="叶斯婧在钢琴旁的肖像" data-alt-zh="叶斯婧在钢琴旁的肖像" data-alt-en="Portrait of Bella(Sijing) Ye at the piano" loading="lazy" decoding="async">
-            <figcaption data-i18n="hero.caption">诗性与克制并存的舞台能量。</figcaption>
-          </figure>
-          <button class="video-trigger" type="button" data-video-url="https://youtu.be/HZklqHtJXUY?si=OVhi9kSFiX1TPXYB" aria-label="Watch">
-            <span data-i18n="hero.videoButton">观看代表作</span>
-          </button>
-        </div>
-      </section>
-
-      <section id="vision" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="vision.eyebrow">艺术愿景</p>
-          <h2 data-i18n="vision.title">将舞台、教育与组织力融为同一艺术语言</h2>
-          <p data-i18n="vision.subtitle">以音乐为核心，将创作、演出与教育共同推进。</p>
-        </div>
-        <div class="vision-grid">
-          <div class="vision-copy" data-render="visionParagraphs" data-animate="reveal"></div>
-          <div class="vision-pillars" data-render="visionPillars" data-stagger="0.08"></div>
-        </div>
-      </section>
-
-      <section id="tour" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="tour.eyebrow">Tour</p>
-          <h2 data-i18n="tour.title">巡演行程</h2>
-          <p data-i18n="tour.subtitle">官方行程与演出资讯。</p>
-        </div>
-        <div class="tour-list" data-render="tour" data-animate="reveal"></div>
-      </section>
-
-      <section id="videos" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="videos.eyebrow">Video</p>
-          <h2 data-i18n="videos.title">视频精选</h2>
-          <p data-i18n="videos.subtitle">舞台片段、讲座与合作项目。</p>
-        </div>
-        <div class="video-feature" data-render="featuredVideo" data-animate="reveal"></div>
-        <div class="video-grid" data-render="videoList" data-stagger="0.08"></div>
-      </section>
-
-      <section id="founder" class="section">
-        <div class="founder-card" data-animate="reveal">
-          <div>
-            <p class="section-eyebrow" data-i18n="founder.eyebrow">Founder</p>
-            <h2 data-i18n="founder.title">Bellissimo Academy for Music and Arts 创办人</h2>
-            <p data-i18n="founder.body">以音乐教育与国际项目为核心，推动新一代音乐人才的培养与国际交流。</p>
-          </div>
-          <a class="btn btn-primary" href="https://www.bamamusicarts.ca/about-founder" target="_blank" rel="noopener" data-i18n="founder.linkLabel">了解创办人故事</a>
-        </div>
-      </section>
-
-      <section id="academy" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="academy.eyebrow">Academy & Festivals</p>
-          <h2 data-i18n="academy.title">学院、音乐节与组织项目</h2>
-          <p data-i18n="academy.subtitle">构建国际艺术社区与跨文化平台。</p>
-        </div>
-        <div class="academy-grid" data-render="academy" data-stagger="0.08"></div>
-        <div class="channel-grid" data-render="channels" data-stagger="0.08"></div>
-      </section>
-
-      <section id="press" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="press.eyebrow">Press</p>
-          <h2 data-i18n="press.title">媒体与荣誉</h2>
-          <p data-i18n="press.subtitle">来自国际媒体与音乐界的评价。</p>
-        </div>
-        <div class="press-grid" data-render="press" data-stagger="0.08"></div>
-        <div class="award-grid" data-render="awards" data-stagger="0.08"></div>
-      </section>
-
-      <section id="gallery" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="gallery.eyebrow">Gallery</p>
-          <h2 data-i18n="gallery.title">影像</h2>
-          <p data-i18n="gallery.subtitle">品牌视觉与舞台瞬间。</p>
-        </div>
-        <div class="gallery-grid" data-render="gallery" data-stagger="0.08"></div>
-      </section>
-
-      <section id="contact" class="section">
-        <div class="section-head" data-animate="reveal">
-          <p class="section-eyebrow" data-i18n="contact.eyebrow">Contact</p>
-          <h2 data-i18n="contact.title">联络与合作</h2>
-          <p data-i18n="contact.subtitle">预约演出、媒体与品牌合作。</p>
-        </div>
-        <div class="contact-grid" data-render="contact" data-animate="reveal"></div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div>
-        <strong data-i18n="footer.name">叶斯婧 | Bella(Sijing) Ye</strong>
-        <span data-i18n="footer.roles">钢琴家 / 作曲家 / 指挥 / 艺术总监</span>
-      </div>
-      <p data-i18n="footer.note">所有内容可在 content.js 内统一替换。</p>
-    </footer>
-  </div>
-
-  <div class="video-modal" data-video-modal aria-hidden="true">
-    <div class="video-modal__backdrop" data-video-close></div>
-    <div class="video-modal__content" role="dialog" aria-label="Video">
-      <button class="video-modal__close" type="button" data-video-close aria-label="Close">×</button>
-      <iframe data-video-frame title="Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-  </div>
+  </header>
 
-  <script src="content.js"></script>
+  <main class="container">
+    <section class="hero" id="home">
+      <div>
+        <h1 data-i18n="hero.name">Xiwei Wang</h1>
+        <div class="tagline" data-i18n="hero.tagline">MEng Electrical and Computer Engineering (Software Engineering) at University of Waterloo | Full-stack mobile and backend developer</div>
+        <span class="pill" data-i18n="hero.pill">Full-stack mobile | Real-time systems | Secure delivery</span>
+        <p class="muted" style="margin-top:14px" data-i18n="hero.summary">I build multi-role mobile apps, REST APIs, and industrial vision pipelines with a focus on performance, reliability, and clean delivery.</p>
+        <div class="tags">
+          <span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Node.js</span>
+          <span class="tag">Express</span><span class="tag">MySQL</span><span class="tag">MongoDB</span>
+          <span class="tag">Redis</span><span class="tag">C++</span><span class="tag">Qt</span>
+          <span class="tag">Django</span>
+        </div>
+        <div class="btn-group" style="margin-top:16px">
+          <a class="btn" href="#experience" data-i18n="hero.ctaInternships">View Internships</a>
+          <a class="btn" href="mailto:wangxiwei2002@gmail.com" data-i18n="hero.ctaEmail">Email</a>
+        </div>
+      </div>
+      <aside class="glass" aria-label="Current status">
+        <div class="muted" data-i18n="hero.current">Currently</div>
+        <ul class="muted" style="margin-top:8px; padding-left:18px; list-style:none">
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.study">Study:</strong> <span data-i18n="hero.currentStudy">Master of Electrical and Computer Engineering (Software Engineering), University of Waterloo</span></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.email">Email:</strong> <a href="mailto:wangxiwei2002@gmail.com" style="text-decoration:none; color:inherit">wangxiwei2002@gmail.com</a></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.phone">Phone:</strong> <a href="tel:+14378723279" style="text-decoration:none; color:inherit">+1 (437) 872-3279</a></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.website">Website:</strong> <a href="https://wxw2002a.github.io/" target="_blank" rel="noopener" style="text-decoration:none; color:inherit">wxw2002a.github.io</a></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section id="education">
+      <h2 data-i18n="edu.title">Education</h2>
+      <p class="muted" data-i18n="edu.subtitle">Graduate and undergraduate training focused on software engineering foundations and applied systems.</p>
+      <div class="about-grid">
+        <div class="tile">
+          <strong data-i18n="edu.uw.name">University of Waterloo</strong>
+          <div class="muted" data-i18n="edu.uw.degree">Master of Electrical and Computer Engineering (Software Engineering)</div>
+          <div class="muted" data-i18n="edu.uw.date">09/2025 - 12/2026</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="edu.ysu.name">Yanshan University</strong>
+          <div class="muted" data-i18n="edu.ysu.degree">Bachelor of Electronic Science and Technology | GPA 86/100</div>
+          <div class="muted" data-i18n="edu.ysu.date">09/2021 - 06/2025</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2 data-i18n="exp.title">Internships</h2>
+      <div class="projects" style="grid-template-columns:1fr 1fr; gap:clamp(22px,3.5vw,32px)">
+        <div class="tile">
+          <div style="display:flex; align-items:center; gap:8px">
+            <strong data-i18n="exp.selest.name">SELEST Security</strong>
+            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.selest.date">09/2025 - 12/2025</span>
+          </div>
+          <div class="muted" data-i18n="exp.selest.role">Mobile Application Full Stack Developer | Ontario, Canada</div>
+          <ul class="muted" style="margin-top:8px">
+            <li data-i18n="exp.selest.b1">Built and shipped a multi-role security concierge app with React Native and TypeScript.</li>
+            <li data-i18n="exp.selest.b2">Implemented email, Google OAuth, and phone sign-in with role-based access for customers, guards, and admins.</li>
+            <li data-i18n="exp.selest.b3">Delivered booking and shift workflows with Node.js/Express APIs, including incident reporting and credential uploads.</li>
+            <li data-i18n="exp.selest.b4">Designed operational data with MySQL and MongoDB, adding Redis caching for low-latency reads.</li>
+            <li data-i18n="exp.selest.b5">Integrated PayPal checkout via backend functions and in-app WebView for payment capture.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <div style="display:flex; align-items:center; gap:8px">
+            <strong data-i18n="exp.hit.name">Harbin Institute of Technology Robot Technology Research Institute</strong>
+            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.hit.date">06/2025 - 08/2025</span>
+          </div>
+          <div class="muted" data-i18n="exp.hit.role">Industrial Vision Platform Development Intern | China</div>
+          <ul class="muted" style="margin-top:8px">
+            <li data-i18n="exp.hit.b1">Built a real-time inspection application in C++ with Qt on Linux for teacup defect detection (up to 600 fps).</li>
+            <li data-i18n="exp.hit.b2">Deployed a Django service for result logging, model parameter sync, and offline frame analysis via REST APIs.</li>
+            <li data-i18n="exp.hit.b3">Collaborated with the algorithm team to connect trained models and improved detection speed by 23%.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <div style="display:flex; align-items:center; gap:8px">
+            <strong data-i18n="exp.sino.name">Sinopec Group</strong>
+            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.sino.date">07/2024 - 08/2024</span>
+          </div>
+          <div class="muted" data-i18n="exp.sino.role">Application Intern, Information Center | China</div>
+          <ul class="muted" style="margin-top:8px">
+            <li data-i18n="exp.sino.b1">Contributed to an unmanned warehouse storage system and robot control system integration.</li>
+            <li data-i18n="exp.sino.b2">Applied reinforcement learning (Stable-Baselines3 PPO) to optimize AGV scheduling and path planning.</li>
+            <li data-i18n="exp.sino.b3">Implemented QR and 2D code recognition with Pyzbar and connected results to backend services.</li>
+            <li data-i18n="exp.sino.b4">Used Redis to cache high-frequency operational states for real-time dispatch.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2 data-i18n="proj.title">Projects</h2>
+      <div class="filters">
+        <button class="chip active" data-filter="All" data-i18n="proj.filter.all">All</button>
+        <button class="chip" data-filter="Systems" data-i18n="proj.filter.systems">Systems</button>
+        <button class="chip" data-filter="AI/ML" data-i18n="proj.filter.aiml">AI/ML</button>
+        <button class="chip" data-filter="GPU" data-i18n="proj.filter.gpu">GPU</button>
+      </div>
+      <div class="projects">
+        <div class="tile project" data-kind="Systems">
+          <h3 data-i18n="proj.java.title">High-Performance Java Server for Networked Applications</h3>
+          <p class="muted" data-i18n="proj.java.desc">Multithreaded Java TCP server on Ubuntu with socket-level tuning; reduced latency from 120 ms to ~40 ms, aiming for &lt; 30 ms.</p>
+          <div class="tags"><span class="tag">Server</span><span class="tag">Linux</span><span class="tag">Ubuntu</span></div>
+        </div>
+        <div class="tile project" data-kind="GPU">
+          <h3 data-i18n="proj.cuda.title">CUDA Convolution Acceleration</h3>
+          <p class="muted" data-i18n="proj.cuda.desc">Implemented 2D convolution CUDA kernels (CUDA 12.4 on RTX 3070) and Python benchmarks...</p>
+          <div class="tags"><span class="tag">CUDA</span><span class="tag">C/C++</span></div>
+        </div>
+        <div class="tile project" data-kind="AI/ML">
+          <h3 data-i18n="proj.yam.title">Audio Anomaly Detection</h3>
+          <p class="muted" data-i18n="proj.yam.desc">YAMNet-based classification with thresholding to reduce false positives in industrial environments.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Client</span></div>
+        </div>
+        <div class="tile project" data-kind="Systems">
+          <h3 data-i18n="proj.roi.title">Template/ROI Toolkit</h3>
+          <p class="muted" data-i18n="proj.roi.desc">Proportional template fitting and ROI parameter panels for inspection UI without distortion.</p>
+          <div class="tags"><span class="tag">C/C++</span><span class="tag">QT</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 data-i18n="skills.title">Skills</h2>
+      <div class="projects">
+        <div class="tile">
+          <strong data-i18n="skills.languages.title">Languages</strong>
+          <div class="muted" data-i18n="skills.languages.list">C/C++, Python, Java, HTML, CSS, JavaScript, TypeScript, SQL</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="skills.frameworks.title">Frameworks</strong>
+          <div class="muted" data-i18n="skills.frameworks.list">React, React Native, Node.js/Express, Django</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="skills.databases.title">Databases</strong>
+          <div class="muted" data-i18n="skills.databases.list">MySQL, Redis, MongoDB</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="skills.tools.title">Tools</strong>
+          <div class="muted" data-i18n="skills.tools.list">Git, Linux, Bash, REST</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="skills.spoken.title">Spoken Languages</strong>
+          <div class="muted" data-i18n="skills.spoken.list">English (fluent), Chinese (native), French (sufficient)</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 data-i18n="contact.title">Contact</h2>
+      <div class="about-grid">
+        <a class="tile" href="mailto:wangxiwei2002@gmail.com" style="text-decoration:none; color:inherit">
+          <strong data-i18n="contact.email">Email</strong>
+          <div class="muted">wangxiwei2002@gmail.com</div>
+        </a>
+        <a class="tile" href="tel:+14378723279" style="text-decoration:none; color:inherit">
+          <strong data-i18n="contact.phone">Phone</strong>
+          <div class="muted">+1 (437) 872-3279</div>
+        </a>
+      </div>
+    </section>
+
+    <footer>Xiwei Wang</footer>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
