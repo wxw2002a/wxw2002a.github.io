@@ -3,150 +3,47 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Xiwei Wang — Portfolio</title>
+  <title>Xiwei Wang - Portfolio</title>
+  <meta name="description" content="Xiwei Wang is a full-stack mobile and backend developer with experience in React Native, Node.js/Express, C++/Qt, and Django." />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --photo-opacity-day:.55;
-      --photo-opacity-night:.75;
-      --scrim-day:.18;
-      --scrim-night:.40;
-      --glass-day:.20;
-      --glass-night:.56;
-      --bg:#0b0f17; --fg:#eaf1ff; --muted:#bacedf; --border:#ffffff20;
-      --cyan:#22d3ee; --mag:#f472b6; --violet:#a78bfa; --glow:0 0 30px -10px;
-      --skyline-day-url:none;
-      --skyline-night-url:none;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial; color:var(--fg);
-      background:var(--bg); line-height:1.75; overflow-x:hidden; scroll-behavior:smooth;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .skyline{
-      position:fixed; inset:0; z-index:-6;
-      background-position:center bottom; background-size:cover; background-repeat:no-repeat;
-      opacity:.9; transition:opacity .4s ease, filter .4s ease, transform .2s ease; will-change:transform;
-    }
-    body.day .skyline{ background-image:var(--skyline-day-url); opacity:var(--photo-opacity-day); filter:saturate(1.04) brightness(1.06) contrast(1.02); }
-    body.night .skyline{ background-image:var(--skyline-night-url); opacity:var(--photo-opacity-night); filter:saturate(1.08) brightness(.92) contrast(1.04); }
-    .skyline::after{ content:""; position:absolute; inset:0; pointer-events:none; transition:background .3s ease; }
-    body.day .skyline::after{
-      background:radial-gradient(1000px 420px at 50% -6%, rgba(8,14,24,var(--scrim-day)), transparent 60%), linear-gradient(to bottom, rgba(8,14,24,calc(var(--scrim-day)*.28)), rgba(8,14,24,calc(var(--scrim-day)*.68)));
-    }
-    body.night .skyline::after{
-      background:radial-gradient(1100px 520px at 50% -10%, rgba(8,14,24,calc(var(--scrim-night)*1.06)), transparent 60%), linear-gradient(to bottom, rgba(8,14,24,var(--scrim-night)), rgba(8,14,24,calc(var(--scrim-night)*.7)));
-    }
-    .bg{ position:fixed; inset:0; z-index:-5; pointer-events:none; opacity:.32;
-      background:radial-gradient(1200px 600px at 60% -10%, rgba(34,211,238,.10), transparent 55%), radial-gradient(1000px 500px at 0% 30%, rgba(167,139,250,.10), transparent 60%);
-      animation:drift 18s linear infinite alternate;
-    }
-    @keyframes drift{ 0%{filter:hue-rotate(0deg)} 100%{filter:hue-rotate(20deg)} }
-    .container{max-width:1180px; margin:0 auto; padding:clamp(18px,3vw,28px)}
-    header.nav{ position:sticky; top:0; z-index:10; backdrop-filter:blur(10px);
-      background:linear-gradient(to bottom, #0b0f17cc, #0b0f1700); border-bottom:1px solid var(--border);
-    }
-    .nav-row{display:flex; align-items:center; justify-content:space-between; padding:12px 0}
-    .brand{display:flex; align-items:center; gap:12px; font-weight:800}
-    .logo{ width:34px; height:34px; }
-    .links a{color:#cfdbef; text-decoration:none; margin:0 clamp(6px,1.2vw,12px); font-size:15px}
-    .links a:hover{color:#fff}
-    .btn{ position:relative; overflow:hidden; display:inline-flex; align-items:center; gap:8px;
-      padding:10px 14px; border-radius:14px; border:1px solid var(--border);
-      background:#0e1424a8; color:#e6f2ff; text-decoration:none; font-weight:700; font-size:14px;
-      box-shadow:var(--glow) var(--cyan); transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
-      -webkit-user-select:none; user-select:none;
-    }
-    .btn:hover{ transform:translateY(-1px); background:#0e1424cc; box-shadow:0 0 46px -14px var(--mag); }
-    .btn.ghost{ background:transparent; }
-    .btn-group{ display:flex; gap:10px; flex-wrap:wrap }
-    .btn::after{ content:""; position:absolute; inset:0; background:radial-gradient(circle at var(--rx,50%) var(--ry,50%), #ffffff55, transparent 40%); opacity:0; transition:opacity .4s ease; }
-    .btn.rippling::after{ opacity:1; animation:ripple .6s ease-out; }
-    @keyframes ripple{ 0%{background-size:0 0} 100%{background-size:400% 400%} }
-    .hero{display:grid; grid-template-columns:1.15fr .85fr; gap:42px; padding:clamp(36px,6.5vw,72px) 0 clamp(40px,7vw,78px)}
-    @media (max-width:980px){ .hero{grid-template-columns:1fr; gap:24px} }
-    h1{
-      margin:0; font-size:clamp(36px,8.2vw,66px); line-height:1.08; letter-spacing:-.02em; font-weight:800;
-      background:linear-gradient(90deg, #fff, #e6f6ff 40%, #fff0ff 85%);
-      -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:0 0 18px #22d3ee33;
-      text-wrap:balance;
-    }
-    .tagline{font-family:Orbitron,Inter; color:#dfe8f6; margin-top:10px; font-size:clamp(14px,2.5vw,19px); letter-spacing:.02em}
-    .pill{display:inline-flex; align-items:center; gap:6px; margin-top:14px; padding:8px 12px; font-size:12px; border:1px solid var(--border); border-radius:999px; background:#0e1424b5}
-    .glass{ border:1px solid var(--border); border-radius:22px; padding:clamp(18px,3vw,24px); backdrop-filter:blur(9px); box-shadow:0 18px 60px -28px rgba(0,0,0,.45); }
-    body.day .glass{ background:rgba(255,255,255,var(--glass-day)); color:#0b0f17; }
-    body.night .glass{ background:rgba(12,16,26,var(--glass-night)); color:#dbe7ff; }
-    .muted{ color:var(--muted); font-size:clamp(13.5px,2.2vw,14.5px) }
-    section{padding:clamp(36px,6.5vw,64px) 0}
-    h2{font-size:clamp(18px,4.2vw,28px); margin:8px 0 16px; letter-spacing:.3px}
-    .filters{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px}
-    .chip{ padding:8px 12px; border-radius:999px; font-size:12px; cursor:pointer; border:1px solid var(--border); color:#cfe2ff; background:#ffffff14; transition:all .15s ease; }
-    .chip:hover{background:#ffffff24}
-    .chip.active{border-color:#5ee5ff88; box-shadow:0 0 28px -18px var(--cyan)}
-    .projects{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(22px,3.5vw,32px)}
-    @media (max-width:820px){ .projects{grid-template-columns:1fr} }
-    .tile{ position:relative; border:1px solid var(--border); border-radius:20px; padding:clamp(18px,2.8vw,22px); backdrop-filter:blur(6px); transition: transform .14s ease, box-shadow .25s ease, border-color .2s ease; overflow:hidden; }
-    body.day .tile{ background:rgba(255,255,255,calc(var(--glass-day)*.9)); color:#0b0f17; }
-    body.night .tile{ background:rgba(12,16,26,calc(var(--glass-night)*.95)); color:#dfe7ff; }
-    .tile:hover{ transform:translateY(-3px); border-color:#ffffff40; box-shadow:0 16px 34px -18px rgba(0,0,0,.5); }
-    .tile::before{ content:""; position:absolute; left:0; right:0; top:0; height:4px; background:linear-gradient(90deg, rgba(34,211,238,.6), rgba(244,114,182,.6), rgba(167,139,250,.6)); opacity:.65 }
-    .project h3{ margin:0 0 8px; font-size:clamp(16px,2.6vw,20px) }
-    .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px}
-    .tag{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--border) }
-    body.day .tag{ color:#1b2638; background:#ffffffe0; }
-    body.night .tag{ color:#d8ecff; background:#ffffff14; }
-    .about-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:clamp(18px,3.5vw,26px)}
-    @media (max-width:980px){ .about-grid{grid-template-columns:1fr} }
-    footer{color:#b6c5e2; font-size:12px; text-align:center; padding:36px 0 64px}
-    canvas#fx{ position:fixed; inset:0; z-index:-7; }
-    @media (max-width:600px){
-      body.day .skyline{ opacity:calc(var(--photo-opacity-day) * .5) }
-      body.day .skyline::after{ background:linear-gradient(to bottom, rgba(8,14,24,.18), rgba(8,14,24,.32) 60%, rgba(8,14,24,.42)) }
-      .nav-row{padding:8px 0}
-      .links{display:none}
-    }
-    @media (prefers-reduced-motion:reduce){
-      .btn, .skyline{ transition:none !important }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="day">
   <div class="skyline" aria-hidden="true"></div>
   <canvas id="fx"></canvas>
-  <div class="bg"></div>
+  <div class="bg" aria-hidden="true"></div>
 
   <header class="nav">
     <div class="container nav-row">
       <div class="brand">
         <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".6" stop-color="#f472b6"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
-          <circle cx="32" cy="32" r="30" fill="url(#g)"/>
-          <path d="M18 20l11 12-11 12M46 20L35 32l11 12" stroke="#0b0f17" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#22d3ee" />
+              <stop offset=".6" stop-color="#f472b6" />
+              <stop offset="1" stop-color="#a78bfa" />
+            </linearGradient>
+          </defs>
+          <circle cx="32" cy="32" r="30" fill="url(#g)" />
+          <path d="M18 20l11 12-11 12M46 20L35 32l11 12" stroke="#0b0f17" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
         </svg>
-        <span id="i-brand" data-i18n="brand">Xiwei</span>
+        <span data-i18n="hero.name">Xiwei Wang</span>
       </div>
       <nav class="links">
-        <a href="#about" data-i18n="nav.about">About</a>
-        <a href="#experience" data-i18n="nav.experience">Experience</a>
-        <a href="#projects" data-i18n="nav.projects">Projects</a>
         <a href="#education" data-i18n="nav.education">Education</a>
+        <a href="#experience" data-i18n="nav.internships">Internships</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
       <div class="btn-group">
-        <a class="btn" id="download-resume" href="Xiwei-Wang-Resume.pdf" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span data-i18n="resume">Resume</span>
-        </a>
-        <button class="btn ghost" id="mode-toggle" aria-label="Toggle Day/Night/Auto">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 0v20M2 12h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span id="mode-label">Auto</span>
-        </button>
+        <a class="btn" id="download-resume" href="Xiwei-Wang-Resume.pdf" download data-i18n="nav.resume">Resume</a>
         <button class="btn ghost" id="lang-toggle" aria-label="Language Toggle">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 0c2.5 0 5 4.5 5 10s-2.5 10-5 10-5-4.5-5-10 2.5-10 5-10Zm-9 10h18M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span data-i18n="lang">EN/中文</span>
+          <span data-i18n="nav.langToggle">EN/ZH</span>
+        </button>
+        <button class="btn ghost" id="mode-toggle" aria-label="Toggle Day Night Auto">
+          <span id="mode-label">Auto</span>
         </button>
       </div>
     </div>
@@ -155,63 +52,89 @@
   <main class="container">
     <section class="hero" id="home">
       <div>
-        <h1 id="i-name" data-i18n="name">Xiwei Wang</h1>
-        <div class="tagline" data-i18n="tagline">MEng, Electrical and Computer Engineering @ University of Waterloo · C++ · AI/ML · Systems</div>
-        <span class="pill" data-i18n="pill">✨ Industrial-grade UX · Realtime · Clean</span>
-        <p class="muted" style="margin-top:14px" data-i18n="hero.desc">I build robust Windows C++ UIs and high-performance backends for inspection/automation, and integrate AI into real-time workflows.</p>
+        <h1 data-i18n="hero.name">Xiwei Wang</h1>
+        <div class="tagline" data-i18n="hero.tagline">MEng Electrical and Computer Engineering (Software Engineering) at University of Waterloo | Full-stack mobile and backend developer</div>
+        <span class="pill" data-i18n="hero.pill">Full-stack mobile | Real-time systems | Secure delivery</span>
+        <p class="muted" style="margin-top:14px" data-i18n="hero.summary">I build multi-role mobile apps, REST APIs, and industrial vision pipelines with a focus on performance, reliability, and clean delivery.</p>
         <div class="tags">
-          <span class="tag">Python</span><span class="tag">C/C++</span><span class="tag">Java</span>
-          <span class="tag">Linux</span><span class="tag">Ubuntu</span><span class="tag">QT</span>
-          <span class="tag">CUDA</span><span class="tag">Server</span><span class="tag">Client</span>
-          <span class="tag">TensorFlow</span>
+          <span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Node.js</span>
+          <span class="tag">Express</span><span class="tag">MySQL</span><span class="tag">MongoDB</span>
+          <span class="tag">Redis</span><span class="tag">C++</span><span class="tag">Qt</span>
+          <span class="tag">Django</span>
         </div>
         <div class="btn-group" style="margin-top:16px">
-          <a class="btn" href="#projects" data-i18n="cta.projects">
-            View Projects
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a class="btn" href="mailto:wangxiwei2002@gmail.com">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 7l9 6 9-6M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span data-i18n="cta.email">Email</span>
-          </a>
+          <a class="btn" href="#experience" data-i18n="hero.ctaInternships">View Internships</a>
+          <a class="btn" href="mailto:wangxiwei2002@gmail.com" data-i18n="hero.ctaEmail">Email</a>
         </div>
       </div>
       <aside class="glass" aria-label="Current status">
-        <div class="muted" data-i18n="current">Currently</div>
+        <div class="muted" data-i18n="hero.current">Currently</div>
         <ul class="muted" style="margin-top:8px; padding-left:18px; list-style:none">
-          <li style="margin:8px 0"><span style="font-weight:700">🎓</span><span data-i18n="status.study">Currently studying at University of Waterloo (MEng, Electrical and Computer Engineering)</span></li>
-          <li style="margin:8px 0"><span style="font-weight:700">📞</span><a href="tel:+14378723279" style="text-decoration:none; color:inherit">+1 (437) 872-3279</a></li>
-          <li style="margin:8px 0"><span style="font-weight:700">📍</span><span data-i18n="status.location">Toronto / Waterloo</span></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.study">Study:</strong> <span data-i18n="hero.currentStudy">Master of Electrical and Computer Engineering (Software Engineering), University of Waterloo</span></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.email">Email:</strong> <a href="mailto:wangxiwei2002@gmail.com" style="text-decoration:none; color:inherit">wangxiwei2002@gmail.com</a></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.phone">Phone:</strong> <a href="tel:+14378723279" style="text-decoration:none; color:inherit">+1 (437) 872-3279</a></li>
+          <li style="margin:8px 0"><strong data-i18n="hero.labels.website">Website:</strong> <a href="https://wxw2002a.github.io/" target="_blank" rel="noopener" style="text-decoration:none; color:inherit">wxw2002a.github.io</a></li>
         </ul>
       </aside>
     </section>
 
+    <section id="education">
+      <h2 data-i18n="edu.title">Education</h2>
+      <p class="muted" data-i18n="edu.subtitle">Graduate and undergraduate training focused on software engineering foundations and applied systems.</p>
+      <div class="about-grid">
+        <div class="tile">
+          <strong data-i18n="edu.uw.name">University of Waterloo</strong>
+          <div class="muted" data-i18n="edu.uw.degree">Master of Electrical and Computer Engineering (Software Engineering)</div>
+          <div class="muted" data-i18n="edu.uw.date">09/2025 - 12/2026</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="edu.ysu.name">Yanshan University</strong>
+          <div class="muted" data-i18n="edu.ysu.degree">Bachelor of Electronic Science and Technology | GPA 86/100</div>
+          <div class="muted" data-i18n="edu.ysu.date">09/2021 - 06/2025</div>
+        </div>
+      </div>
+    </section>
+
     <section id="experience">
-      <h2 data-i18n="exp.title">Experience</h2>
+      <h2 data-i18n="exp.title">Internships</h2>
       <div class="projects" style="grid-template-columns:1fr 1fr; gap:clamp(22px,3.5vw,32px)">
         <div class="tile">
           <div style="display:flex; align-items:center; gap:8px">
-            <strong data-i18n="exp.hit.name">HIT Wuhu Robot Technology Research Institute</strong>
-            <span class="muted" style="margin-left:auto; font-size:12px">06/2025 — 08/2025</span>
+            <strong data-i18n="exp.selest.name">SELEST Security</strong>
+            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.selest.date">09/2025 - 12/2025</span>
           </div>
-          <div class="muted" data-i18n="exp.hit.role">Industrial Vision Platform Development Intern</div>
+          <div class="muted" data-i18n="exp.selest.role">Mobile Application Full Stack Developer | Ontario, Canada</div>
           <ul class="muted" style="margin-top:8px">
-            <li data-i18n="exp.hit.b1">Built a C++ industrial inspection platform for real-time teacup defect detection with live camera feeds from scratch.</li>
-            <li data-i18n="exp.hit.b2">Designed modular layers for capture (Media Foundation), AI algorithm interface, and UI rendering.</li>
-            <li data-i18n="exp.hit.b3">Exposed standardized per-ROI detection APIs; collaborated with algorithm team to integrate trained models.</li>
-            <li data-i18n="exp.hit.b4">Deployed a local server for detection-result logging, model-parameter sync, and offline frame analysis.</li>
+            <li data-i18n="exp.selest.b1">Built and shipped a multi-role security concierge app with React Native and TypeScript.</li>
+            <li data-i18n="exp.selest.b2">Implemented email, Google OAuth, and phone sign-in with role-based access for customers, guards, and admins.</li>
+            <li data-i18n="exp.selest.b3">Delivered booking and shift workflows with Node.js/Express APIs, including incident reporting and credential uploads.</li>
+            <li data-i18n="exp.selest.b4">Designed operational data with MySQL and MongoDB, adding Redis caching for low-latency reads.</li>
+            <li data-i18n="exp.selest.b5">Integrated PayPal checkout via backend functions and in-app WebView for payment capture.</li>
           </ul>
         </div>
         <div class="tile">
           <div style="display:flex; align-items:center; gap:8px">
-            <strong data-i18n="exp.sino.name">Sinopec Group — Information Center</strong>
-            <span class="muted" style="margin-left:auto; font-size:12px">07/2024 — 08/2024</span>
+            <strong data-i18n="exp.hit.name">Harbin Institute of Technology Robot Technology Research Institute</strong>
+            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.hit.date">06/2025 - 08/2025</span>
           </div>
-          <div class="muted" data-i18n="exp.sino.role">Application Intern</div>
+          <div class="muted" data-i18n="exp.hit.role">Industrial Vision Platform Development Intern | China</div>
           <ul class="muted" style="margin-top:8px">
-            <li data-i18n="exp.sino.b1">Completed unmanned warehouse digital storage and Robot Control System (RCS) projects.</li>
-            <li data-i18n="exp.sino.b2">Forecasted demand using scikit-learn; implemented QR recognition with Pyzbar.</li>
-            <li data-i18n="exp.sino.b3">Optimized AGV scheduling using RL (Stable-Baselines3, PPO); trained path-planning model for real-time deployment.</li>
+            <li data-i18n="exp.hit.b1">Built a real-time inspection application in C++ with Qt on Linux for teacup defect detection (up to 600 fps).</li>
+            <li data-i18n="exp.hit.b2">Deployed a Django service for result logging, model parameter sync, and offline frame analysis via REST APIs.</li>
+            <li data-i18n="exp.hit.b3">Collaborated with the algorithm team to connect trained models and improved detection speed by 23%.</li>
+          </ul>
+        </div>
+        <div class="tile">
+          <div style="display:flex; align-items:center; gap:8px">
+            <strong data-i18n="exp.sino.name">Sinopec Group</strong>
+            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.sino.date">07/2024 - 08/2024</span>
+          </div>
+          <div class="muted" data-i18n="exp.sino.role">Application Intern, Information Center | China</div>
+          <ul class="muted" style="margin-top:8px">
+            <li data-i18n="exp.sino.b1">Contributed to an unmanned warehouse storage system and robot control system integration.</li>
+            <li data-i18n="exp.sino.b2">Applied reinforcement learning (Stable-Baselines3 PPO) to optimize AGV scheduling and path planning.</li>
+            <li data-i18n="exp.sino.b3">Implemented QR and 2D code recognition with Pyzbar and connected results to backend services.</li>
+            <li data-i18n="exp.sino.b4">Used Redis to cache high-frequency operational states for real-time dispatch.</li>
           </ul>
         </div>
       </div>
@@ -249,36 +172,28 @@
       </div>
     </section>
 
-    <section id="education">
-      <h2 data-i18n="edu.title">Education</h2>
-      <div class="about-grid">
+    <section id="skills">
+      <h2 data-i18n="skills.title">Skills</h2>
+      <div class="projects">
         <div class="tile">
-          <strong data-i18n="edu.uw.name">University of Waterloo</strong>
-          <div class="muted" data-i18n="edu.uw.program">MEng, Electrical and Computer Engineering</div>
-          <div class="muted" data-i18n="edu.uw.grad">Anticipated graduation: Dec 2026</div>
+          <strong data-i18n="skills.languages.title">Languages</strong>
+          <div class="muted" data-i18n="skills.languages.list">C/C++, Python, Java, HTML, CSS, JavaScript, TypeScript, SQL</div>
         </div>
         <div class="tile">
-          <strong data-i18n="edu.ysu.name">Yanshan University</strong>
-          <div class="muted" data-i18n="edu.ysu.program">BEng, Electronic Science & Technology</div>
-          <div class="muted" data-i18n="edu.ysu.note">GPA 86/100 · Scholarship ×2</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about">
-      <h2 data-i18n="about.title">About</h2>
-      <div class="about-grid">
-        <div class="tile" data-i18n="about.p">
-          I design and build production-minded tools for inspection & automation. My recent work focuses on <b>C/C++ real-time UI on Windows</b>, <b>Java low-latency servers on Linux</b>, and <b>CUDA kernels</b> for computer vision. I care about interaction craft—contrast, spacing, motion budget—and deliver UIs that stay responsive under load. Outside dev, I enjoy profiling weird performance bottlenecks and making tiny tools that remove manual steps from the workflow.
+          <strong data-i18n="skills.frameworks.title">Frameworks</strong>
+          <div class="muted" data-i18n="skills.frameworks.list">React, React Native, Node.js/Express, Django</div>
         </div>
         <div class="tile">
-          <div class="muted" style="margin-bottom:6px">Highlights</div>
-          <ul class="muted" style="margin-top:0">
-            <li>Reduced network round-trip from ~120 ms → ~40 ms on Ubuntu server via socket tuning.</li>
-            <li>Built ROI & template toolkit with non-distorting proportional fit and per-region params.</li>
-            <li>CUDA 2D conv kernels with benchmark harness (GFLOPs/GBps reporting) for K=3–11.</li>
-            <li>Pragmatic UX: clear edges, high contrast, and predictable real-time behavior.</li>
-          </ul>
+          <strong data-i18n="skills.databases.title">Databases</strong>
+          <div class="muted" data-i18n="skills.databases.list">MySQL, Redis, MongoDB</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="skills.tools.title">Tools</strong>
+          <div class="muted" data-i18n="skills.tools.list">Git, Linux, Bash, REST</div>
+        </div>
+        <div class="tile">
+          <strong data-i18n="skills.spoken.title">Spoken Languages</strong>
+          <div class="muted" data-i18n="skills.spoken.list">English (fluent), Chinese (native), French (sufficient)</div>
         </div>
       </div>
     </section>
@@ -297,163 +212,9 @@
       </div>
     </section>
 
-    <footer>Xiwei</footer>
+    <footer>Xiwei Wang</footer>
   </main>
 
-  <script>
-    (function(){
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const c=document.getElementById('fx'); const ctx=c.getContext('2d');
-      let w,h,dpr; const dots=[];
-      function resize(){ dpr=Math.max(1,devicePixelRatio||1); w=c.width=innerWidth*dpr; h=c.height=innerHeight*dpr; c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px'; }
-      addEventListener('resize', resize, {passive:true}); resize();
-      const N=Math.min(70, Math.floor(innerWidth/20));
-      for(let i=0;i<N;i++){ dots.push({x:Math.random()*w,y:Math.random()*h,r:(Math.random()*1.3+.6)*dpr,vx:(Math.random()-.5)*0.08*dpr,vy:(Math.random()-.5)*0.08*dpr,a:.3+Math.random()*.4});}
-      function step(){ ctx.clearRect(0,0,w,h); for(const s of dots){ s.x+=s.vx; s.y+=s.vy; if(s.x<0||s.x>w) s.vx*=-1; if(s.y<0||s.y>h) s.vy*=-1; ctx.beginPath(); ctx.fillStyle=`rgba(180,220,255,${s.a})`; ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill(); } requestAnimationFrame(step);}
-      step();
-    })();
-    (function(){
-      document.querySelectorAll('.btn').forEach(btn=>{
-        btn.addEventListener('pointerdown', e=>{
-          const rect=btn.getBoundingClientRect();
-          btn.style.setProperty('--rx', `${e.clientX-rect.left}px`);
-          btn.style.setProperty('--ry', `${e.clientY-rect.top}px`);
-          btn.classList.add('rippling'); setTimeout(()=>btn.classList.remove('rippling'), 300);
-        });
-      });
-    })();
-    (function(){
-      const chips=[...document.querySelectorAll('.chip')];
-      const cards=[...document.querySelectorAll('.project')];
-      let current='All';
-      chips.forEach(chip=>{
-        chip.addEventListener('click', ()=>{
-          current=chip.dataset.filter;
-          chips.forEach(c=>c.classList.toggle('active', c===chip));
-          cards.forEach(card=>{ const k=card.getAttribute('data-kind'); card.style.display=(current==='All'||current===k)?'':'none'; });
-        });
-      });
-    })();
-    (function(){
-      const root=document.documentElement.style;
-      const el=document.querySelector('.skyline');
-      const DAY_URL='https://upload.wikimedia.org/wikipedia/commons/2/26/Skyline_of_Toronto_viewed_from_Harbour.jpg';
-      const NIGHT_URL='https://upload.wikimedia.org/wikipedia/commons/1/13/Toronto_at_Dusk_-a.jpg';
-      root.setProperty('--skyline-day-url',`url('${DAY_URL}')`);
-      root.setProperty('--skyline-night-url',`url('${NIGHT_URL}')`);
-      [DAY_URL,NIGHT_URL].forEach(s=>{ const i=new Image(); i.src=s; });
-      function torontoHour(){
-        try{ const h=parseInt(new Intl.DateTimeFormat('en-CA',{hour:'numeric',hour12:false,timeZone:'America/Toronto'}).format(new Date()),10); return isNaN(h)?new Date().getHours():h; }
-        catch(_){ return new Date().getHours(); }
-      }
-      function isDayByClock(){ const h=torontoHour(); return (h>=6 && h<=19); }
-      let mode=localStorage.getItem('mode')||'auto';
-      const label=document.getElementById('mode-label');
-      let timer=null;
-      function applyMode(m){
-        const day=m==='day'?true:(m==='night'?false:isDayByClock());
-        document.body.classList.toggle('day', day);
-        document.body.classList.toggle('night', !day);
-        label.textContent=(m==='auto'?'Auto':(m==='day'?'Day':'Night'));
-        if(timer) clearInterval(timer), timer=null;
-        if(m==='auto') timer=setInterval(()=>applyMode('auto'), 600000);
-      }
-      applyMode(mode);
-      document.getElementById('mode-toggle')?.addEventListener('click', ()=>{
-        mode=(mode==='auto')?'day':(mode==='day')?'night':'auto';
-        localStorage.setItem('mode', mode); applyMode(mode);
-      });
-      const enableParallax=matchMedia('(pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(enableParallax){
-        addEventListener('pointermove', e=>{
-          const dx=(e.clientX/innerWidth-.5)*10, dy=(e.clientY/innerHeight-.5)*6;
-          el.style.transform=`translate3d(${dx}px, ${dy}px, 0)`;
-        }, {passive:true});
-        addEventListener('pointerleave', ()=>{ el.style.transform='translate3d(0,0,0)'; }, {passive:true});
-      }
-    })();
-    (function(){
-      const t={
-        en:{ brand:'Xiwei', name:'Xiwei Wang',
-          nav:{about:'About',experience:'Experience',projects:'Projects',education:'Education',contact:'Contact'},
-          resume:'Resume', lang:'EN/中文',
-          tagline:'MEng, Electrical and Computer Engineering @ University of Waterloo · C++ · AI/ML · Systems',
-          pill:'✨ Industrial-grade UX · Realtime · Clean',
-          hero:{desc:'I build robust Windows C++ UIs and high-performance backends for inspection/automation, and integrate AI into real-time workflows.'},
-          cta:{projects:'View Projects', email:'Email'},
-          current:'Currently',
-          status:{study:'Currently studying at University of Waterloo (MEng, Electrical and Computer Engineering)', location:'Toronto / Waterloo'},
-          exp:{title:'Experience',
-            hit:{name:'HIT Wuhu Robot Technology Research Institute', role:'Industrial Vision Platform Development Intern',
-              b1:'Built a C++ industrial inspection platform for real-time teacup defect detection with live camera feeds from scratch.',
-              b2:'Designed modular layers for capture (Media Foundation), AI algorithm interface, and UI rendering.',
-              b3:'Exposed standardized per-ROI detection APIs; collaborated with algorithm team to integrate trained models.',
-              b4:'Deployed a local server for detection-result logging, model-parameter sync, and offline frame analysis.'},
-            sino:{name:'Sinopec Group — Information Center', role:'Application Intern',
-              b1:'Completed unmanned warehouse digital storage and Robot Control System (RCS) projects.',
-              b2:'Forecasted demand using scikit-learn; implemented QR recognition with Pyzbar.',
-              b3:'Optimized AGV scheduling using RL (Stable-Baselines3, PPO); trained path-planning model for real-time deployment.'}
-          },
-          proj:{ title:'Projects', filter:{all:'All', systems:'Systems', aiml:'AI/ML', gpu:'GPU'},
-            java:{title:'High-Performance Java Server for Networked Applications', desc:'Multithreaded Java TCP server on Ubuntu with socket-level tuning; reduced latency from 120 ms to ~40 ms, aiming for < 30 ms.'},
-            cuda:{title:'CUDA Convolution Acceleration', desc:'Implemented 2D convolution CUDA kernels (CUDA 12.4 on RTX 3070) and Python benchmarks...'},
-            yam:{title:'Audio Anomaly Detection', desc:'YAMNet-based classification with thresholding to reduce false positives in industrial environments.'},
-            roi:{title:'Template/ROI Toolkit', desc:'Proportional template fitting and ROI parameter panels for inspection UI without distortion.'}
-          },
-          edu:{ title:'Education', uw:{name:'University of Waterloo', program:'MEng, Electrical and Computer Engineering', grad:'Anticipated graduation: Dec 2026'},
-            ysu:{name:'Yanshan University', program:'BEng, Electronic Science & Technology', note:'GPA 86/100 · Scholarship ×2'} },
-          about:{ title:'About',
-            p:'I design and build production-minded tools for inspection & automation. My recent work focuses on <b>C/C++ real-time UI on Windows</b>, <b>Java low-latency servers on Linux</b>, and <b>CUDA kernels</b> for computer vision. I care about interaction craft—contrast, spacing, motion budget—and deliver UIs that stay responsive under load. Outside dev, I enjoy profiling weird performance bottlenecks and making tiny tools that remove manual steps from the workflow.' },
-          contact:{ title:'Contact', email:'Email', phone:'Phone' }
-        },
-        zh:{ brand:'熙蔚', name:'王熙蔚',
-          nav:{about:'关于',experience:'经历',projects:'项目',education:'教育',contact:'联系'},
-          resume:'简历', lang:'中文/EN',
-          tagline:'电子与计算机工程（MEng）@ 滑铁卢大学 · C++ · AI/ML · 系统',
-          pill:'✨ 工业级体验 · 实时 · 干净利落',
-          hero:{desc:'我专注于构建可靠的 Windows C++ 实时界面与高性能后端，将 AI 融入检验/自动化流程。'},
-          cta:{projects:'查看项目', email:'邮件'},
-          current:'当前',
-          status:{ study:'最近在滑铁卢大学就读（电子与计算机工程 MEng）', location:'多伦多 / 滑铁卢' },
-          exp:{ title:'经历',
-            hit:{name:'哈工大芜湖机器人技术研究院', role:'工业视觉平台开发实习生',
-              b1:'从零搭建 C++ 工业检测平台，实现实时茶杯缺陷检测与相机取流。',
-              b2:'分层设计：采集（Media Foundation）、算法接口与 UI 渲染。',
-              b3:'标准化每个 ROI 的检测接口，协同算法团队集成训练模型。',
-              b4:'部署本地服务用于检测日志、参数同步与离线帧分析。'},
-            sino:{name:'中国石化集团信息中心', role:'应用实习生',
-              b1:'完成无人仓储与 RCS 项目。', b2:'使用 scikit-learn 做需求预测，Pyzbar 实现二维码识别。',
-              b3:'用强化学习（Stable-Baselines3、PPO）优化 AGV 调度并部署。'}
-          },
-          proj:{ title:'项目', filter:{all:'全部', systems:'系统', aiml:'AI/ML', gpu:'GPU'},
-            java:{title:'高性能 Java 网络服务器', desc:'Ubuntu 下多线程 Java TCP，套接字级调优；延迟由 120ms 降至 ~40ms，目标 <30ms。'},
-            cuda:{title:'CUDA 卷积加速', desc:'编写 2D 卷积 CUDA kernel（CUDA 12.4 / RTX 3070），并做性能基准...'},
-            yam:{title:'音频异常检测', desc:'基于 YAMNet 的分类，结合阈值抑制工业场景中的误报。'},
-            roi:{title:'模板/ROI 工具包', desc:'按比例适配模板与 ROI 参数面板，保证无失真。'}
-          },
-          edu:{ title:'教育', uw:{name:'滑铁卢大学', program:'电子与计算机工程硕士（MEng）', grad:'预计毕业：2026 年 12 月'},
-            ysu:{name:'燕山大学', program:'电子科学与技术学士', note:'GPA 86/100 · 两次奖学金'} },
-          about:{ title:'关于',
-            p:'我喜欢做面向生产的检验/自动化工具。近期专注 <b>C/C++ 实时界面</b>、<b>Linux/Java 低延迟服务</b> 与 <b>CUDA 核心</b>；在意对比度、留白与动效预算，让 UI 在负载下也稳定响应。闲暇会做性能剖析与小工具来消除重复劳动。' },
-          contact:{ title:'联系', email:'邮箱', phone:'电话' }
-        }
-      };
-      const pref=localStorage.getItem('lang')||'en';
-      applyLang(pref);
-      document.getElementById('lang-toggle').addEventListener('click', ()=>{
-        const next=(document.documentElement.lang||'en')==='en'?'zh':'en';
-        applyLang(next); localStorage.setItem('lang', next);
-      });
-      function applyLang(lang){
-        document.documentElement.lang=lang;
-        const dict=t[lang];
-        document.querySelectorAll('[data-i18n]').forEach(el=>{
-          const key=el.getAttribute('data-i18n');
-          const val=key.split('.').reduce((o,k)=>o&&o[k], dict);
-          if(val){ (typeof val==='string' && val.includes('<')) ? (el.innerHTML=val) : (el.textContent=val); }
-        });
-      }
-    })();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
