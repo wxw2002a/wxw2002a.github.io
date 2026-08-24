@@ -23,19 +23,23 @@
       "nav.profile": "Profile",
       "nav.experience": "Experience",
       "nav.work": "Work",
-      "nav.education": "Education",
+      "nav.background": "Background",
       "nav.contact": "Contact",
-      "hero.eyebrow": "MEng candidate @ Waterloo · 2026",
-      "hero.title1": "Engineering products",
-      "hero.title2": "from idea to impact.",
-      "hero.lede": "I connect product thinking with hands-on engineering—building AI-powered experiences, cross-platform applications, reliable backend services, and performance-sensitive systems.",
+      "nav.language": "Language",
+      "hero.eyebrow": "Full-stack / AI product engineer",
+      "hero.lede": "I turn product requirements into shipped mobile, backend, AI, and real-time systems—connecting technical direction with hands-on delivery.",
+      "hero.study": "MEng candidate in Software Engineering · University of Waterloo · 2026",
       "hero.ctaWork": "Explore my work",
       "hero.ctaResume": "Download résumé",
       "hero.signal": "SYSTEMS ONLINE",
       "hero.scroll": "Scroll to explore",
-      "metrics.workstreams": "workstreams led",
-      "metrics.response": "faster response",
-      "metrics.vision": "images / sec",
+      "metrics.title": "Selected impact",
+      "metrics.workstreamsTitle": "Cross-functional workstreams",
+      "metrics.workstreamsText": "Led from planning through integration and delivery",
+      "metrics.responseTitle": "Average response time",
+      "metrics.responseText": "Improved through API and database optimization",
+      "metrics.visionTitle": "Images per second",
+      "metrics.visionText": "Processed from live camera feeds in C++ / Qt",
       "profile.title": "Product thinking. Engineering depth.",
       "profile.intro": "I’m an Electrical and Computer Engineering MEng candidate at the University of Waterloo. My work spans product planning, cross-platform apps, backend services, AI pipelines, cloud deployment, and real-time industrial software.",
       "profile.deliveryTitle": "Product delivery",
@@ -46,6 +50,7 @@
       "profile.systemsText": "Connect LLM and image-generation services in the cloud, and engineer performance-sensitive C++/Qt vision applications on Linux.",
       "experience.title": "From product direction to production delivery.",
       "experience.intro": "Five roles across AI products, mobile platforms, backend systems, and industrial automation.",
+      "experience.details": "Role details",
       "experience.ipmd.role": "Technical Manager Intern",
       "experience.ipmd.badge": "AI PRODUCT",
       "experience.ipmd.b1": "Led 6 cross-functional workstreams across frontend, backend, AI/ML, design, and product, moving the “Image Cards to Fine Arts” MVP from planning through integration and delivery.",
@@ -87,6 +92,10 @@
       "education.waterloo.detail": "Software Engineering · Expected December 2026",
       "education.yanshan.degree": "Bachelor of Electronic Science & Technology",
       "education.yanshan.detail": "GPA 86 / 100",
+      "background.title": "Education meets engineering practice.",
+      "background.intro": "Graduate software engineering study backed by an electronic systems foundation and a practical full-stack toolkit.",
+      "background.education": "Education",
+      "background.toolkit": "Technical toolkit",
       "skills.title": "The right tool for the system.",
       "skills.intro": "A practical stack spanning client applications, services, data, cloud, and performance engineering.",
       "skills.languages": "Languages",
@@ -95,10 +104,12 @@
       "skills.platform": "Cloud & tools",
       "skills.spoken": "Spoken languages",
       "skills.spokenList": "English — fluent · Chinese — native · French — sufficient",
-      "contact.title": "Have a hard problem? Let’s make it shippable.",
+      "contact.title": "Let’s build something that holds up.",
       "contact.intro": "For full-stack, AI-enabled product, or systems work, email is the fastest way to reach me.",
       "contact.emailLabel": "Start a conversation",
-      "contact.phoneLabel": "Phone",
+      "contact.githubLabel": "GitHub",
+      "contact.resumeLabel": "Résumé",
+      "contact.resumeAction": "View PDF",
       "footer.note": "Designed and engineered with intention.",
       "footer.top": "Back to top ↑"
     },
@@ -123,19 +134,23 @@
       "nav.profile": "简介",
       "nav.experience": "经历",
       "nav.work": "项目",
-      "nav.education": "教育",
+      "nav.background": "背景",
       "nav.contact": "联系",
-      "hero.eyebrow": "滑铁卢大学工程硕士在读 · 2026",
-      "hero.title1": "把产品构想",
-      "hero.title2": "做成真实影响。",
-      "hero.lede": "我将产品思维与一线工程实践连接起来，构建 AI 驱动体验、跨平台应用、可靠后端服务与性能敏感型系统。",
+      "nav.language": "语言",
+      "hero.eyebrow": "全栈 / AI 产品工程师",
+      "hero.lede": "我把产品需求转化为真正交付的移动端、后端、AI 与实时系统，将技术方向与一线工程实践连接起来。",
+      "hero.study": "滑铁卢大学软件工程方向 · 工程硕士在读 · 2026",
       "hero.ctaWork": "查看我的经历",
       "hero.ctaResume": "下载简历",
       "hero.signal": "系统在线",
       "hero.scroll": "向下探索",
-      "metrics.workstreams": "条工作流统筹",
-      "metrics.response": "响应速度提升",
-      "metrics.vision": "图像 / 秒",
+      "metrics.title": "成果概览",
+      "metrics.workstreamsTitle": "条跨职能工作流",
+      "metrics.workstreamsText": "从规划、集成推进至最终交付",
+      "metrics.responseTitle": "平均响应时间",
+      "metrics.responseText": "通过 API 与数据库优化实现提升",
+      "metrics.visionTitle": "每秒处理图像",
+      "metrics.visionText": "使用 C++ / Qt 处理实时相机数据流",
       "profile.title": "产品思维，工程深度。",
       "profile.intro": "我就读于滑铁卢大学电子与计算机工程硕士项目，方向为软件工程。我的实践覆盖产品规划、跨平台应用、后端服务、AI 流水线、云端部署与实时工业软件。",
       "profile.deliveryTitle": "产品交付",
@@ -146,6 +161,7 @@
       "profile.systemsText": "在云端连接大语言模型与图像生成服务，并在 Linux 上开发性能敏感的 C++/Qt 视觉应用。",
       "experience.title": "从产品方向，到生产交付。",
       "experience.intro": "五段实践经历，覆盖 AI 产品、移动平台、后端系统与工业自动化。",
+      "experience.details": "工作详情",
       "experience.ipmd.role": "技术经理实习生",
       "experience.ipmd.badge": "AI 产品",
       "experience.ipmd.b1": "统筹前端、后端、AI/ML、设计与产品等 6 条跨职能工作流，推动“Image Cards to Fine Arts” MVP 从规划走向集成与交付。",
@@ -187,6 +203,10 @@
       "education.waterloo.detail": "软件工程方向 · 预计 2026 年 12 月毕业",
       "education.yanshan.degree": "电子科学与技术学士",
       "education.yanshan.detail": "GPA 86 / 100",
+      "background.title": "让教育背景与工程实践相互支撑。",
+      "background.intro": "以电子系统为基础，在研究生阶段深入软件工程，并形成一套实用的全栈技术工具箱。",
+      "background.education": "教育经历",
+      "background.toolkit": "技术工具箱",
       "skills.title": "为系统选择合适工具。",
       "skills.intro": "一套覆盖客户端、服务端、数据、云平台与性能工程的实用技术栈。",
       "skills.languages": "编程语言",
@@ -195,10 +215,12 @@
       "skills.platform": "云平台与工具",
       "skills.spoken": "语言能力",
       "skills.spokenList": "英语 — 流利 · 中文 — 母语 · 法语 — 基础沟通",
-      "contact.title": "有棘手的问题？一起把它做成可交付的产品。",
+      "contact.title": "一起构建经得起检验的产品。",
       "contact.intro": "如果你想讨论全栈开发、AI 产品或系统工程，电子邮件是联系我的最快方式。",
       "contact.emailLabel": "发起交流",
-      "contact.phoneLabel": "电话",
+      "contact.githubLabel": "GitHub",
+      "contact.resumeLabel": "简历",
+      "contact.resumeAction": "查看 PDF",
       "footer.note": "用心设计，认真构建。",
       "footer.top": "返回顶部 ↑"
     }
@@ -256,8 +278,9 @@
       if (dictionary[key]) element.setAttribute("aria-label", dictionary[key]);
     });
 
-    const languageLabel = document.querySelector("[data-language-label]");
-    if (languageLabel) languageLabel.textContent = currentLanguage === "en" ? "中" : "EN";
+    document.querySelectorAll("[data-language-label]").forEach((label) => {
+      label.textContent = currentLanguage === "en" ? "中" : "EN";
+    });
 
     document.title = dictionary["meta.title"];
     const metaValues = [
@@ -280,8 +303,11 @@
   const initLanguage = () => {
     const stored = readStorage("language");
     applyLanguage(stored === "zh" ? "zh" : "en");
-    document.querySelector("[data-language-toggle]")?.addEventListener("click", () => {
-      applyLanguage(currentLanguage === "en" ? "zh" : "en");
+    document.querySelectorAll("[data-language-toggle]").forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        applyLanguage(currentLanguage === "en" ? "zh" : "en");
+        if (toggle.classList.contains("mobile-language")) setMenu(false);
+      });
     });
   };
 
