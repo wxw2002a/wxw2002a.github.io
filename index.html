@@ -1,220 +1,207 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Xiwei Wang - Portfolio</title>
-  <meta name="description" content="Xiwei Wang is a full-stack mobile and backend developer with experience in React Native, Node.js/Express, C++/Qt, and Django." />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Xiwei Wang — Full-Stack &amp; AI Product Engineer</title>
+  <meta name="description" content="Xiwei Wang is a full-stack engineer and University of Waterloo MEng candidate building AI-powered products, cross-platform applications, backend services, and real-time systems.">
+  <meta name="author" content="Xiwei Wang">
+  <meta name="theme-color" content="#07111f">
+  <link rel="canonical" href="https://wxw2002a.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wxw2002a.github.io/">
+  <meta property="og:title" content="Xiwei Wang — Full-Stack &amp; AI Product Engineer">
+  <meta property="og:description" content="Product-minded engineering across AI, mobile, backend, cloud, and real-time systems.">
+  <meta property="og:site_name" content="Xiwei Wang — Portfolio">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Xiwei Wang — Full-Stack &amp; AI Product Engineer">
+  <meta name="twitter:description" content="Product-minded engineering across AI, mobile, backend, cloud, and real-time systems.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (() => {
+      document.documentElement.classList.add("js");
+      try {
+        const saved = localStorage.getItem("theme");
+        const preferred = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = saved === "light" || saved === "dark" ? saved : preferred;
+      } catch (error) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    })();
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Xiwei Wang",
+      "url": "https://wxw2002a.github.io/",
+      "email": "mailto:wangxiwei2002@gmail.com",
+      "affiliation": { "@type": "CollegeOrUniversity", "name": "University of Waterloo" },
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "Yanshan University" },
+      "knowsAbout": ["Full-stack development", "React Native", "Flutter", "Node.js", "Spring Boot", "Artificial intelligence", "Real-time systems"]
+    }
+  </script>
 </head>
-<body class="day">
-  <div class="skyline" aria-hidden="true"></div>
-  <canvas id="fx"></canvas>
-  <div class="bg" aria-hidden="true"></div>
+<body>
+  <a class="skip-link" href="#main" data-i18n="access.skip">Skip to main content</a>
+  <div class="ambient" aria-hidden="true"><div class="ambient-grid"></div><div class="ambient-glow"></div></div>
 
-  <header class="nav">
-    <div class="container nav-row">
-      <div class="brand">
-        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
-          <defs>
-            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0" stop-color="#22d3ee" />
-              <stop offset=".6" stop-color="#f472b6" />
-              <stop offset="1" stop-color="#a78bfa" />
-            </linearGradient>
-          </defs>
-          <circle cx="32" cy="32" r="30" fill="url(#g)" />
-          <path d="M18 20l11 12-11 12M46 20L35 32l11 12" stroke="#0b0f17" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
-        </svg>
-        <span data-i18n="hero.name">Xiwei Wang</span>
-      </div>
-      <nav class="links">
+  <header class="site-header" data-header>
+    <div class="nav-shell">
+      <a class="brand" href="#home">
+        <span class="brand-mark" aria-hidden="true">XW</span>
+        <span class="brand-copy"><strong>Xiwei Wang</strong><small data-i18n="brand.role">Engineer / Builder</small></span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-i18n-aria-label="access.navigation">
+        <a href="#profile" data-i18n="nav.profile">Profile</a>
+        <a href="#experience" data-i18n="nav.experience">Experience</a>
+        <a href="#work" data-i18n="nav.work">Work</a>
         <a href="#education" data-i18n="nav.education">Education</a>
-        <a href="#experience" data-i18n="nav.internships">Internships</a>
-        <a href="#projects" data-i18n="nav.projects">Projects</a>
-        <a href="#skills" data-i18n="nav.skills">Skills</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
       </nav>
-      <div class="btn-group">
-        <a class="btn" id="download-resume" href="Xiwei-Wang-Resume.pdf" download data-i18n="nav.resume">Resume</a>
-        <button class="btn ghost" id="lang-toggle" aria-label="Language Toggle">
-          <span data-i18n="nav.langToggle">EN/ZH</span>
+      <div class="nav-actions">
+        <button class="icon-button language-toggle" type="button" data-language-toggle aria-label="Switch language" data-i18n-aria-label="access.language"><span data-language-label>中</span></button>
+        <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme" data-i18n-aria-label="access.theme">
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"></path></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"></path></svg>
         </button>
-        <button class="btn ghost" id="mode-toggle" aria-label="Toggle Day Night Auto">
-          <span id="mode-label">Auto</span>
-        </button>
+        <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav" aria-label="Open menu" data-i18n-aria-label="access.menu"><span></span><span></span></button>
       </div>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero" id="home">
-      <div>
-        <h1 data-i18n="hero.name">Xiwei Wang</h1>
-        <div class="tagline" data-i18n="hero.tagline">MEng Electrical and Computer Engineering (Software Engineering) at University of Waterloo | Full-stack mobile and backend developer</div>
-        <span class="pill" data-i18n="hero.pill">Full-stack mobile | Real-time systems | Secure delivery</span>
-        <p class="muted" style="margin-top:14px" data-i18n="hero.summary">I build multi-role mobile apps, REST APIs, and industrial vision pipelines with a focus on performance, reliability, and clean delivery.</p>
-        <div class="tags">
-          <span class="tag">React Native</span><span class="tag">TypeScript</span><span class="tag">Node.js</span>
-          <span class="tag">Express</span><span class="tag">MySQL</span><span class="tag">MongoDB</span>
-          <span class="tag">Redis</span><span class="tag">C++</span><span class="tag">Qt</span>
-          <span class="tag">Django</span>
+  <main id="main">
+    <section class="hero section-shell" id="home">
+      <div class="hero-copy" data-reveal>
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.eyebrow">MEng candidate @ Waterloo · 2026</span></p>
+        <h1><span data-i18n="hero.title1">Engineering products</span><span class="accent-text" data-i18n="hero.title2">from idea to impact.</span></h1>
+        <p class="hero-lede" data-i18n="hero.lede">I connect product thinking with hands-on engineering—building AI-powered experiences, cross-platform applications, reliable backend services, and performance-sensitive systems.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#experience"><span data-i18n="hero.ctaWork">Explore my work</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"></path></svg></a>
+          <a class="button button-secondary" href="Xiwei-Wang-Resume.pdf" download><span data-i18n="hero.ctaResume">Download résumé</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v10M6 9l4 4 4-4M4 17h12"></path></svg></a>
         </div>
-        <div class="btn-group" style="margin-top:16px">
-          <a class="btn" href="#experience" data-i18n="hero.ctaInternships">View Internships</a>
-          <a class="btn" href="mailto:wangxiwei2002@gmail.com" data-i18n="hero.ctaEmail">Email</a>
-        </div>
+        <nav class="hero-links" aria-label="Quick links" data-i18n-aria-label="access.quickLinks"><a href="mailto:wangxiwei2002@gmail.com">wangxiwei2002@gmail.com</a><span aria-hidden="true">/</span><a href="https://github.com/wxw2002a" target="_blank" rel="noopener noreferrer">GitHub</a></nav>
       </div>
-      <aside class="glass" aria-label="Current status">
-        <div class="muted" data-i18n="hero.current">Currently</div>
-        <ul class="muted" style="margin-top:8px; padding-left:18px; list-style:none">
-          <li style="margin:8px 0"><strong data-i18n="hero.labels.study">Study:</strong> <span data-i18n="hero.currentStudy">Master of Electrical and Computer Engineering (Software Engineering), University of Waterloo</span></li>
-          <li style="margin:8px 0"><strong data-i18n="hero.labels.email">Email:</strong> <a href="mailto:wangxiwei2002@gmail.com" style="text-decoration:none; color:inherit">wangxiwei2002@gmail.com</a></li>
-          <li style="margin:8px 0"><strong data-i18n="hero.labels.phone">Phone:</strong> <a href="tel:+14378723279" style="text-decoration:none; color:inherit">+1 (437) 872-3279</a></li>
-          <li style="margin:8px 0"><strong data-i18n="hero.labels.website">Website:</strong> <a href="https://wxw2002a.github.io/" target="_blank" rel="noopener" style="text-decoration:none; color:inherit">wxw2002a.github.io</a></li>
-        </ul>
-      </aside>
-    </section>
 
-    <section id="education">
-      <h2 data-i18n="edu.title">Education</h2>
-      <p class="muted" data-i18n="edu.subtitle">Graduate and undergraduate training focused on software engineering foundations and applied systems.</p>
-      <div class="about-grid">
-        <div class="tile">
-          <strong data-i18n="edu.uw.name">University of Waterloo</strong>
-          <div class="muted" data-i18n="edu.uw.degree">Master of Electrical and Computer Engineering (Software Engineering)</div>
-          <div class="muted" data-i18n="edu.uw.date">09/2025 - 12/2026</div>
-        </div>
-        <div class="tile">
-          <strong data-i18n="edu.ysu.name">Yanshan University</strong>
-          <div class="muted" data-i18n="edu.ysu.degree">Bachelor of Electronic Science and Technology | GPA 86/100</div>
-          <div class="muted" data-i18n="edu.ysu.date">09/2021 - 06/2025</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="experience">
-      <h2 data-i18n="exp.title">Internships</h2>
-      <div class="projects" style="grid-template-columns:1fr 1fr; gap:clamp(22px,3.5vw,32px)">
-        <div class="tile">
-          <div style="display:flex; align-items:center; gap:8px">
-            <strong data-i18n="exp.selest.name">SELEST Security</strong>
-            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.selest.date">09/2025 - 12/2025</span>
+      <div class="hero-visual" data-reveal data-reveal-delay="1" role="group" aria-label="Engineering highlights" data-i18n-aria-label="access.highlights">
+        <div class="signal-card" data-tilt>
+          <div class="signal-card-top"><span>PORTFOLIO / 2026</span><span class="signal-live"><i></i><span data-i18n="hero.signal">SYSTEMS ONLINE</span></span></div>
+          <div class="orbit-stage" aria-hidden="true">
+            <svg class="orbit-lines" viewBox="0 0 420 300" fill="none"><ellipse cx="210" cy="150" rx="164" ry="74"></ellipse><ellipse cx="210" cy="150" rx="164" ry="74" transform="rotate(58 210 150)"></ellipse><ellipse cx="210" cy="150" rx="164" ry="74" transform="rotate(-58 210 150)"></ellipse><circle cx="70" cy="111" r="5" class="orbit-node node-one"></circle><circle cx="326" cy="77" r="5" class="orbit-node node-two"></circle><circle cx="318" cy="231" r="5" class="orbit-node node-three"></circle></svg>
+            <div class="core-mark"><span>XW</span><small>BUILD / SHIP</small></div>
+            <span class="orbit-label label-ai">AI / ML</span><span class="orbit-label label-app">APP</span><span class="orbit-label label-cloud">CLOUD</span>
           </div>
-          <div class="muted" data-i18n="exp.selest.role">Mobile Application Full Stack Developer | Ontario, Canada</div>
-          <ul class="muted" style="margin-top:8px">
-            <li data-i18n="exp.selest.b1">Built and shipped a multi-role security concierge app with React Native and TypeScript.</li>
-            <li data-i18n="exp.selest.b2">Implemented email, Google OAuth, and phone sign-in with role-based access for customers, guards, and admins.</li>
-            <li data-i18n="exp.selest.b3">Delivered booking and shift workflows with Node.js/Express APIs, including incident reporting and credential uploads.</li>
-            <li data-i18n="exp.selest.b4">Designed operational data with MySQL and MongoDB, adding Redis caching for low-latency reads.</li>
-            <li data-i18n="exp.selest.b5">Integrated PayPal checkout via backend functions and in-app WebView for payment capture.</li>
-          </ul>
-        </div>
-        <div class="tile">
-          <div style="display:flex; align-items:center; gap:8px">
-            <strong data-i18n="exp.hit.name">Harbin Institute of Technology Robot Technology Research Institute</strong>
-            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.hit.date">06/2025 - 08/2025</span>
+          <div class="signal-metrics">
+            <div><strong>6</strong><span data-i18n="metrics.workstreams">workstreams led</span></div>
+            <div><strong>25%</strong><span data-i18n="metrics.response">faster response</span></div>
+            <div><strong>600</strong><span data-i18n="metrics.vision">images / sec</span></div>
           </div>
-          <div class="muted" data-i18n="exp.hit.role">Industrial Vision Platform Development Intern | China</div>
-          <ul class="muted" style="margin-top:8px">
-            <li data-i18n="exp.hit.b1">Built a real-time inspection application in C++ with Qt on Linux for teacup defect detection (up to 600 fps).</li>
-            <li data-i18n="exp.hit.b2">Deployed a Django service for result logging, model parameter sync, and offline frame analysis via REST APIs.</li>
-            <li data-i18n="exp.hit.b3">Collaborated with the algorithm team to connect trained models and improved detection speed by 23%.</li>
-          </ul>
         </div>
-        <div class="tile">
-          <div style="display:flex; align-items:center; gap:8px">
-            <strong data-i18n="exp.sino.name">Sinopec Group</strong>
-            <span class="muted" style="margin-left:auto; font-size:12px" data-i18n="exp.sino.date">07/2024 - 08/2024</span>
+      </div>
+      <a class="scroll-cue" href="#profile"><span data-i18n="hero.scroll">Scroll to explore</span><i aria-hidden="true"></i></a>
+    </section>
+
+    <div class="capability-rail" aria-hidden="true"><div class="rail-track"><span>PRODUCT DELIVERY</span><i></i><span>FULL-STACK</span><i></i><span>AI SYSTEMS</span><i></i><span>MOBILE</span><i></i><span>BACKEND</span><i></i><span>REAL-TIME</span><i></i><span>PRODUCT DELIVERY</span><i></i><span>FULL-STACK</span><i></i><span>AI SYSTEMS</span><i></i><span>MOBILE</span><i></i><span>BACKEND</span><i></i><span>REAL-TIME</span><i></i></div></div>
+
+    <section class="profile section-shell section-pad" id="profile">
+      <div class="section-heading" data-reveal>
+        <p class="section-index">01 / PROFILE</p>
+        <h2 data-i18n="profile.title">Product thinking. Engineering depth.</h2>
+        <p data-i18n="profile.intro">I’m an Electrical and Computer Engineering MEng candidate at the University of Waterloo. My work spans product planning, cross-platform apps, backend services, AI pipelines, cloud deployment, and real-time industrial software.</p>
+      </div>
+      <div class="profile-grid">
+        <article class="profile-card" data-reveal><span class="card-number">01</span><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 24V9l11-5 11 5v15l-11 5-11-5Z"></path><path d="m5 9 11 6 11-6M16 15v14"></path></svg><h3 data-i18n="profile.deliveryTitle">Product delivery</h3><p data-i18n="profile.deliveryText">Translate requirements into technical priorities, align milestones, resolve cross-team blockers, and carry releases through integration.</p></article>
+        <article class="profile-card" data-reveal data-reveal-delay="1"><span class="card-number">02</span><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="4" width="22" height="24" rx="4"></rect><path d="M10 10h12M10 16h7M10 22h10"></path></svg><h3 data-i18n="profile.fullstackTitle">Full-stack products</h3><p data-i18n="profile.fullstackText">Build mobile and web experiences with React, React Native, and Flutter, backed by Node.js, Spring Boot, Django, and structured data systems.</p></article>
+        <article class="profile-card" data-reveal data-reveal-delay="2"><span class="card-number">03</span><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11"></circle><path d="M16 5v22M5 16h22M8.2 9.5c2.2 2 4.8 3 7.8 3s5.6-1 7.8-3M8.2 22.5c2.2-2 4.8-3 7.8-3s5.6 1 7.8 3"></path></svg><h3 data-i18n="profile.systemsTitle">AI &amp; real-time systems</h3><p data-i18n="profile.systemsText">Connect LLM and image-generation services in the cloud, and engineer performance-sensitive C++/Qt vision applications on Linux.</p></article>
+      </div>
+    </section>
+
+    <section class="experience section-shell section-pad" id="experience">
+      <div class="section-heading section-heading-row" data-reveal><div><p class="section-index">02 / EXPERIENCE</p><h2 data-i18n="experience.title">From product direction to production delivery.</h2></div><p data-i18n="experience.intro">Five roles across AI products, mobile platforms, backend systems, and industrial automation.</p></div>
+      <div class="timeline">
+        <article class="timeline-item" data-reveal>
+          <div class="timeline-meta"><time datetime="2026-05/2026-08">05.2026 — 08.2026</time><span>California, US · Remote</span></div><div class="timeline-marker"><i></i></div>
+          <div class="timeline-content"><div class="role-heading"><div><p>IPMD, Inc.</p><h3 data-i18n="experience.ipmd.role">Technical Manager Intern</h3></div><span class="role-badge" data-i18n="experience.ipmd.badge">AI PRODUCT</span></div>
+            <ul><li data-i18n="experience.ipmd.b1">Led 6 cross-functional workstreams across frontend, backend, AI/ML, design, and product, moving the “Image Cards to Fine Arts” MVP from planning through integration and delivery.</li><li data-i18n="experience.ipmd.b2">Developed and deployed an AI image-generation platform on Microsoft Azure using React, TypeScript, Node.js/Express, Qwen/Gemini, and Stable Diffusion 1.5.</li><li data-i18n="experience.ipmd.b3">Coordinated Dockerized frontend, API, LLM, and Stable Diffusion services for end-to-end integration and release readiness.</li></ul>
+            <div class="tech-list"><span>React</span><span>TypeScript</span><span>Azure</span><span>Docker</span><span>Qwen / Gemini</span><span>Stable Diffusion</span></div>
           </div>
-          <div class="muted" data-i18n="exp.sino.role">Application Intern, Information Center | China</div>
-          <ul class="muted" style="margin-top:8px">
-            <li data-i18n="exp.sino.b1">Contributed to an unmanned warehouse storage system and robot control system integration.</li>
-            <li data-i18n="exp.sino.b2">Applied reinforcement learning (Stable-Baselines3 PPO) to optimize AGV scheduling and path planning.</li>
-            <li data-i18n="exp.sino.b3">Implemented QR and 2D code recognition with Pyzbar and connected results to backend services.</li>
-            <li data-i18n="exp.sino.b4">Used Redis to cache high-frequency operational states for real-time dispatch.</li>
-          </ul>
+        </article>
+        <article class="timeline-item" data-reveal>
+          <div class="timeline-meta"><time datetime="2026-01/2026-04">01.2026 — 04.2026</time><span>Ontario, Canada</span></div><div class="timeline-marker"><i></i></div>
+          <div class="timeline-content"><div class="role-heading"><div><p>FoloBotics</p><h3 data-i18n="experience.folo.role">Full-Stack Developer</h3></div><span class="metric-badge">−25% <small data-i18n="experience.folo.metric">response time</small></span></div>
+            <ul><li data-i18n="experience.folo.b1">Developed Flutter clients and Kotlin/Spring Boot services for user, task, recommendation, and warehouse workflows.</li><li data-i18n="experience.folo.b2">Designed PostgreSQL, MySQL, and Redis data flows and optimized API/database interactions, reducing average response time by 25%.</li></ul>
+            <div class="tech-list"><span>Flutter</span><span>Kotlin</span><span>Spring Boot</span><span>PostgreSQL</span><span>Redis</span></div>
+          </div>
+        </article>
+        <article class="timeline-item" data-reveal>
+          <div class="timeline-meta"><time datetime="2025-09/2025-12">09.2025 — 12.2025</time><span>Ontario, Canada</span></div><div class="timeline-marker"><i></i></div>
+          <div class="timeline-content"><div class="role-heading"><div><p>SELEST Security</p><h3 data-i18n="experience.selest.role">Full-Stack Developer</h3></div><span class="metric-badge">5+ <small data-i18n="experience.selest.metric">workflows</small></span></div>
+            <ul><li data-i18n="experience.selest.b1">Built and shipped a multi-role React Native application, supporting testing and production releases to the App Store and Google Play.</li><li data-i18n="experience.selest.b2">Integrated Node.js/Express REST APIs with MongoDB to deliver 5+ booking and shift-management workflows.</li></ul>
+            <div class="tech-list"><span>React Native</span><span>TypeScript</span><span>Node.js</span><span>Express</span><span>MongoDB</span></div>
+          </div>
+        </article>
+        <article class="timeline-item" data-reveal>
+          <div class="timeline-meta"><time datetime="2025-06/2025-08">06.2025 — 08.2025</time><span>China</span></div><div class="timeline-marker"><i></i></div>
+          <div class="timeline-content"><div class="role-heading"><div><p>HIT Robot Technology Research Institute</p><h3 data-i18n="experience.hit.role">Industrial Vision Platform Development Intern</h3></div><span class="metric-badge">600 <small data-i18n="experience.hit.metric">images / sec</small></span></div>
+            <ul><li data-i18n="experience.hit.b1">Developed a real-time C++/Qt application on Linux that processed up to 600 images per second from live camera feeds.</li><li data-i18n="experience.hit.b2">Built a Python/Django REST backend for detection logging, parameter synchronization, and offline frame analysis.</li></ul>
+            <div class="tech-list"><span>C++</span><span>Qt</span><span>Linux</span><span>Python</span><span>Django</span></div>
+          </div>
+        </article>
+        <article class="timeline-item" data-reveal>
+          <div class="timeline-meta"><time datetime="2024-07/2024-08">07.2024 — 08.2024</time><span>China</span></div><div class="timeline-marker"><i></i></div>
+          <div class="timeline-content"><div class="role-heading"><div><p>Sinopec Group</p><h3 data-i18n="experience.sinopec.role">Application Intern, Information Center</h3></div><span class="role-badge" data-i18n="experience.sinopec.badge">AUTOMATION</span></div>
+            <ul><li data-i18n="experience.sinopec.b1">Integrated and tested software components for an unmanned warehouse digital storage system and Robot Control System.</li><li data-i18n="experience.sinopec.b2">Implemented QR/2D-code recognition with Python and Pyzbar, connecting scan results to backend services.</li></ul>
+            <div class="tech-list"><span>Python</span><span>Pyzbar</span><span>RCS</span><span>Backend APIs</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="work section-pad" id="work">
+      <div class="section-shell">
+        <div class="section-heading section-heading-row" data-reveal><div><p class="section-index">03 / SELECTED WORK</p><h2 data-i18n="work.title">Engineering beyond the happy path.</h2></div><div class="work-heading-side"><p data-i18n="work.intro">Selected systems, GPU, and applied AI work from my engineering portfolio.</p><div class="filters" role="group" aria-label="Filter projects" data-i18n-aria-label="access.filters"><button class="filter active" type="button" data-filter="all" data-i18n="work.filterAll">All</button><button class="filter" type="button" data-filter="systems" data-i18n="work.filterSystems">Systems</button><button class="filter" type="button" data-filter="ai" data-i18n="work.filterAI">AI / ML</button><button class="filter" type="button" data-filter="gpu">GPU</button></div></div></div>
+        <div class="project-grid">
+          <article class="project-card project-wide" data-category="systems" data-reveal><div class="project-top"><span>01 / SYSTEMS</span><strong>120 → ~40 ms</strong></div><div class="project-graphic terminal-graphic" aria-hidden="true"><div class="terminal-bar"><i></i><i></i><i></i></div><code><span>$ server --threads=auto</span><br>&gt; tuning socket buffers...<br>&gt; latency <b>40ms</b> <em>✓</em><br>&gt; status: stable</code></div><div class="project-copy"><h3 data-i18n="work.java.title">High-Performance Java Server</h3><p data-i18n="work.java.text">A multithreaded Java TCP server on Ubuntu with socket-level tuning, reducing latency from 120 ms to approximately 40 ms.</p><div class="tech-list"><span>Java</span><span>TCP</span><span>Linux</span><span>Performance</span></div></div></article>
+          <article class="project-card" data-category="gpu" data-reveal data-reveal-delay="1"><div class="project-top"><span>02 / GPU</span><strong>CUDA 12.4</strong></div><div class="project-graphic matrix-graphic" aria-hidden="true"><div class="matrix"></div><div class="matrix-core">∑</div></div><div class="project-copy"><h3 data-i18n="work.cuda.title">CUDA Convolution Acceleration</h3><p data-i18n="work.cuda.text">Implemented 2D convolution CUDA kernels on an RTX 3070 and built Python benchmarks for performance evaluation.</p><div class="tech-list"><span>CUDA</span><span>C / C++</span><span>Python</span><span>RTX 3070</span></div></div></article>
+          <article class="project-card" data-category="ai" data-reveal><div class="project-top"><span>03 / AI / ML</span><strong>YAMNet</strong></div><div class="project-graphic wave-graphic" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="project-copy"><h3 data-i18n="work.audio.title">Audio Anomaly Detection</h3><p data-i18n="work.audio.text">YAMNet-based classification with thresholding designed to reduce false positives in industrial environments.</p><div class="tech-list"><span>Python</span><span>TensorFlow</span><span>YAMNet</span><span>Audio ML</span></div></div></article>
+          <article class="project-card project-wide" data-category="systems" data-reveal data-reveal-delay="1"><div class="project-top"><span>04 / VISION UI</span><strong>ROI</strong></div><div class="project-graphic roi-graphic" aria-hidden="true"><div class="roi-frame"><i></i><i></i><i></i><i></i><span>ROI 01</span></div></div><div class="project-copy"><h3 data-i18n="work.roi.title">Template / ROI Toolkit</h3><p data-i18n="work.roi.text">Proportional template fitting and ROI parameter controls for distortion-free industrial inspection interfaces.</p><div class="tech-list"><span>C / C++</span><span>Qt</span><span>Computer Vision</span><span>UI Systems</span></div></div></article>
         </div>
       </div>
     </section>
 
-    <section id="projects">
-      <h2 data-i18n="proj.title">Projects</h2>
-      <div class="filters">
-        <button class="chip active" data-filter="All" data-i18n="proj.filter.all">All</button>
-        <button class="chip" data-filter="Systems" data-i18n="proj.filter.systems">Systems</button>
-        <button class="chip" data-filter="AI/ML" data-i18n="proj.filter.aiml">AI/ML</button>
-        <button class="chip" data-filter="GPU" data-i18n="proj.filter.gpu">GPU</button>
-      </div>
-      <div class="projects">
-        <div class="tile project" data-kind="Systems">
-          <h3 data-i18n="proj.java.title">High-Performance Java Server for Networked Applications</h3>
-          <p class="muted" data-i18n="proj.java.desc">Multithreaded Java TCP server on Ubuntu with socket-level tuning; reduced latency from 120 ms to ~40 ms, aiming for &lt; 30 ms.</p>
-          <div class="tags"><span class="tag">Server</span><span class="tag">Linux</span><span class="tag">Ubuntu</span></div>
-        </div>
-        <div class="tile project" data-kind="GPU">
-          <h3 data-i18n="proj.cuda.title">CUDA Convolution Acceleration</h3>
-          <p class="muted" data-i18n="proj.cuda.desc">Implemented 2D convolution CUDA kernels (CUDA 12.4 on RTX 3070) and Python benchmarks...</p>
-          <div class="tags"><span class="tag">CUDA</span><span class="tag">C/C++</span></div>
-        </div>
-        <div class="tile project" data-kind="AI/ML">
-          <h3 data-i18n="proj.yam.title">Audio Anomaly Detection</h3>
-          <p class="muted" data-i18n="proj.yam.desc">YAMNet-based classification with thresholding to reduce false positives in industrial environments.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">Client</span></div>
-        </div>
-        <div class="tile project" data-kind="Systems">
-          <h3 data-i18n="proj.roi.title">Template/ROI Toolkit</h3>
-          <p class="muted" data-i18n="proj.roi.desc">Proportional template fitting and ROI parameter panels for inspection UI without distortion.</p>
-          <div class="tags"><span class="tag">C/C++</span><span class="tag">QT</span></div>
+    <section class="education section-shell section-pad" id="education">
+      <div class="education-layout">
+        <div class="education-copy" data-reveal><p class="section-index">04 / EDUCATION</p><h2 data-i18n="education.title">Always learning. Always shipping.</h2><p data-i18n="education.intro">Graduate study in software engineering builds on a foundation in electronic science and technology.</p><a class="text-link" href="Xiwei-Wang-Resume.pdf" target="_blank" rel="noopener"><span data-i18n="education.resume">View full résumé</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 16 16 4M7 4h9v9"></path></svg></a></div>
+        <div class="education-list">
+          <article class="education-card" data-reveal><div class="education-year">2025<br>— 2026</div><div><p>University of Waterloo</p><h3 data-i18n="education.waterloo.degree">Master of Engineering in Electrical &amp; Computer Engineering</h3><span data-i18n="education.waterloo.detail">Software Engineering · Expected December 2026</span></div><div class="school-mark" aria-hidden="true">UW</div></article>
+          <article class="education-card" data-reveal data-reveal-delay="1"><div class="education-year">2021<br>— 2025</div><div><p>Yanshan University</p><h3 data-i18n="education.yanshan.degree">Bachelor of Electronic Science &amp; Technology</h3><span data-i18n="education.yanshan.detail">GPA 86 / 100</span></div><div class="school-mark" aria-hidden="true">YSU</div></article>
         </div>
       </div>
     </section>
 
-    <section id="skills">
-      <h2 data-i18n="skills.title">Skills</h2>
-      <div class="projects">
-        <div class="tile">
-          <strong data-i18n="skills.languages.title">Languages</strong>
-          <div class="muted" data-i18n="skills.languages.list">C/C++, Python, Java, HTML, CSS, JavaScript, TypeScript, SQL</div>
-        </div>
-        <div class="tile">
-          <strong data-i18n="skills.frameworks.title">Frameworks</strong>
-          <div class="muted" data-i18n="skills.frameworks.list">React, React Native, Node.js/Express, Django</div>
-        </div>
-        <div class="tile">
-          <strong data-i18n="skills.databases.title">Databases</strong>
-          <div class="muted" data-i18n="skills.databases.list">MySQL, Redis, MongoDB</div>
-        </div>
-        <div class="tile">
-          <strong data-i18n="skills.tools.title">Tools</strong>
-          <div class="muted" data-i18n="skills.tools.list">Git, Linux, Bash, REST</div>
-        </div>
-        <div class="tile">
-          <strong data-i18n="skills.spoken.title">Spoken Languages</strong>
-          <div class="muted" data-i18n="skills.spoken.list">English (fluent), Chinese (native), French (sufficient)</div>
-        </div>
+    <section class="skills section-shell section-pad" id="skills">
+      <div class="section-heading section-heading-row" data-reveal><div><p class="section-index">05 / TOOLKIT</p><h2 data-i18n="skills.title">The right tool for the system.</h2></div><p data-i18n="skills.intro">A practical stack spanning client applications, services, data, cloud, and performance engineering.</p></div>
+      <div class="skills-grid">
+        <article class="skill-panel skill-panel-large" data-reveal><span>01</span><h3 data-i18n="skills.languages">Languages</h3><div class="skill-cloud"><b>TypeScript</b><b>JavaScript</b><b>Python</b><b>SQL</b><b>HTML / CSS</b><b>Java</b><b>Kotlin</b><b>C / C++</b></div></article>
+        <article class="skill-panel" data-reveal data-reveal-delay="1"><span>02</span><h3 data-i18n="skills.frameworks">Frameworks</h3><p>React · React Native · Flutter · Node.js / Express · Django · Spring Boot</p></article>
+        <article class="skill-panel" data-reveal><span>03</span><h3 data-i18n="skills.data">Data</h3><p>PostgreSQL · MySQL · MongoDB · Redis</p></article>
+        <article class="skill-panel skill-panel-accent" data-reveal data-reveal-delay="1"><span>04</span><h3 data-i18n="skills.platform">Cloud &amp; tools</h3><p>Microsoft Azure · Docker · Git · Linux · Bash · REST APIs</p></article>
+        <article class="skill-panel" data-reveal data-reveal-delay="2"><span>05</span><h3 data-i18n="skills.spoken">Spoken languages</h3><p data-i18n="skills.spokenList">English — fluent · Chinese — native · French — sufficient</p></article>
       </div>
     </section>
 
-    <section id="contact">
-      <h2 data-i18n="contact.title">Contact</h2>
-      <div class="about-grid">
-        <a class="tile" href="mailto:wangxiwei2002@gmail.com" style="text-decoration:none; color:inherit">
-          <strong data-i18n="contact.email">Email</strong>
-          <div class="muted">wangxiwei2002@gmail.com</div>
-        </a>
-        <a class="tile" href="tel:+14378723279" style="text-decoration:none; color:inherit">
-          <strong data-i18n="contact.phone">Phone</strong>
-          <div class="muted">+1 (437) 872-3279</div>
-        </a>
-      </div>
+    <section class="contact section-shell section-pad" id="contact">
+      <div class="contact-card" data-reveal><div class="contact-orbit" aria-hidden="true"><i></i><i></i><i></i></div><p class="section-index">06 / CONTACT</p><h2 data-i18n="contact.title">Have a hard problem? Let’s make it shippable.</h2><p data-i18n="contact.intro">For full-stack, AI-enabled product, or systems work, email is the fastest way to reach me.</p><div class="contact-actions"><a class="contact-email" href="mailto:wangxiwei2002@gmail.com"><span data-i18n="contact.emailLabel">Start a conversation</span><strong>wangxiwei2002@gmail.com</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M8 5h11v11"></path></svg></a><a class="contact-phone" href="tel:+14378723279"><span data-i18n="contact.phoneLabel">Phone</span><strong>+1&nbsp;(437)&nbsp;872&#8209;3279</strong></a></div></div>
     </section>
-
-    <footer>Xiwei Wang</footer>
   </main>
 
-  <script src="script.js"></script>
+  <footer class="site-footer"><div class="section-shell footer-inner"><div><span class="brand-mark" aria-hidden="true">XW</span><p>© <span data-current-year>2026</span> Xiwei Wang</p></div><p data-i18n="footer.note">Designed and engineered with intention.</p><div class="footer-links"><a href="mailto:wangxiwei2002@gmail.com">Email</a><a href="https://github.com/wxw2002a" target="_blank" rel="noopener noreferrer">GitHub</a><a href="#home" data-i18n="footer.top">Back to top ↑</a></div></div></footer>
+  <noscript><div class="noscript">This portfolio works best with JavaScript enabled. All core content remains available.</div></noscript>
+  <script src="script.js" defer></script>
 </body>
 </html>
