@@ -6,6 +6,8 @@ Content is maintained in `app/src/content.js` (English and Chinese). Current exp
 
 The HIT industrial-vision case dialog includes the supplied detection demo (`assets/hit-detection-demo.mp4`) and a poster frame from that recording. The player loads only when this case opens, uses native inline/full-screen controls without autoplay, and releases playback when the dialog closes. Other project visuals remain conceptual.
 
+IPMD's expanded experience and the “From prompt to image” case dialog share three supplied recordings: `assets/ipmd/video1.mp4` is the Creating Without Words overview, `video2.mp4` is the emotion-card workflow, and `video3.mp4` is the floating-card demo. Both galleries use the labels video1, video2, and video3, open on the overview, and mount only the selected player. Switching videos, collapsing the experience, or closing the dialog stops its playback. Opening a dialog pauses background video, and starting a player pauses any other player. Posters are frames from the corresponding recordings; the original video bytes are preserved.
+
 ## Local development
 
     npm install

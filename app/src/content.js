@@ -10,6 +10,12 @@ const sharedContact = {
   resumeHref: "Xiwei-Wang-Resume.pdf",
 };
 
+const ipmdVideos = [1, 2, 3].map((number) => ({
+  src: `/assets/ipmd/video${number}.mp4`,
+  poster: `/assets/ipmd/video${number}-poster.jpg`,
+  title: `video${number}`,
+}));
+
 export const supportedLocales = ["en", "zh"];
 export const defaultLocale = "en";
 
@@ -141,6 +147,7 @@ export const content = {
     experiences: [
       {
         id: "ipmd",
+        videos: ipmdVideos,
         company: "IPMD, Inc.",
         role: "Software Engineering Intern",
         start: "2026-05",
@@ -275,6 +282,7 @@ export const content = {
           "Azure",
         ],
         experienceId: "ipmd",
+        videos: ipmdVideos,
       },
       {
         id: "warehouse-visualization",
@@ -610,6 +618,7 @@ export const content = {
     experiences: [
       {
         id: "ipmd",
+        videos: ipmdVideos,
         company: "IPMD, Inc.",
         role: "软件工程实习生",
         start: "2026-05",
@@ -735,6 +744,7 @@ export const content = {
           "Azure",
         ],
         experienceId: "ipmd",
+        videos: ipmdVideos,
       },
       {
         id: "warehouse-visualization",

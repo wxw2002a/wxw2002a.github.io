@@ -40,7 +40,9 @@ test("HIT media loads only inside its case, with playable metadata and no autopl
   for (const index of [0, 1]) {
     await page.locator(`.case-${index} .case-open`).click();
     await expect(page.locator(".case-dialog")).toBeVisible();
-    await expect(page.locator(".case-dialog .case-video")).toHaveCount(0);
+    await expect(
+      page.locator(`.case-dialog .case-video[src="${videoPath}"]`),
+    ).toHaveCount(0);
     await page.locator(".dialog-close").click();
     await expect(page.locator(".case-dialog")).toBeHidden();
   }

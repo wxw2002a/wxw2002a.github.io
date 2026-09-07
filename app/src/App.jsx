@@ -307,6 +307,11 @@ function CaseVideo({ video, zh }) {
         width="1280"
         height="720"
         aria-label={video.title}
+        onPlay={(event) => {
+          document.querySelectorAll(".case-video").forEach((player) => {
+            if (player !== event.currentTarget) player.pause();
+          });
+        }}
         onError={() => setFailed(true)}
       />
       <figcaption>
@@ -327,6 +332,42 @@ function CaseVideo({ video, zh }) {
   );
 }
 
+function CaseVideoGallery({ videos, zh }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const video = videos[activeIndex];
+
+  return (
+    <section
+      className="case-video-gallery"
+      aria-label={zh ? "项目视频" : "Project videos"}
+    >
+      <div className="case-video-heading">
+        <span>{zh ? "视频演示" : "VIDEO DEMOS"}</span>
+        <span>
+          0{activeIndex + 1} / 0{videos.length}
+        </span>
+      </div>
+      <div
+        className="case-video-options"
+        role="group"
+        aria-label={zh ? "选择视频" : "Select video"}
+      >
+        {videos.map((item, index) => (
+          <button
+            key={item.src}
+            type="button"
+            aria-pressed={index === activeIndex}
+            onClick={() => setActiveIndex(index)}
+          >
+            {item.title}
+          </button>
+        ))}
+      </div>
+      <CaseVideo key={video.src} video={video} zh={zh} />
+    </section>
+  );
+}
+
 function CaseDialog({ selected, data, onClose, zh }) {
   const ref = useRef(null);
   const featured = data.featured.find((item) => item.id === selected);
@@ -336,6 +377,9 @@ function CaseDialog({ selected, data, onClose, zh }) {
   useEffect(() => {
     const dialog = ref.current;
     if (selected && !dialog.open) {
+      document
+        .querySelectorAll(".case-video")
+        .forEach((player) => player.pause());
       dialog.showModal();
       document.body.style.overflow = "hidden";
     }
@@ -365,6 +409,13 @@ function CaseDialog({ selected, data, onClose, zh }) {
           </button>
           <span className="eyebrow">{featured.eyebrow}</span>
           <h2 id="case-title">{featured.title}</h2>
+          {featured.videos && (
+            <CaseVideoGallery
+              key={featured.id}
+              videos={featured.videos}
+              zh={zh}
+            />
+          )}
           {featured.video && (
             <CaseVideo key={featured.id} video={featured.video} zh={zh} />
           )}
@@ -405,6 +456,7 @@ export default function App() {
   const [paused, setPaused] = useState(false);
   const [exploded, setExploded] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [openVideoExperience, setOpenVideoExperience] = useState(null);
   const [filter, setFilter] = useState("all");
   const [touchInput, setTouchInput] = useState(
     () => window.matchMedia("(pointer: coarse)").matches,
@@ -830,7 +882,20 @@ export default function App() {
           </div>
           <div className="experience-list reveal">
             {data.experiences.map((item, index) => (
-              <details key={item.id} className="experience-row">
+              <details
+                key={item.id}
+                className="experience-row"
+                data-experience-id={item.id}
+                onToggle={
+                  item.videos
+                    ? (event) => {
+                        setOpenVideoExperience(
+                          event.currentTarget.open ? item.id : null,
+                        );
+                      }
+                    : undefined
+                }
+              >
                 <summary>
                   <span className="row-index">0{index + 1}</span>
                   <span className="role-main">
@@ -861,6 +926,11 @@ export default function App() {
                       ))}
                     </ul>
                     <Tags items={item.tech} />
+                    {item.videos && openVideoExperience === item.id && (
+                      <div className="experience-videos">
+                        <CaseVideoGallery videos={item.videos} zh={zh} />
+                      </div>
+                    )}
                   </div>
                 </div>
               </details>

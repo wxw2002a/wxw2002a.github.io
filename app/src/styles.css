@@ -1492,6 +1492,54 @@ footer .wordmark-star {
 .case-video-block {
   margin: 26px 0;
 }
+.case-video-gallery {
+  margin: 28px 0;
+  min-width: 0;
+}
+.case-video-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  font: 9px/1.7 var(--mono);
+  color: var(--muted);
+}
+.case-video-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.case-video-options button {
+  min-height: 44px;
+  padding: 10px 8px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: 11px/1.5 var(--mono);
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.case-video-options button[aria-pressed="true"] {
+  color: #19210b;
+  background: var(--acid);
+  border-color: var(--acid);
+}
+.case-video-options button:hover {
+  border-color: var(--muted);
+}
+.case-video-gallery .case-video-block {
+  margin: 0;
+}
+.experience-videos {
+  max-width: 760px;
+  margin-top: 30px;
+  border-top: 1px solid var(--line);
+}
+.experience-row[data-experience-id="ipmd"] .role-details > div {
+  min-width: 0;
+}
 .case-video {
   display: block;
   width: 100%;
