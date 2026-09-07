@@ -1489,6 +1489,45 @@ footer .wordmark-star {
   line-height: 1.9;
   color: var(--muted);
 }
+.case-video-block {
+  margin: 26px 0;
+}
+.case-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #050609;
+  border: 1px solid var(--line);
+}
+.case-video-block figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 12px;
+  color: var(--muted);
+  font: 9px/1.7 var(--mono);
+}
+.case-video-block figcaption a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  color: var(--text);
+}
+.case-video-block figcaption a svg {
+  width: 12px;
+  height: 12px;
+}
+.case-video-error {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
 .dialog-role {
   display: flex;
   flex-direction: column;

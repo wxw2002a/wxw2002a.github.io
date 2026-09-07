@@ -277,6 +277,56 @@ function ProjectVisual({ index, zh }) {
   );
 }
 
+function CaseVideo({ video, zh }) {
+  const ref = useRef(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    const player = ref.current;
+    if (player.getAttribute("src") !== video.src) {
+      player.setAttribute("src", video.src);
+    }
+    setFailed(false);
+    return () => {
+      player.pause();
+      player.removeAttribute("src");
+      player.load();
+    };
+  }, [video.src]);
+
+  return (
+    <figure className="case-video-block">
+      <video
+        ref={ref}
+        className="case-video"
+        src={video.src}
+        poster={video.poster}
+        controls
+        playsInline
+        preload="metadata"
+        width="1280"
+        height="720"
+        aria-label={video.title}
+        onError={() => setFailed(true)}
+      />
+      <figcaption>
+        <span>{video.title}</span>
+        <a href={video.src} target="_blank" rel="noreferrer">
+          {zh ? "单独打开视频" : "Open video"}
+          <Arrow diagonal />
+        </a>
+      </figcaption>
+      {failed && (
+        <p className="case-video-error" role="status">
+          {zh
+            ? "视频暂时无法播放，请尝试单独打开视频。"
+            : "Unable to play here. Try opening the video directly."}
+        </p>
+      )}
+    </figure>
+  );
+}
+
 function CaseDialog({ selected, data, onClose, zh }) {
   const ref = useRef(null);
   const featured = data.featured.find((item) => item.id === selected);
@@ -315,6 +365,9 @@ function CaseDialog({ selected, data, onClose, zh }) {
           </button>
           <span className="eyebrow">{featured.eyebrow}</span>
           <h2 id="case-title">{featured.title}</h2>
+          {featured.video && (
+            <CaseVideo key={featured.id} video={featured.video} zh={zh} />
+          )}
           <p className="dialog-summary">{featured.summary}</p>
           <div className="dialog-role">
             <span>{role.company}</span>

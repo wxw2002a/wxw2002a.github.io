@@ -4,6 +4,8 @@ A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/
 
 Content is maintained in `app/src/content.js` (English and Chinese). Current experience and the downloadable `Xiwei-Wang-Resume.pdf` reflect the latest September 2026 résumé; four independent projects and additional tools from the previous site remain available. Project artwork is labeled as conceptual, not proprietary product screenshots.
 
+The HIT industrial-vision case dialog includes the supplied detection demo (`assets/hit-detection-demo.mp4`) and a poster frame from that recording. The player loads only when this case opens, uses native inline/full-screen controls without autoplay, and releases playback when the dialog closes. Other project visuals remain conceptual.
+
 ## Local development
 
     npm install

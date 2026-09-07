@@ -295,6 +295,11 @@ export const content = {
         metric: { value: "600", label: "images per second, peak" },
         tech: ["C++", "Qt", "Linux", "Python", "Django"],
         experienceId: "hit-robotics",
+        video: {
+          src: "/assets/hit-detection-demo.mp4",
+          poster: "/assets/hit-detection-poster.jpg",
+          title: "HIT · Detection demo",
+        },
       },
     ],
     projectsIntro: {
@@ -750,6 +755,11 @@ export const content = {
         metric: { value: "600", label: "张图像 / 秒，峰值" },
         tech: ["C++", "Qt", "Linux", "Python", "Django"],
         experienceId: "hit-robotics",
+        video: {
+          src: "/assets/hit-detection-demo.mp4",
+          poster: "/assets/hit-detection-poster.jpg",
+          title: "HIT · 检测演示",
+        },
       },
     ],
     projectsIntro: {
