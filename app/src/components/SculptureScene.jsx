@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 
-/** A self-lit studio sculpture. It does not request textures or other assets. */
+/** A floating modular cube, lit locally without textures or remote assets. */
 export default function SculptureScene({
   paused = false,
   reducedMotion = false,
@@ -123,8 +123,7 @@ export default function SculptureScene({
         canvas.style.cssText =
           "position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none;";
 
-        // Broad white reflection panels give the chrome its photographed,
-        // liquid-metal contours. PMREM is generated entirely on the device.
+        // Broad local reflection panels softly light the brushed-metal planes.
         environmentRoom = new RoomEnvironment();
         environmentRoom.traverse((object) => {
           if (object.material?.isMeshStandardMaterial) {
@@ -144,60 +143,77 @@ export default function SculptureScene({
         const sculpture = new THREE.Group();
         scene.add(sculpture);
 
-        const chrome = own(
+        const silver = own(
           new THREE.MeshPhysicalMaterial({
-            color: 0xd9dce0,
-            metalness: 1,
-            roughness: 0.16,
-            clearcoat: 1,
-            clearcoatRoughness: 0.14,
-            envMapIntensity: 1.2,
+            color: 0x75808a,
+            metalness: 0.85,
+            roughness: 0.36,
+            clearcoat: 0.12,
+            clearcoatRoughness: 0.5,
+            envMapIntensity: 0.85,
           }),
         );
-        const lacquer = own(
-          new THREE.MeshPhysicalMaterial({
+        const accent = own(
+          new THREE.MeshStandardMaterial({
             color: 0xe6ff7b,
-            metalness: 0.22,
-            roughness: 0.25,
-            clearcoat: 1,
-            clearcoatRoughness: 0.15,
+            metalness: 0.1,
+            roughness: 0.5,
             emissive: 0x667b13,
-            emissiveIntensity: 0.09,
+            emissiveIntensity: 0.2,
           }),
         );
-        const graphite = own(
-          new THREE.MeshPhysicalMaterial({
-            color: 0x282a30,
-            metalness: 0.95,
-            roughness: 0.28,
-            clearcoat: 0.7,
+        const frameMaterial = own(
+          new THREE.LineBasicMaterial({
+            color: 0xe6ff7b,
+            transparent: true,
+            opacity: 0.48,
           }),
         );
-
-        const knot = new THREE.Mesh(
-          own(new THREE.TorusKnotGeometry(1.18, 0.365, 240, 40, 2, 3)),
-          chrome,
+        const edgeMaterial = own(
+          new THREE.LineBasicMaterial({
+            color: 0xe2e8f0,
+            transparent: true,
+            opacity: 0.25,
+          }),
         );
-        knot.rotation.set(0.4, -0.25, -0.42);
-        sculpture.add(knot);
+        const moduleGeometry = own(new THREE.BoxGeometry(1.08, 1.08, 1.08));
+        const moduleEdges = own(new THREE.EdgesGeometry(moduleGeometry));
+        const modules = [];
+        for (const x of [-1, 1]) {
+          for (const y of [-1, 1]) {
+            for (const z of [-1, 1]) {
+              const block = new THREE.Mesh(moduleGeometry, silver);
+              block.userData.direction = new THREE.Vector3(x, y, z);
+              block.position
+                .copy(block.userData.direction)
+                .multiplyScalar(0.59);
+              block.add(new THREE.LineSegments(moduleEdges, edgeMaterial));
+              sculpture.add(block);
+              modules.push(block);
+            }
+          }
+        }
 
-        const ringPivot = new THREE.Group();
-        ringPivot.rotation.set(1.08, 0.4, -0.3);
-        const ring = new THREE.Mesh(
-          own(new THREE.TorusGeometry(2.14, 0.072, 24, 180)),
-          lacquer,
+        // A precise construction cage frames the eight independent modules.
+        const cageGeometry = own(new THREE.BoxGeometry(3.25, 3.25, 3.25));
+        const cageEdges = own(new THREE.EdgesGeometry(cageGeometry));
+        sculpture.add(new THREE.LineSegments(cageEdges, frameMaterial));
+        const anchorGeometry = own(new THREE.BoxGeometry(0.065, 0.065, 0.065));
+        for (const x of [-1, 1]) {
+          for (const y of [-1, 1]) {
+            for (const z of [-1, 1]) {
+              const anchor = new THREE.Mesh(anchorGeometry, accent);
+              anchor.position.set(x * 1.625, y * 1.625, z * 1.625);
+              sculpture.add(anchor);
+            }
+          }
+        }
+        const marker = new THREE.Mesh(
+          own(new THREE.BoxGeometry(0.36, 0.035, 0.035)),
+          accent,
         );
-        ringPivot.add(ring);
-
-        // A small graphite clasp grounds the acid-yellow ring as a physical
-        // object, and supplies a deliberate asymmetry as the sculpture turns.
-        const clasp = new THREE.Mesh(
-          own(new THREE.TorusGeometry(2.14, 0.084, 16, 18, 0.14)),
-          graphite,
-        );
-        clasp.rotation.z = 1.15;
-        ringPivot.add(clasp);
-        sculpture.add(ringPivot);
+        marker.position.set(0.59, 1.155, 1.12);
+        sculpture.add(marker);
 
         const keyLight = new THREE.DirectionalLight(0xf5f3e9, 2.5);
         keyLight.position.set(-3, 5, 4);
@@ -234,13 +250,20 @@ export default function SculptureScene({
           smoothX += (pointerX * 0.16 + dragX - smoothX) * easing;
           smoothY += (pointerY * 0.09 + dragY - smoothY) * easing;
           sculpture.rotation.set(
-            0.15 + smoothY + Math.sin(elapsed * 0.23) * 0.055,
-            -0.24 + elapsed * 0.105 + smoothX + scrollAmount * 0.27,
-            -0.12 + Math.sin(elapsed * 0.19) * 0.045,
+            0.32 + smoothY + Math.sin(elapsed * 0.2) * 0.025,
+            -0.52 +
+              smoothX +
+              Math.sin(elapsed * 0.16) * 0.065 +
+              scrollAmount * 0.14,
+            -0.04,
           );
-          sculpture.position.y = Math.sin(elapsed * 0.65) * 0.085;
-          ringPivot.rotation.y = 0.4 + Math.sin(elapsed * 0.3) * 0.15;
-          ringPivot.rotation.z = -0.3 + Math.sin(elapsed * 0.2) * 0.1;
+          sculpture.position.y = Math.sin(elapsed * 0.5) * 0.045;
+          const spacing = 0.59 + (1 + Math.sin(elapsed * 0.4)) * 0.012;
+          modules.forEach((block) => {
+            block.position
+              .copy(block.userData.direction)
+              .multiplyScalar(spacing);
+          });
         };
 
         const tick = (now) => {
@@ -278,12 +301,12 @@ export default function SculptureScene({
           renderer.setSize(width, height, false);
           camera.aspect = width / height;
           // Fit the narrow dimension as well as the height, so a portrait
-          // mobile viewport keeps both the knot and outer ring intact.
+          // mobile viewport keeps all eight construction-cage corners intact.
           const angle = Math.atan(
             Math.tan(THREE.MathUtils.degToRad(17.5)) *
               Math.min(camera.aspect, 1),
           );
-          camera.position.set(0, 0.1, 2.48 / Math.sin(angle));
+          camera.position.set(0, 0.1, 2.95 / Math.sin(angle));
           camera.lookAt(0, 0, 0);
           camera.updateProjectionMatrix();
           render();
@@ -399,6 +422,7 @@ export default function SculptureScene({
     <div
       ref={hostRef}
       className="sculpture-scene"
+      data-artwork="modular-cube"
       data-renderer={rendererType}
       data-motion="paused"
       aria-hidden="true"
@@ -425,70 +449,74 @@ export default function SculptureScene({
       >
         <defs>
           <linearGradient
-            id={`${gradientId}-chrome`}
-            x1="150"
+            id={`${gradientId}-top`}
+            x1="180"
             y1="130"
-            x2="545"
-            y2="475"
+            x2="520"
+            y2="320"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#f2f3f0" />
-            <stop offset=".13" stopColor="#a6acaf" />
-            <stop offset=".29" stopColor="#34373d" />
-            <stop offset=".38" stopColor="#e4e7e8" />
-            <stop offset=".55" stopColor="#858d92" />
-            <stop offset=".68" stopColor="#1e2128" />
-            <stop offset=".83" stopColor="#adb6ba" />
-            <stop offset="1" stopColor="#f0f2ed" />
+            <stop stopColor="#e5e8eb" />
+            <stop offset="1" stopColor="#aab4be" />
           </linearGradient>
           <linearGradient
-            id={`${gradientId}-acid`}
-            x1="150"
-            y1="150"
-            x2="560"
-            y2="550"
+            id={`${gradientId}-left`}
+            x1="180"
+            y1="225"
+            x2="350"
+            y2="520"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#edffa5" />
-            <stop offset=".55" stopColor="#e6ff7b" />
-            <stop offset="1" stopColor="#727d3e" />
+            <stop stopColor="#8f9ca9" />
+            <stop offset="1" stopColor="#4c5863" />
           </linearGradient>
-          <radialGradient id={`${gradientId}-glow`}>
-            <stop stopColor="#e6ff7b" stopOpacity=".06" />
-            <stop offset="1" stopColor="#e6ff7b" stopOpacity="0" />
-          </radialGradient>
+          <linearGradient id={`${gradientId}-right`}>
+            <stop stopColor="#46515c" />
+            <stop offset="1" stopColor="#242c34" />
+          </linearGradient>
         </defs>
-        <circle cx="350" cy="350" r="300" fill={`url(#${gradientId}-glow)`} />
-        <g transform="translate(0 36)">
-          <ellipse
-            cx="350"
-            cy="310"
-            rx="243"
-            ry="112"
-            transform="rotate(-37 350 310)"
-            stroke={`url(#${gradientId}-acid)`}
-            strokeWidth="9"
+        <path
+          d="M350 60 602 205 350 350 98 205Z M98 205V495L350 640 602 495V205 M350 350V640 M350 60V350"
+          stroke="#e6ff7b"
+          strokeOpacity=".4"
+        />
+        <g data-cube-faces="true" stroke="#cad2da" strokeWidth="1">
+          <polygon
+            points="350,130 520,225 350,320 180,225"
+            fill={`url(#${gradientId}-top)`}
           />
-          <path
-            d="M354 158C442 54 576 105 565 240C555 357 377 385 256 318C139 253 179 103 313 134C440 164 489 376 394 458C298 538 155 457 201 325C250 181 444 169 514 281C600 418 458 526 348 445C229 356 268 245 354 158Z"
-            stroke="#111216"
-            strokeWidth="76"
-            strokeLinejoin="round"
+          <polygon
+            points="180,225 350,320 350,520 180,425"
+            fill={`url(#${gradientId}-left)`}
           />
-          <path
-            d="M354 158C442 54 576 105 565 240C555 357 377 385 256 318C139 253 179 103 313 134C440 164 489 376 394 458C298 538 155 457 201 325C250 181 444 169 514 281C600 418 458 526 348 445C229 356 268 245 354 158Z"
-            stroke={`url(#${gradientId}-chrome)`}
-            strokeWidth="65"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M107 310A243 112 0 0 0 593 310"
-            transform="rotate(-37 350 310)"
-            stroke={`url(#${gradientId}-acid)`}
-            strokeWidth="9"
-            strokeLinecap="round"
+          <polygon
+            points="350,320 520,225 520,425 350,520"
+            fill={`url(#${gradientId}-right)`}
           />
         </g>
+        <path
+          d="M265 177.5 435 272.5V472.5 M435 177.5 265 272.5V472.5 M180 325 350 420 520 325"
+          stroke="#11181f"
+          strokeWidth="7"
+        />
+        <path d="M397 275 430 257" stroke="#e6ff7b" strokeWidth="5" />
+        {[
+          [350, 60],
+          [602, 205],
+          [98, 205],
+          [98, 495],
+          [350, 640],
+          [602, 495],
+        ].map(([x, y]) => (
+          <rect
+            key={`${x}-${y}`}
+            x={x - 3}
+            y={y - 3}
+            width="6"
+            height="6"
+            fill="#e6ff7b"
+          />
+        ))}
       </svg>
     </div>
   );

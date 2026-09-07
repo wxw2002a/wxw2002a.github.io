@@ -20,6 +20,7 @@ test("shows the revised résumé and preserves the additional engineering projec
   await expect(page).toHaveTitle(/Xiwei Wang.*Software Engineer/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/XIWEI\s+WANG/);
   await expect(page.locator(".sculpture-scene")).toBeVisible();
+  await expect(page.locator(".sculpture-scene")).toHaveAttribute("data-artwork", "modular-cube");
   await expect(page.locator(".sculpture-scene")).toHaveAttribute("data-renderer", /^(webgl|fallback)$/);
   await expect(page.locator("#work button.case-open")).toHaveCount(3);
   await expect(page.locator("details.experience-row")).toHaveCount(5);
@@ -127,6 +128,7 @@ test("language and theme changes persist and expose the updated Chinese résumé
 test("motion can be paused and resumed without hiding the sculpture", async ({ page }) => {
   await page.goto("/");
   const scene = page.locator(".sculpture-scene");
+  await expect(scene).toHaveAttribute("data-renderer", "webgl");
   await expect(scene).toHaveAttribute("data-motion", "running");
   await page.getByRole("button", { name: "Pause motion", exact: true }).click();
   await expect(scene).toHaveAttribute("data-motion", "paused");
@@ -179,12 +181,58 @@ test("WebGL-unavailable browsers get a readable static sculpture and functioning
   const scene = page.locator(".sculpture-scene");
   await expect(scene).toBeVisible();
   await expect(scene).toHaveAttribute("data-renderer", "fallback");
+  await expect(scene).toHaveAttribute("data-artwork", "modular-cube");
   await expect(scene.locator("svg")).toBeVisible();
+  const cubeFaces = scene.locator("svg g[data-cube-faces]");
+  await expect(cubeFaces).toHaveCount(1);
+  await expect(cubeFaces.locator("polygon")).toHaveCount(3);
+  await expect(scene.locator("svg ellipse")).toHaveCount(0);
+  await expect(scene.locator('svg path[stroke-linejoin="round"]')).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   await page.locator("#work button.case-open").first().click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
   expect(errors).toEqual([]);
+});
+
+test("reading progress follows scroll position and expandable page content", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+  const progress = page.getByRole("progressbar");
+  await expect(progress).toHaveAttribute("aria-valuemin", "0");
+  await expect(progress).toHaveAttribute("aria-valuemax", "100");
+  await expect(progress).toHaveAttribute("aria-valuenow", "0");
+  await expect(progress).toHaveCSS("position", "fixed");
+  await expectNoOverflow(page);
+
+  await page.evaluate(() => {
+    window.scrollTo({
+      top: (document.documentElement.scrollHeight - window.innerHeight) / 2,
+      behavior: "instant",
+    });
+  });
+  await expect.poll(async () => Number(await progress.getAttribute("aria-valuenow"))).toBeGreaterThanOrEqual(40);
+  await expect.poll(async () => Number(await progress.getAttribute("aria-valuenow"))).toBeLessThanOrEqual(60);
+
+  const heightBefore = await page.evaluate(() => document.documentElement.scrollHeight);
+  const experience = page.locator("details.experience-row").first();
+  // Toggle without scrolling to the summary: this isolates the height observer
+  // from the ordinary scroll event listener that drives the progress bar.
+  await experience.evaluate((element) => { element.open = true; });
+  await expect(experience).toHaveAttribute("open", "");
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollHeight)).toBeGreaterThan(heightBefore);
+  await expect.poll(() => page.evaluate(() => {
+    const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const expected = Math.round((window.scrollY / scrollableHeight) * 100);
+    const actual = Number(document.querySelector('[role="progressbar"]').getAttribute("aria-valuenow"));
+    return actual - expected;
+  })).toBe(0);
+
+  await page.evaluate(() => {
+    window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" });
+  });
+  await expect(progress).toHaveAttribute("aria-valuenow", "100");
+  await expectNoOverflow(page);
 });
 
 test("the résumé download serves the exact production PDF", async ({ request }) => {

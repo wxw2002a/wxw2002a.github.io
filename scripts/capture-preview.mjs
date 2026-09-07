@@ -20,10 +20,31 @@ await page.getByRole("button", { name: "Pause motion", exact: true }).click();
 await page.screenshot({ path: `${output}/desktop-hero.png` });
 await page.screenshot({ path: `${output}/desktop-full.png`, fullPage: true });
 await page.locator("#work").scrollIntoViewIfNeeded();
+await page.waitForFunction(
+  () =>
+    Number(
+      document
+        .querySelector('[role="progressbar"]')
+        .getAttribute("aria-valuenow"),
+    ) > 0,
+);
 await page.screenshot({ path: `${output}/desktop-work.png` });
 await page.locator(".case-study").first().click();
 await page.screenshot({ path: `${output}/desktop-dialog.png` });
 await page.keyboard.press("Escape");
+await page.evaluate(() =>
+  window.scrollTo({
+    top: (document.documentElement.scrollHeight - window.innerHeight) / 2,
+    behavior: "instant",
+  }),
+);
+await page.waitForFunction(
+  () =>
+    document
+      .querySelector('[role="progressbar"]')
+      .getAttribute("aria-valuenow") === "50",
+);
+await page.screenshot({ path: `${output}/desktop-progress.png` });
 await page
   .getByRole("button", { name: "Use light theme", exact: true })
   .click();
@@ -34,6 +55,20 @@ await page.setViewportSize({ width: 390, height: 844 });
 await page.waitForTimeout(200);
 await page.screenshot({ path: `${output}/mobile-hero.png` });
 await page.screenshot({ path: `${output}/mobile-full.png`, fullPage: true });
+await page.evaluate(() =>
+  window.scrollTo({
+    top: (document.documentElement.scrollHeight - window.innerHeight) / 2,
+    behavior: "instant",
+  }),
+);
+await page.waitForFunction(
+  () =>
+    document
+      .querySelector('[role="progressbar"]')
+      .getAttribute("aria-valuenow") === "50",
+);
+await page.screenshot({ path: `${output}/mobile-progress.png` });
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
 await page.getByRole("button", { name: "切换至中文", exact: true }).click();
 await page.screenshot({ path: `${output}/mobile-zh.png` });
 await page.setViewportSize({ width: 320, height: 780 });

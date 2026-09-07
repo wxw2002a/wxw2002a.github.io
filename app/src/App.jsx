@@ -28,6 +28,78 @@ const initialLocale = () => {
   }
 };
 
+function ReadingProgress({ zh }) {
+  const [progress, setProgress] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const distance =
+        document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(
+        distance > 0
+          ? Math.max(0, Math.min(100, (window.scrollY / distance) * 100))
+          : 0,
+      );
+      setScrolled(window.scrollY > 160);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    const observer = new ResizeObserver(schedule);
+    observer.observe(document.body);
+    measure();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
+  const percentage = Math.round(progress);
+  return (
+    <>
+      <div
+        className="reading-progress"
+        role="progressbar"
+        aria-label={zh ? "阅读进度" : "Reading progress"}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={percentage}
+        aria-valuetext={zh ? `已阅读 ${percentage}%` : `${percentage}% read`}
+      >
+        <span
+          className="reading-progress-fill"
+          style={{ transform: `scaleX(${progress / 100})` }}
+        />
+      </div>
+      <a
+        className="reading-position"
+        href="#profile"
+        data-visible={scrolled && percentage < 99}
+        tabIndex={scrolled && percentage < 99 ? 0 : -1}
+        aria-hidden={!scrolled || percentage >= 99}
+        aria-label={
+          zh
+            ? `已阅读 ${percentage}%，返回顶部`
+            : `${percentage}% read, back to top`
+        }
+      >
+        <span>
+          {String(percentage).padStart(2, "0")}
+          <small>%</small>
+        </span>
+        <span className="reading-up" aria-hidden="true">
+          ↑
+        </span>
+      </a>
+    </>
+  );
+}
+
 function ProjectVisual({ index }) {
   if (index === 0)
     return (
@@ -283,6 +355,7 @@ export default function App() {
   ];
   return (
     <>
+      <ReadingProgress zh={zh} />
       <a className="skip-link" href="#main">
         {data.ui.skipToContent}
       </a>

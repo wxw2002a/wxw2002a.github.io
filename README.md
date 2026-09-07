@@ -1,6 +1,6 @@
 # Xiwei Wang — Portfolio
 
-A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/), built with Vite, Three.js, and Motion. The September 2026 redesign combines editorial typography with an interactive chrome sculpture, animated project studies, and expandable experience and project details.
+A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/), built with Vite, Three.js, and Motion. The September 2026 redesign combines editorial typography with an interactive modular silver cube, animated project studies, and expandable experience and project details. A slim accent reading-progress line and percentage/back-to-top control track the current page length, including expanded content.
 
 Content is maintained in `app/src/content.js` (English and Chinese). Current experience and the downloadable `Xiwei-Wang-Resume.pdf` reflect the latest September 2026 résumé; four independent projects and additional tools from the previous site remain available. Project artwork is labeled as conceptual, not proprietary product screenshots.
 
