@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { getContent } from "./content.js";
 import SculptureScene from "./components/SculptureScene.jsx";
+import usePortfolioMotion from "./usePortfolioMotion.js";
 
 const resume = "/Xiwei-Wang-Resume.pdf";
 const Arrow = ({ diagonal = false, ...props }) => (
@@ -158,6 +159,14 @@ function ProjectVisual({ index, zh }) {
                   loading="lazy"
                   decoding="async"
                 />
+                <div
+                  className="ai-draft-layer"
+                  style={{
+                    backgroundImage:
+                      'url("/assets/ai-architecture-preview.jpg")',
+                  }}
+                />
+                <div className="ai-reveal-sweep" />
                 <span className="ai-preview-badge">
                   {zh ? "AI 概念预览" : "AI CONCEPT PREVIEW"}
                 </span>
@@ -218,6 +227,8 @@ function ProjectVisual({ index, zh }) {
               strokeDasharray="4 6"
               className="data-route"
             />
+            <circle className="warehouse-agv" r="5" fill="#e6ff7b" />
+            <circle className="warehouse-agv agv-second" r="3" fill="#e6ff7b" />
           </g>
         </svg>
         <div className="visual-stat">
@@ -247,6 +258,19 @@ function ProjectVisual({ index, zh }) {
       <div className="vision-coordinates">
         <span>ROI [ 0.24, 0.68 ]</span>
         <span>C++ / QT / LINUX</span>
+      </div>
+      <div className="vision-waveform">
+        {[0.4, 0.8, 0.55, 1, 0.65, 0.3, 0.85, 0.5, 0.9, 0.35, 0.65, 0.45].map(
+          (height, index) => (
+            <i
+              key={index}
+              style={{
+                "--bar-height": height,
+                "--bar-delay": `${index * -0.16}s`,
+              }}
+            />
+          ),
+        )}
       </div>
       <span className="visual-note">CONCEPT VISUAL / NOT PRODUCT UI</span>
     </div>
@@ -326,6 +350,7 @@ export default function App() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [exploded, setExploded] = useState(false);
   const [selected, setSelected] = useState(null);
   const [filter, setFilter] = useState("all");
   const [touchInput, setTouchInput] = useState(
@@ -335,6 +360,7 @@ export default function App() {
   const data = getContent(locale);
   const zh = locale === "zh";
   const motionOff = paused || reducedMotion;
+  usePortfolioMotion({ disabled: !!motionOff, locale });
 
   useEffect(() => {
     document.documentElement.lang = data.locale;
@@ -495,14 +521,27 @@ export default function App() {
                 : "INTERFACES / INTELLIGENCE / SYSTEMS"}
             </span>
           </div>
-          <h1 id="hero-name">
-            XIWEI WANG
+          <h1 id="hero-name" aria-label="Xiwei Wang">
+            {Array.from("XIWEI WANG").map((letter, index) => (
+              <span className="hero-letter-mask" key={index} aria-hidden="true">
+                <span
+                  className="hero-letter"
+                  style={{ "--letter-index": index }}
+                >
+                  {letter === " " ? "\u00a0" : letter}
+                </span>
+              </span>
+            ))}
             <span className="name-period" aria-hidden="true">
               ✳
             </span>
           </h1>
           <div className="hero-scene">
-            <SculptureScene paused={paused} reducedMotion={!!reducedMotion} />
+            <SculptureScene
+              paused={paused}
+              reducedMotion={!!reducedMotion}
+              exploded={exploded}
+            />
           </div>
           <div className="hero-copy">
             <p className="hero-statement">
@@ -526,7 +565,7 @@ export default function App() {
                 : "I’m Xiwei, a software engineer building full-stack products, AI platforms, and real-time systems."}
             </p>
             <div className="hero-actions">
-              <a className="pill-button" href="#work">
+              <a className="pill-button" href="#work" data-magnetic>
                 {zh ? "探索作品" : "Explore my work"}
                 <Arrow diagonal />
               </a>
@@ -560,6 +599,36 @@ export default function App() {
               </small>
             </span>
           </div>
+          <button
+            className="cube-control"
+            aria-pressed={exploded}
+            aria-label={
+              exploded
+                ? zh
+                  ? "组装方块"
+                  : "Assemble cube"
+                : zh
+                  ? "拆解方块"
+                  : "Explode cube"
+            }
+            onClick={() => setExploded(!exploded)}
+            data-magnetic
+          >
+            <span
+              className={
+                exploded ? "cube-control-icon is-exploded" : "cube-control-icon"
+              }
+              aria-hidden="true"
+            >
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+            <span>
+              {exploded ? (zh ? "组装" : "ASSEMBLE") : zh ? "拆解" : "EXPLODE"}
+            </span>
+          </button>
           <button
             className="motion-button hero-motion"
             aria-label={
@@ -645,6 +714,7 @@ export default function App() {
               <article
                 key={item.id}
                 className={`case-study case-${index} reveal`}
+                style={{ "--reveal-delay": `${index * 0.09}s` }}
               >
                 <ProjectVisual index={index} zh={zh} />
                 <div className="case-info">

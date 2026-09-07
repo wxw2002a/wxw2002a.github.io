@@ -197,7 +197,8 @@ test("WebGL-unavailable browsers get a readable static sculpture and functioning
   await expect(scene.locator("svg")).toBeVisible();
   const cubeFaces = scene.locator("svg g[data-cube-faces]");
   await expect(cubeFaces).toHaveCount(1);
-  await expect(cubeFaces.locator("polygon")).toHaveCount(3);
+  await expect(cubeFaces.locator(":scope > g")).toHaveCount(8);
+  await expect(cubeFaces.locator("polygon")).toHaveCount(24);
   await expect(scene.locator("svg ellipse")).toHaveCount(0);
   await expect(scene.locator('svg path[stroke-linejoin="round"]')).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();

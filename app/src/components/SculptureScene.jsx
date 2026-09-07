@@ -4,17 +4,21 @@ import { useEffect, useId, useRef, useState } from "react";
 export default function SculptureScene({
   paused = false,
   reducedMotion = false,
+  exploded = false,
 }) {
   const hostRef = useRef(null);
-  const settingsRef = useRef({ paused, reducedMotion });
+  const settingsRef = useRef({ paused, reducedMotion, exploded });
   const reconcileRef = useRef(null);
   const [rendererType, setRendererType] = useState("fallback");
   const gradientId = useId().replace(/:/g, "");
 
   useEffect(() => {
-    settingsRef.current = { paused, reducedMotion };
-    reconcileRef.current?.();
-  }, [paused, reducedMotion]);
+    settingsRef.current = { paused, reducedMotion, exploded };
+    if (reconcileRef.current) reconcileRef.current();
+    else if (hostRef.current) {
+      hostRef.current.dataset.explosion = exploded ? "1.00" : "0.00";
+    }
+  }, [paused, reducedMotion, exploded]);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -65,6 +69,16 @@ export default function SculptureScene({
         let smoothX = 0;
         let smoothY = 0;
         let scrollAmount = 0;
+        let hovered = false;
+        let framesRendered = 0;
+        let lastFrameReport = 0;
+        let appliedExploded = settingsRef.current.exploded;
+        let introElapsed =
+          settingsRef.current.paused || settingsRef.current.reducedMotion
+            ? 2
+            : 0;
+        let explosion = introElapsed === 0 || appliedExploded ? 1 : 0;
+        let lastFit = -1;
         const disposables = new Set();
         const removers = [];
         const scene = new THREE.Scene();
@@ -139,7 +153,7 @@ export default function SculptureScene({
         pmrem.dispose();
         pmrem = undefined;
 
-        const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 40);
+        const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 80);
         const sculpture = new THREE.Group();
         scene.add(sculpture);
 
@@ -195,16 +209,18 @@ export default function SculptureScene({
         }
 
         // A precise construction cage frames the eight independent modules.
+        const cage = new THREE.Group();
+        sculpture.add(cage);
         const cageGeometry = own(new THREE.BoxGeometry(3.25, 3.25, 3.25));
         const cageEdges = own(new THREE.EdgesGeometry(cageGeometry));
-        sculpture.add(new THREE.LineSegments(cageEdges, frameMaterial));
+        cage.add(new THREE.LineSegments(cageEdges, frameMaterial));
         const anchorGeometry = own(new THREE.BoxGeometry(0.065, 0.065, 0.065));
         for (const x of [-1, 1]) {
           for (const y of [-1, 1]) {
             for (const z of [-1, 1]) {
               const anchor = new THREE.Mesh(anchorGeometry, accent);
               anchor.position.set(x * 1.625, y * 1.625, z * 1.625);
-              sculpture.add(anchor);
+              cage.add(anchor);
             }
           }
         }
@@ -212,8 +228,56 @@ export default function SculptureScene({
           own(new THREE.BoxGeometry(0.36, 0.035, 0.035)),
           accent,
         );
-        marker.position.set(0.59, 1.155, 1.12);
-        sculpture.add(marker);
+        marker.position.set(0, 0.565, 0.53);
+        modules[modules.length - 1].add(marker);
+
+        // A travelling line and three packets reveal the construction paths.
+        // They stay attached to the cage: no confetti and no orbiting object.
+        const energyMaterial = own(
+          new THREE.MeshBasicMaterial({ color: 0xe6ff7b }),
+        );
+        const packetGeometry = own(new THREE.BoxGeometry(0.075, 0.075, 0.075));
+        const circuit = [
+          [-1, -1, -1],
+          [1, -1, -1],
+          [1, 1, -1],
+          [-1, 1, -1],
+          [-1, 1, 1],
+          [1, 1, 1],
+          [1, -1, 1],
+          [-1, -1, 1],
+          [-1, -1, -1],
+        ].map((point) => new THREE.Vector3(...point).multiplyScalar(1.625));
+        const packets = Array.from({ length: 3 }, () => {
+          const packet = new THREE.Mesh(packetGeometry, energyMaterial);
+          cage.add(packet);
+          return packet;
+        });
+        const scanMaterial = own(
+          new THREE.LineBasicMaterial({
+            color: 0xe6ff7b,
+            transparent: true,
+            opacity: 0.4,
+            depthWrite: false,
+          }),
+        );
+        const scan = new THREE.LineLoop(
+          own(
+            new THREE.BufferGeometry().setFromPoints([
+              new THREE.Vector3(-1.2, 0, -1.2),
+              new THREE.Vector3(1.2, 0, -1.2),
+              new THREE.Vector3(1.2, 0, 1.2),
+              new THREE.Vector3(-1.2, 0, 1.2),
+            ]),
+          ),
+          scanMaterial,
+        );
+        sculpture.add(scan);
+        const core = new THREE.Mesh(
+          own(new THREE.BoxGeometry(0.24, 0.24, 0.24)),
+          energyMaterial,
+        );
+        sculpture.add(core);
 
         const keyLight = new THREE.DirectionalLight(0xf5f3e9, 2.5);
         keyLight.position.set(-3, 5, 4);
@@ -233,10 +297,17 @@ export default function SculptureScene({
           !settingsRef.current.paused &&
           !settingsRef.current.reducedMotion;
 
-        const render = () => {
+        const render = (report = false) => {
           if (disposed || failed || !renderer) return;
           try {
             renderer.render(scene, camera);
+            framesRendered += 1;
+            const now = performance.now();
+            if (report || now - lastFrameReport >= 200) {
+              host.dataset.frame = String(framesRendered);
+              host.dataset.explosion = explosion.toFixed(2);
+              lastFrameReport = now;
+            }
           } catch {
             failed = true;
             stop();
@@ -245,25 +316,96 @@ export default function SculptureScene({
           }
         };
 
-        const pose = (delta) => {
-          const easing = 1 - Math.exp(-delta * 4.5);
+        const fitCamera = () => {
+          // The exploded state has a larger silhouette. A modest dolly-out
+          // keeps the far corners in frame, including on narrow mobile screens.
+          const fit = Math.round(explosion * 1000) / 1000;
+          if (fit === lastFit) return;
+          lastFit = fit;
+          const angle = Math.atan(
+            Math.tan(THREE.MathUtils.degToRad(17.5)) *
+              Math.min(camera.aspect, 1),
+          );
+          camera.position.set(0, 0.1, (2.95 + fit * 0.6) / Math.sin(angle));
+          camera.lookAt(0, 0, 0);
+          camera.updateProjectionMatrix();
+        };
+
+        const pose = (delta, immediate = false) => {
+          const easing = immediate ? 1 : 1 - Math.exp(-delta * 4.5);
           smoothX += (pointerX * 0.16 + dragX - smoothX) * easing;
           smoothY += (pointerY * 0.09 + dragY - smoothY) * easing;
+          const introProgress = THREE.MathUtils.clamp(
+            introElapsed / 1.85,
+            0,
+            1,
+          );
+          const intro = 1 - THREE.MathUtils.smoothstep(introProgress, 0, 1);
+          // A deliberate mechanical breath separates the modules every five
+          // seconds; orientation stays composed instead of continuously spinning.
+          const breath =
+            Math.pow(Math.sin(Math.max(0, elapsed - 2.1) * 0.62), 6) * 0.25;
+          const requested = settingsRef.current.exploded
+            ? 1
+            : Math.max(
+                intro,
+                breath,
+                hovered ? 0.28 : 0,
+                Math.min(scrollAmount * 0.85, 0.85),
+              );
+          explosion = immediate
+            ? settingsRef.current.exploded
+              ? 1
+              : 0
+            : THREE.MathUtils.lerp(
+                explosion,
+                requested,
+                1 - Math.exp(-delta * 7),
+              );
+          explosion = THREE.MathUtils.clamp(explosion, 0, 1);
           sculpture.rotation.set(
-            0.32 + smoothY + Math.sin(elapsed * 0.2) * 0.025,
-            -0.52 +
-              smoothX +
-              Math.sin(elapsed * 0.16) * 0.065 +
-              scrollAmount * 0.14,
+            0.32 + smoothY,
+            -0.52 + smoothX + scrollAmount * 0.1,
             -0.04,
           );
-          sculpture.position.y = Math.sin(elapsed * 0.5) * 0.045;
-          const spacing = 0.59 + (1 + Math.sin(elapsed * 0.4)) * 0.012;
-          modules.forEach((block) => {
+          sculpture.position.y = immediate
+            ? 0
+            : Math.sin(elapsed * 0.8) * 0.045;
+          const spacing = 0.59 + explosion * 0.72;
+          modules.forEach((block, index) => {
             block.position
               .copy(block.userData.direction)
               .multiplyScalar(spacing);
+            // Each block settles from a slightly different initial attitude.
+            const settle = immediate ? 0 : intro * 0.16;
+            const recoil = immediate
+              ? 0
+              : Math.sin(Math.max(0, introElapsed - 1.05) * 12 + index * 0.18) *
+                Math.exp(-Math.max(0, introElapsed - 1.05) * 5) *
+                THREE.MathUtils.smoothstep(introElapsed, 0.8, 1.1) *
+                0.035;
+            block.rotation.set(
+              (settle + recoil) * block.userData.direction.y,
+              settle * block.userData.direction.x,
+              settle * block.userData.direction.z,
+            );
           });
+          cage.scale.setScalar(1 + explosion * 0.12);
+          packets.forEach((packet, index) => {
+            const progress = (elapsed * 0.75 + (index * 8) / 3) % 8;
+            const segment = Math.floor(progress);
+            packet.position.lerpVectors(
+              circuit[segment],
+              circuit[segment + 1],
+              progress - segment,
+            );
+          });
+          scan.scale.setScalar(1 + explosion * 0.59);
+          scan.position.y = (1.17 + explosion * 0.72) * Math.cos(elapsed * 1.2);
+          scanMaterial.opacity = 0.24 + (1 + Math.sin(elapsed * 1.2)) * 0.1;
+          core.scale.setScalar(0.8 + explosion * 0.6);
+          core.visible = explosion > 0.18;
+          fitCamera();
         };
 
         const tick = (now) => {
@@ -275,12 +417,24 @@ export default function SculptureScene({
           const delta = lastTime ? Math.min((now - lastTime) / 1000, 0.05) : 0;
           lastTime = now;
           elapsed += delta;
+          introElapsed += delta;
           pose(delta);
           render();
           if (canAnimate()) frameId = requestAnimationFrame(tick);
         };
 
         const reconcile = () => {
+          const changedExplosion =
+            appliedExploded !== settingsRef.current.exploded;
+          appliedExploded = settingsRef.current.exploded;
+          if (settingsRef.current.reducedMotion || changedExplosion)
+            introElapsed = 2;
+          if (failed) {
+            host.dataset.explosion = settingsRef.current.exploded
+              ? "1.00"
+              : "0.00";
+            return;
+          }
           if (canAnimate()) {
             host.dataset.motion = "running";
             host.style.cursor = dragging ? "grabbing" : "grab";
@@ -288,7 +442,20 @@ export default function SculptureScene({
           } else {
             stop();
             dragging = false;
+            if (
+              capturedPointer !== null &&
+              host.hasPointerCapture(capturedPointer)
+            ) {
+              host.releasePointerCapture(capturedPointer);
+              capturedPointer = null;
+            }
             host.style.cursor = "";
+            // Explicit state controls still work when animations are disabled.
+            // A pause otherwise preserves the exact current pose and frame.
+            if (changedExplosion || settingsRef.current.reducedMotion) {
+              pose(0, true);
+              render(true);
+            }
           }
         };
         reconcileRef.current = reconcile;
@@ -300,16 +467,9 @@ export default function SculptureScene({
           renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
           renderer.setSize(width, height, false);
           camera.aspect = width / height;
-          // Fit the narrow dimension as well as the height, so a portrait
-          // mobile viewport keeps all eight construction-cage corners intact.
-          const angle = Math.atan(
-            Math.tan(THREE.MathUtils.degToRad(17.5)) *
-              Math.min(camera.aspect, 1),
-          );
-          camera.position.set(0, 0.1, 2.95 / Math.sin(angle));
-          camera.lookAt(0, 0, 0);
-          camera.updateProjectionMatrix();
-          render();
+          lastFit = -1;
+          fitCamera();
+          render(true);
         };
 
         const pointerMove = (event) => {
@@ -363,6 +523,16 @@ export default function SculptureScene({
         };
 
         listen(window, "pointermove", pointerMove, { passive: true });
+        listen(host, "pointerenter", (event) => {
+          if (event.pointerType === "mouse" && canAnimate()) hovered = true;
+        });
+        listen(host, "pointerleave", () => {
+          hovered = false;
+          if (!dragging) {
+            pointerX = 0;
+            pointerY = 0;
+          }
+        });
         listen(host, "pointerdown", pointerDown);
         listen(host, "pointerup", pointerUp);
         listen(host, "pointercancel", pointerUp);
@@ -398,7 +568,10 @@ export default function SculptureScene({
 
         host.appendChild(canvas);
         readScroll();
-        pose(0);
+        pose(
+          0,
+          settingsRef.current.paused || settingsRef.current.reducedMotion,
+        );
         resize();
         if (!failed) setRendererType("webgl");
         reconcile();
@@ -450,10 +623,10 @@ export default function SculptureScene({
         <defs>
           <linearGradient
             id={`${gradientId}-top`}
-            x1="180"
-            y1="130"
-            x2="520"
-            y2="320"
+            x1="-81"
+            y1="-94"
+            x2="81"
+            y2="1"
             gradientUnits="userSpaceOnUse"
           >
             <stop stopColor="#e5e8eb" />
@@ -461,10 +634,10 @@ export default function SculptureScene({
           </linearGradient>
           <linearGradient
             id={`${gradientId}-left`}
-            x1="180"
-            y1="225"
-            x2="350"
-            y2="520"
+            x1="-81"
+            y1="-46"
+            x2="0"
+            y2="94"
             gradientUnits="userSpaceOnUse"
           >
             <stop stopColor="#8f9ca9" />
@@ -480,26 +653,46 @@ export default function SculptureScene({
           stroke="#e6ff7b"
           strokeOpacity=".4"
         />
-        <g data-cube-faces="true" stroke="#cad2da" strokeWidth="1">
-          <polygon
-            points="350,130 520,225 350,320 180,225"
-            fill={`url(#${gradientId}-top)`}
-          />
-          <polygon
-            points="180,225 350,320 350,520 180,425"
-            fill={`url(#${gradientId}-left)`}
-          />
-          <polygon
-            points="350,320 520,225 520,425 350,520"
-            fill={`url(#${gradientId}-right)`}
-          />
+        <g data-cube-faces="true" stroke="#cad2da" strokeWidth="1.2">
+          {[-1, 1]
+            .flatMap((x) =>
+              [-1, 1].flatMap((y) => [-1, 1].map((z) => ({ x, y, z }))),
+            )
+            .sort((a, b) => a.x + a.y + a.z - b.x - b.y - b.z)
+            .map(({ x, y, z }) => {
+              const spacing = exploded ? 1.31 : 0.59;
+              const cx = 350 + (x - z) * 75 * spacing;
+              const cy = 350 + ((x + z) * 44 - y * 86) * spacing;
+              return (
+                <g
+                  key={`${x}-${y}-${z}`}
+                  style={{
+                    transform: `translate(${cx}px, ${cy}px)`,
+                    transition:
+                      paused || reducedMotion
+                        ? "none"
+                        : "transform 850ms cubic-bezier(.2,.8,.2,1)",
+                  }}
+                >
+                  <polygon
+                    points="0,-93.96 81,-46.44 0,1.08 -81,-46.44"
+                    fill={`url(#${gradientId}-top)`}
+                  />
+                  <polygon
+                    points="-81,-46.44 0,1.08 0,93.96 -81,46.44"
+                    fill={`url(#${gradientId}-left)`}
+                  />
+                  <polygon
+                    points="0,1.08 81,-46.44 81,46.44 0,93.96"
+                    fill={`url(#${gradientId}-right)`}
+                  />
+                  {x === 1 && y === 1 && z === 1 && (
+                    <path d="M30 -17 58 -33" stroke="#e6ff7b" strokeWidth="5" />
+                  )}
+                </g>
+              );
+            })}
         </g>
-        <path
-          d="M265 177.5 435 272.5V472.5 M435 177.5 265 272.5V472.5 M180 325 350 420 520 325"
-          stroke="#11181f"
-          strokeWidth="7"
-        />
-        <path d="M397 275 430 257" stroke="#e6ff7b" strokeWidth="5" />
         {[
           [350, 60],
           [602, 205],
