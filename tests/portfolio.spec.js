@@ -1,77 +1,199 @@
+import { createHash } from "node:crypto";
+import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
-test("renders the complete portfolio without runtime errors", async ({ page, isMobile }) => {
-  const consoleErrors = [];
-  const pageErrors = [];
+async function expectNoOverflow(page) {
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth),
+    "The page must fit the viewport without horizontal scrolling",
+  ).toBeLessThanOrEqual(1);
+}
+
+test("shows the revised résumé and preserves the additional engineering projects", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
-    if (message.type() === "error") consoleErrors.push(message.text());
+    if (message.type() === "error") errors.push(message.text());
   });
-  page.on("pageerror", (error) => pageErrors.push(error.message));
 
   await page.goto("/");
-  await expect(page).toHaveTitle(/Xiwei Wang/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("I build products");
-  await expect(page.locator(".system-map")).toBeVisible();
-  await expect(page.locator(".proof-item")).toHaveCount(3);
+  await expect(page).toHaveTitle(/Xiwei Wang.*Software Engineer/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/XIWEI\s+WANG/);
+  await expect(page.locator(".sculpture-scene")).toBeVisible();
+  await expect(page.locator(".sculpture-scene")).toHaveAttribute("data-renderer", /^(webgl|fallback)$/);
+  await expect(page.locator("#work button.case-open")).toHaveCount(3);
+  await expect(page.locator("details.experience-row")).toHaveCount(5);
 
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
-  expect(overflow).toBeLessThanOrEqual(1);
+  const ipmd = page.locator("details.experience-row").filter({ hasText: "IPMD, Inc." });
+  if ((await ipmd.getAttribute("open")) === null) await ipmd.locator("summary").click();
+  await expect(ipmd).toHaveAttribute("open", "");
+  await expect(ipmd).toContainText("Software Engineering Intern");
+  await expect(ipmd).toContainText("May 2026 — Aug 2026");
+  await expect(ipmd).toContainText("Stable Diffusion 1.5");
+  await expect(ipmd).toContainText("Docker");
+  await expect(ipmd).toContainText("Azure");
+  await expect(ipmd).not.toContainText("Technical Manager");
+  await ipmd.locator("summary").click();
+  await expect(ipmd).not.toHaveAttribute("open");
 
-  if (isMobile) {
-    const menu = page.getByRole("button", { name: "Open menu" });
-    await expect(page.locator("#primary-navigation")).toBeHidden();
-    await menu.click();
-    await expect(page.locator("#primary-navigation")).toBeVisible();
-    await page.locator("#primary-navigation").getByRole("link", { name: "Experience" }).click();
-    await expect(page.locator("#primary-navigation")).toBeHidden();
+  const folobotics = page.locator("details.experience-row").filter({ hasText: "FoloBotics" });
+  await expect(folobotics).toContainText("Full-Stack Developer");
+  await expect(folobotics).toContainText("multithreaded");
+  await expect(folobotics).toContainText("25%");
+  const vision = page.locator("details.experience-row").filter({ hasText: "HIT Robotics Institute" });
+  await expect(vision).toContainText("May 2025 — Aug 2025");
+  await expect(vision).toContainText("600");
+  const sinopec = page.locator("details.experience-row").filter({ hasText: "Sinopec Group" });
+  await expect(sinopec).toContainText("Jun 2024 — Dec 2024");
+  await expect(sinopec).toContainText("5,000+");
+  await expect(sinopec).toContainText("80 ms");
+
+  await expect(page.locator("#background")).toContainText("Dec 2026");
+  await expect(page.locator("#background")).toContainText("Expected");
+  await expect(page.locator("#experiments .project-row")).toHaveCount(4);
+  for (const project of ["High-Performance Java Server", "CUDA Convolution Acceleration", "Audio Anomaly Detection", "Template / ROI Toolkit"]) {
+    await expect(page.locator("#experiments")).toContainText(project);
   }
-
-  await page.locator("#experience").scrollIntoViewIfNeeded();
-  await expect(page.locator(".experience-card")).toHaveCount(5);
-  await page.locator("#work").scrollIntoViewIfNeeded();
-  await expect(page.locator(".project-card")).toHaveCount(4);
-  await page.getByRole("button", { name: "GPU", exact: true }).click();
-  await expect(page.locator(".project-card")).toHaveCount(1);
-  await expect(page.locator(".project-card")).toContainText("CUDA");
-  await page.getByRole("button", { name: "All", exact: true }).click();
-  await expect(page.locator(".project-card")).toHaveCount(4);
-
-  await page.locator("#contact").scrollIntoViewIfNeeded();
-  await expect(page.locator('a[href^="mailto:"]')).toHaveCount(2);
-  await expect(page.locator('a[href^="tel:"]')).toHaveCount(1);
-  await expect(page.locator('a[href="/Xiwei-Wang-Resume.pdf"]')).toHaveCount(3);
-
-  expect(consoleErrors).toEqual([]);
-  expect(pageErrors).toEqual([]);
+  await expect(page.locator('#contact a[href="mailto:wangxiwei2002@gmail.com"]').last()).toBeVisible();
+  await expect(page.locator('#contact a[href="tel:+14378723279"]')).toBeVisible();
+  await expectNoOverflow(page);
+  expect(errors).toEqual([]);
 });
 
-test("language and theme controls update the document", async ({ page }) => {
+test("case studies open accessible dialogs and restore focus when dismissed", async ({ page }) => {
+  await page.goto("/#work");
+  const caseStudies = page.locator("#work button.case-open");
+  await expect(caseStudies).toHaveCount(3);
+  for (let index = 0; index < 3; index += 1) {
+    const trigger = caseStudies.nth(index);
+    await trigger.click();
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("heading").first()).toBeVisible();
+    await expect(dialog).toContainText(["IPMD", "Sinopec", "600"][index]);
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(trigger).toBeFocused();
+  }
+  await expectNoOverflow(page);
+});
+
+test("filters the retained project archive and navigates on narrow screens", async ({ page, isMobile }) => {
   await page.goto("/");
-  const initialTheme = await page.locator("html").getAttribute("data-theme");
-
-  await page.getByRole("button", { name: "切换至中文" }).click();
-  await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("我把产品构想");
-  await expect(page).toHaveTitle(/王曦威/);
-
-  const themeControl = page.getByRole("button", { name: /使用.*主题/ });
-  await themeControl.click();
-  await expect.poll(async () => page.locator("html").getAttribute("data-theme")).not.toBe(initialTheme);
+  if (isMobile) {
+    const menu = page.getByRole("button", { name: "Open menu", exact: true });
+    const workLink = page.locator('header a[href="#work"]').first();
+    await expect(workLink).toBeHidden();
+    await menu.click();
+    await expect(workLink).toBeVisible();
+    await workLink.click();
+    await expect(workLink).toBeHidden();
+    await expect(page).toHaveURL(/#work$/);
+    await expect(page.locator("#work")).toBeInViewport();
+  }
+  const archive = page.locator("#experiments");
+  await archive.getByRole("button", { name: "GPU", exact: true }).click();
+  await expect(archive.locator(".project-row")).toHaveCount(1);
+  await expect(archive.locator(".project-row")).toContainText("CUDA");
+  await archive.getByRole("button", { name: "Systems", exact: true }).click();
+  await expect(archive.locator(".project-row")).toHaveCount(2);
+  await archive.getByRole("button", { name: "All", exact: true }).click();
+  await expect(archive.locator(".project-row")).toHaveCount(4);
+  if (isMobile) await page.setViewportSize({ width: 320, height: 700 });
+  await expectNoOverflow(page);
 });
 
-test("résumé asset is served and reduced-motion mode remains usable", async ({ browser, request }) => {
+test("language and theme changes persist and expose the updated Chinese résumé", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await page.getByRole("button", { name: "Use light theme", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await page.getByRole("button", { name: "切换至中文", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
+  await expect(page).toHaveTitle(/Xiwei Wang.*软件工程师/);
+  const ipmd = page.locator("details.experience-row").filter({ hasText: "IPMD" });
+  await expect(ipmd).toContainText("软件工程实习生");
+  await expect(ipmd).not.toContainText("技术经理");
+  const sinopec = page.locator("details.experience-row").filter({ hasText: "中国石化" });
+  await expect(sinopec).toContainText("2024年6月—12月");
+  await expect(sinopec).toContainText("5,000+");
+  await expect(page.locator("#background")).toContainText("预计");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expectNoOverflow(page);
+});
+
+test("motion can be paused and resumed without hiding the sculpture", async ({ page }) => {
+  await page.goto("/");
+  const scene = page.locator(".sculpture-scene");
+  await expect(scene).toHaveAttribute("data-motion", "running");
+  await page.getByRole("button", { name: "Pause motion", exact: true }).click();
+  await expect(scene).toHaveAttribute("data-motion", "paused");
+  await expect(scene).toBeVisible();
+  await page.getByRole("button", { name: "Resume motion", exact: true }).click();
+  await expect(scene).toHaveAttribute("data-motion", "running");
+});
+
+test("pausing motion keeps expanded experience and project details readable", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Pause motion", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-motion", "paused");
+
+  for (const [rowSelector, contentSelector] of [
+    ["details.experience-row", ".role-details"],
+    ["details.project-row", ".project-description"],
+  ]) {
+    const row = page.locator(rowSelector).first();
+    await row.locator("summary").click();
+    await expect(row).toHaveAttribute("open", "");
+    const details = row.locator(contentSelector);
+    await expect(details).toBeVisible();
+    await expect(details).toHaveCSS("opacity", "1");
+  }
+});
+
+test("reduced motion starts paused and work deep links remain reachable", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.locator(".sculpture-scene")).toHaveAttribute("data-motion", "paused");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await page.goto("/#work");
+  await expect(page.locator(".sculpture-scene")).toHaveAttribute("data-motion", "paused");
+  await expect(page.locator("#work")).toBeInViewport();
+  await expect(page.locator("#work button.case-open").first()).toBeVisible();
+  await expectNoOverflow(page);
+});
+
+test("WebGL-unavailable browsers get a readable static sculpture and functioning content", async ({ page }) => {
+  await page.addInitScript(() => {
+    const getContext = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+      if (["webgl", "webgl2", "experimental-webgl"].includes(type)) return null;
+      return getContext.call(this, type, ...args);
+    };
+  });
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto("/");
+  const scene = page.locator(".sculpture-scene");
+  await expect(scene).toBeVisible();
+  await expect(scene).toHaveAttribute("data-renderer", "fallback");
+  await expect(scene.locator("svg")).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await page.locator("#work button.case-open").first().click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.keyboard.press("Escape");
+  expect(errors).toEqual([]);
+});
+
+test("the résumé download serves the exact production PDF", async ({ request }) => {
   const response = await request.get("/Xiwei-Wang-Resume.pdf");
   expect(response.ok()).toBeTruthy();
-  expect((await response.body()).byteLength).toBeGreaterThan(100000);
-
-  const context = await browser.newContext({
-    reducedMotion: "reduce",
-    viewport: { width: 390, height: 844 },
-  });
-  const page = await context.newPage();
-  await page.goto("/");
-  await expect(page.locator(".system-map")).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  expect(await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)).toBeTruthy();
-  await context.close();
+  expect(response.headers()["content-type"]).toContain("application/pdf");
+  const served = await response.body();
+  expect(served.subarray(0, 5).toString()).toBe("%PDF-");
+  const committed = await readFile(new URL("../Xiwei-Wang-Resume.pdf", import.meta.url));
+  const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
+  expect(sha256(served)).toBe(sha256(committed));
 });

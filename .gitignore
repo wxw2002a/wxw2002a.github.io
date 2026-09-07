@@ -1,4 +1,5 @@
 node_modules/
+.visual-qa/
 test-results/
 playwright-report/
 *.log

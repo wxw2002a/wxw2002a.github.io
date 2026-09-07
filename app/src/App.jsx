@@ -1,758 +1,836 @@
-import {
-  AnimatePresence,
-  MotionConfig,
-  motion,
-  useInView,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "motion/react";
 import { getContent } from "./content.js";
-import SystemMap from "./components/SystemMap.jsx";
+import SculptureScene from "./components/SculptureScene.jsx";
 
-const RESUME_PATH = "/Xiwei-Wang-Resume.pdf";
-
-function ArrowIcon({ down = false }) {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true">
-      {down ? (
-        <>
-          <path d="M10 3v11" />
-          <path d="m6 10 4 4 4-4" />
-          <path d="M4 17h12" />
-        </>
-      ) : (
-        <>
-          <path d="M4 16 16 4" />
-          <path d="M7 4h9v9" />
-        </>
-      )}
-    </svg>
-  );
-}
-
-function ThemeIcon({ theme }) {
-  if (theme === "dark") {
-    return (
-      <svg className="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-      </svg>
-    );
+const resume = "/Xiwei-Wang-Resume.pdf";
+const Arrow = ({ diagonal = false, ...props }) => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+    <path
+      d={diagonal ? "M5 19 19 5M5 5h14v14" : "M4 12h16m-6-6 6 6-6 6"}
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+  </svg>
+);
+const Tags = ({ items }) => (
+  <span className="tags">
+    {items.map((item) => (
+      <span key={item}>{item}</span>
+    ))}
+  </span>
+);
+const initialLocale = () => {
+  try {
+    return localStorage.getItem("portfolio-language") === "zh" ? "zh" : "en";
+  } catch {
+    return "en";
   }
+};
 
-  return (
-    <svg className="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M20.2 15.2A8.7 8.7 0 0 1 8.8 3.8a8.8 8.8 0 1 0 11.4 11.4Z" />
-    </svg>
-  );
-}
-
-function useMediaQuery(query) {
-  const [matches, setMatches] = useState(() =>
-    typeof window === "undefined" ? false : window.matchMedia(query).matches,
-  );
-
-  useEffect(() => {
-    const media = window.matchMedia(query);
-    const update = () => setMatches(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, [query]);
-
-  return matches;
-}
-
-function AnimatedMetric({ value, label }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.55 });
-  const reduceMotion = useReducedMotion();
-  const [display, setDisplay] = useState(reduceMotion ? value : "0");
-
-  useEffect(() => {
-    if (!isInView) return undefined;
-    const numeric = Number.parseFloat(value.replace(/[^\d.]/g, ""));
-    if (!Number.isFinite(numeric) || reduceMotion) {
-      setDisplay(value);
-      return undefined;
-    }
-
-    const negative = value.trim().startsWith("−") || value.trim().startsWith("-");
-    const suffix = value.includes("%") ? "%" : value.includes("+") ? "+" : "";
-    const startedAt = performance.now();
-    const duration = 900;
-    let frame = 0;
-
-    const tick = (now) => {
-      const progress = Math.min((now - startedAt) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = Math.round(numeric * eased);
-      setDisplay((negative ? "−" : "") + current + suffix);
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    };
-
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [isInView, reduceMotion, value]);
-
-  return (
-    <div className="proof-item" ref={ref}>
-      <strong>{display}</strong>
-      <span>{label}</span>
-    </div>
-  );
-}
-
-function Reveal({ as = "div", className = "", children, delay = 0, ...props }) {
-  const Component = motion[as];
-  return (
-    <Component
-      className={className}
-      initial={{ y: 24, opacity: 0.28 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true, amount: 0.12, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.62, delay, ease: [0.22, 1, 0.36, 1] }}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
-}
-
-function CapabilityIcon({ type }) {
-  if (type === "product-delivery") {
+function ProjectVisual({ index }) {
+  if (index === 0)
     return (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M6 24V8l10-4 10 4v16l-10 4-10-4Z" />
-        <path d="m6 8 10 5 10-5M16 13v15" />
-      </svg>
-    );
-  }
-  if (type === "full-stack-products") {
-    return (
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <rect x="5" y="4" width="22" height="24" rx="4" />
-        <path d="M10 10h12M10 16h7M10 22h10" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 32 32" aria-hidden="true">
-      <circle cx="16" cy="16" r="11" />
-      <path d="M16 5v22M5 16h22M8 9.5c2.3 2 4.9 3 8 3s5.7-1 8-3M8 22.5c2.3-2 4.9-3 8-3s5.7 1 8 3" />
-    </svg>
-  );
-}
-
-function ProjectVisual({ id }) {
-  if (id === "java-tcp-server") {
-    return (
-      <div className="project-visual-inner">
-        <div className="terminal-ui">
-          <code>
-            $ server --threads=auto
-            <br />
-            &gt; tuning socket buffers...
-            <br />
-            &gt; latency <b>~40ms ✓</b>
-            <br />
-            &gt; status: stable
-          </code>
+      <div className="project-visual ai-visual" aria-hidden="true">
+        <div className="art-caption">
+          <span>INPUT → INFERENCE → IMAGE</span>
+          <span>01 / GENERATIVE</span>
         </div>
-      </div>
-    );
-  }
-
-  if (id === "cuda-convolution") {
-    return (
-      <div className="project-visual-inner">
-        <div className="kernel-grid">
-          {Array.from({ length: 64 }, (_, index) => (
-            <i key={index} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (id === "audio-anomaly-detection") {
-    return (
-      <div className="project-visual-inner">
-        <div className="wave-ui">
-          {Array.from({ length: 18 }, (_, index) => (
-            <i key={index} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="project-visual-inner">
-      <div className="roi-ui">
-        <div className="roi-box">
+        <div className="latent-art">
+          <i />
+          <i />
+          <i />
+          <i />
           <i />
           <i />
           <i />
           <i />
         </div>
+        <div className="prompt-line">
+          <span className="signal-dot" /> A thought, made visible.<span>↵</span>
+        </div>
+        <span className="visual-note">CONCEPT VISUAL / NOT PRODUCT UI</span>
       </div>
-    </div>
-  );
-}
-
-function Header({
-  copy,
-  activeSection,
-  scrolled,
-  menuOpen,
-  setMenuOpen,
-  isMobile,
-  locale,
-  onLanguage,
-  theme,
-  onTheme,
-}) {
-  const navId = "primary-navigation";
-  return (
-    <header className={"site-header" + (scrolled ? " is-scrolled" : "")}>
-      <div className="nav-shell">
-        <a className="brand" href="#home" onClick={() => setMenuOpen(false)} aria-label="Xiwei Wang — Home">
-          <span className="brand-mark" aria-hidden="true">XW</span>
-          <span className="brand-copy">
-            <strong>Xiwei Wang</strong>
-            <small>{copy.ui.brandRole}</small>
+    );
+  if (index === 1)
+    return (
+      <div className="project-visual warehouse-visual" aria-hidden="true">
+        <div className="art-caption">
+          <span>WAREHOUSE / LIVE STATE</span>
+          <span>
+            <i className="signal-dot" /> SYNC
           </span>
-        </a>
+        </div>
+        <svg className="warehouse-grid" viewBox="0 0 560 300">
+          <g transform="translate(280 15) rotate(30) skewX(-30) scale(1 .85)">
+            {Array.from({ length: 160 }, (_, i) => {
+              const x = (i % 16) * 20 - 180;
+              const y = Math.floor(i / 16) * 24;
+              const active = (i * 7) % 19 < 4;
+              return (
+                <rect
+                  key={i}
+                  x={x}
+                  y={y}
+                  width="13"
+                  height="16"
+                  rx="1"
+                  fill={active ? "#d9fa8a" : "#27342b"}
+                  opacity={active ? 0.4 + (i % 6) / 10 : 1}
+                  className={active ? "live-cell" : ""}
+                  style={{ animationDelay: `${(i % 7) * -0.7}s` }}
+                />
+              );
+            })}
+            <path
+              d="M-186 262H143V-12H-55V262"
+              stroke="#d9fa8a"
+              strokeWidth="1.5"
+              fill="none"
+              strokeDasharray="4 6"
+              className="data-route"
+            />
+          </g>
+        </svg>
+        <div className="visual-stat">
+          <b>
+            &lt;80<span>ms</span>
+          </b>
+          <span>REAL-TIME SYNC LATENCY</span>
+        </div>
+        <span className="visual-note">CONCEPT VISUAL / NOT PRODUCT UI</span>
+      </div>
+    );
+  return (
+    <div className="project-visual vision-visual" aria-hidden="true">
+      <div className="art-caption">
+        <span>VISION / FRAME ANALYSIS</span>
+        <span>03 / INSPECTION</span>
+      </div>
+      <div className="vision-target">
+        <div className="target-ring" />
+        <div className="target-ring" />
+        <div className="target-cross" />
+        <div className="scan-line" />
+        <span>
+          600<small>IMAGES / SECOND · PEAK</small>
+        </span>
+      </div>
+      <div className="vision-coordinates">
+        <span>ROI [ 0.24, 0.68 ]</span>
+        <span>C++ / QT / LINUX</span>
+      </div>
+      <span className="visual-note">CONCEPT VISUAL / NOT PRODUCT UI</span>
+    </div>
+  );
+}
 
+function CaseDialog({ selected, data, onClose, zh }) {
+  const ref = useRef(null);
+  const featured = data.featured.find((item) => item.id === selected);
+  const role = data.experiences.find(
+    (item) => item.id === featured?.experienceId,
+  );
+  useEffect(() => {
+    const dialog = ref.current;
+    if (selected && !dialog.open) {
+      dialog.showModal();
+      document.body.style.overflow = "hidden";
+    }
+    if (!selected && dialog.open) dialog.close();
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
+  return (
+    <dialog
+      ref={ref}
+      className="case-dialog"
+      aria-labelledby="case-title"
+      onClose={onClose}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) ref.current.close();
+      }}
+    >
+      {featured && (
+        <div className="dialog-content">
+          <button
+            className="dialog-close"
+            onClick={() => ref.current.close()}
+            aria-label={zh ? "关闭案例" : "Close case study"}
+          >
+            ×
+          </button>
+          <span className="eyebrow">{featured.eyebrow}</span>
+          <h2 id="case-title">{featured.title}</h2>
+          <p className="dialog-summary">{featured.summary}</p>
+          <div className="dialog-role">
+            <span>{role.company}</span>
+            <span>{role.role}</span>
+            <span>{role.period}</span>
+          </div>
+          <h3>{zh ? "我的工作" : "My contribution"}</h3>
+          <ul>
+            {role.bullets.map((bullet) => (
+              <li key={bullet}>{bullet}</li>
+            ))}
+          </ul>
+          <Tags items={featured.tech} />
+          <a
+            className="text-link"
+            href={resume}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {data.ui.actions.viewResume}
+            <Arrow diagonal />
+          </a>
+        </div>
+      )}
+    </dialog>
+  );
+}
+
+export default function App() {
+  const [locale, setLocale] = useState(initialLocale);
+  const [theme, setTheme] = useState(
+    () => document.documentElement.dataset.theme || "dark",
+  );
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [filter, setFilter] = useState("all");
+  const [touchInput, setTouchInput] = useState(
+    () => window.matchMedia("(pointer: coarse)").matches,
+  );
+  const reducedMotion = useReducedMotion();
+  const data = getContent(locale);
+  const zh = locale === "zh";
+  const motionOff = paused || reducedMotion;
+
+  useEffect(() => {
+    document.documentElement.lang = data.locale;
+    document.title = data.meta.title;
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute("content", data.meta.description);
+    try {
+      localStorage.setItem("portfolio-language", locale);
+    } catch {
+      /* Storage may be disabled. */
+    }
+  }, [data, locale]);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", theme === "dark" ? "#09090b" : "#efeee8");
+    try {
+      localStorage.setItem("portfolio-appearance", theme);
+    } catch {
+      /* Keep the in-memory preference. */
+    }
+  }, [theme]);
+  useEffect(() => {
+    document.documentElement.dataset.motion = motionOff ? "paused" : "running";
+  }, [motionOff]);
+  useEffect(() => {
+    const query = window.matchMedia("(pointer: coarse)");
+    const update = () => setTouchInput(query.matches);
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { threshold: 0.08 },
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [locale]);
+  useEffect(() => {
+    let cancelled = false;
+    const followHash = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (id)
+        document.getElementById(id)?.scrollIntoView({ behavior: "instant" });
+    };
+    document.fonts.ready.then(() => {
+      if (!cancelled) requestAnimationFrame(followHash);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  useEffect(() => {
+    const escape = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, []);
+
+  const nav = [
+    { id: "work", label: zh ? "作品" : "Work" },
+    { id: "experience", label: zh ? "经历" : "Experience" },
+    { id: "background", label: zh ? "关于" : "About" },
+  ];
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        {data.ui.skipToContent}
+      </a>
+      <header className="nav">
+        <a className="wordmark" href="#profile" aria-label="Xiwei Wang — home">
+          xw<span className="wordmark-star">✳</span>
+        </a>
+        <span className="nav-descriptor">
+          {zh ? "软件工程师 / 创造者" : "SOFTWARE ENGINEER / BUILDER"}
+        </span>
         <nav
-          className={"site-nav" + (menuOpen ? " is-open" : "")}
-          id={navId}
-          aria-label="Primary navigation"
-          hidden={isMobile && !menuOpen}
-          inert={isMobile && !menuOpen}
+          id="site-navigation"
+          className={menuOpen ? "nav-links open" : "nav-links"}
+          aria-label={zh ? "主导航" : "Main navigation"}
         >
-          {copy.ui.nav.map((item) => (
+          {nav.map((item) => (
             <a
               key={item.id}
-              className={activeSection === item.id ? "is-active" : ""}
-              href={item.href}
+              href={`#${item.id}`}
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </a>
           ))}
-        </nav>
-
-        <div className="nav-actions">
-          <button
-            className="utility-button"
-            type="button"
-            onClick={onLanguage}
-            aria-label={copy.ui.controls.switchLanguage}
+          <a
+            className="nav-contact"
+            href="#contact"
+            onClick={() => setMenuOpen(false)}
           >
-            {locale === "en" ? "中" : "EN"}
+            {zh ? "联系" : "Let’s talk"}
+            <Arrow diagonal />
+          </a>
+        </nav>
+        <div className="nav-controls">
+          <button
+            className="language-button"
+            aria-label={data.ui.controls.switchLanguage}
+            onClick={() => setLocale(zh ? "en" : "zh")}
+          >
+            {zh ? "EN" : "中"}
           </button>
           <button
-            className="utility-button"
-            type="button"
-            onClick={onTheme}
-            aria-label={theme === "dark" ? copy.ui.controls.lightTheme : copy.ui.controls.darkTheme}
+            className="theme-button"
+            aria-label={
+              theme === "dark"
+                ? data.ui.controls.lightTheme
+                : data.ui.controls.darkTheme
+            }
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
-            <ThemeIcon theme={theme} />
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" />
+              <path d="M10 4a6 6 0 0 1 0 12z" fill="currentColor" />
+            </svg>
           </button>
           <button
             className="menu-button"
-            type="button"
+            aria-controls="site-navigation"
             aria-expanded={menuOpen}
-            aria-controls={navId}
-            aria-label={menuOpen ? copy.ui.controls.closeMenu : copy.ui.controls.openMenu}
-            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={
+              menuOpen ? data.ui.controls.closeMenu : data.ui.controls.openMenu
+            }
+            onClick={() => setMenuOpen(!menuOpen)}
           >
-            <span className="menu-lines" aria-hidden="true"><i /><i /></span>
+            <span />
+            <span />
           </button>
         </div>
-      </div>
-    </header>
-  );
-}
+      </header>
 
-function Hero({ copy }) {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const mapY = useTransform(scrollYProgress, [0, 1], [0, 135]);
-  const mapScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.92]);
-  const reduceMotion = useReducedMotion();
-
-  const handlePointerMove = (event) => {
-    if (reduceMotion || event.pointerType === "touch") return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.style.setProperty("--pointer-x", ((event.clientX - rect.left) / rect.width) * 100 + "%");
-    event.currentTarget.style.setProperty("--pointer-y", ((event.clientY - rect.top) / rect.height) * 100 + "%");
-  };
-
-  return (
-    <section className="hero" id="home" ref={heroRef} onPointerMove={handlePointerMove}>
-      <div className="hero-shell">
-        <div className="hero-content">
-          <motion.div
-            className="hero-copy"
-            style={reduceMotion ? undefined : { y: copyY }}
-            initial="hidden"
-            animate="show"
-            variants={{
-              hidden: {},
-              show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
-            }}
-          >
-            <motion.p
-              className="hero-eyebrow"
-              variants={{ hidden: { y: 16, opacity: 0 }, show: { y: 0, opacity: 1 } }}
-              transition={{ duration: 0.55 }}
-            >
-              {copy.hero.name} / {copy.hero.eyebrow}
-            </motion.p>
-            <motion.h1
-              variants={{ hidden: { y: 28, opacity: 0 }, show: { y: 0, opacity: 1 } }}
-              transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {copy.hero.headlineLead}
-              <br />
-              <span className="title-accent">{copy.hero.headlineAccent}</span>
-            </motion.h1>
-            <motion.p
-              className="hero-intro"
-              variants={{ hidden: { y: 20, opacity: 0 }, show: { y: 0, opacity: 1 } }}
-              transition={{ duration: 0.62 }}
-            >
-              {copy.hero.lede}
-            </motion.p>
-            <motion.p
-              className="hero-meta"
-              variants={{ hidden: { y: 16, opacity: 0 }, show: { y: 0, opacity: 1 } }}
-              transition={{ duration: 0.55 }}
-            >
-              {copy.hero.study}
-            </motion.p>
-            <motion.div
-              className="hero-actions"
-              variants={{ hidden: { y: 18, opacity: 0 }, show: { y: 0, opacity: 1 } }}
-              transition={{ duration: 0.55 }}
-            >
-              <motion.a className="button button-primary" href="#experience" whileHover={{ scale: 1.025 }} whileTap={{ scale: 0.98 }}>
-                {copy.ui.actions.explore}
-                <ArrowIcon />
-              </motion.a>
-              <motion.a
-                className="button button-secondary"
-                href={RESUME_PATH}
-                download
-                whileHover={{ scale: 1.025 }}
-                whileTap={{ scale: 0.98 }}
+      <main id="main">
+        <section id="profile" className="hero" aria-labelledby="hero-name">
+          <div className="hero-topline">
+            <span>
+              <i className="signal-dot" />{" "}
+              {zh ? "加拿大 · 安大略" : "ONTARIO, CANADA"}
+            </span>
+            <span>
+              {zh
+                ? "界面 / 智能 / 系统"
+                : "INTERFACES / INTELLIGENCE / SYSTEMS"}
+            </span>
+          </div>
+          <h1 id="hero-name">
+            XIWEI WANG
+            <span className="name-period" aria-hidden="true">
+              ✳
+            </span>
+          </h1>
+          <div className="hero-scene">
+            <SculptureScene paused={paused} reducedMotion={!!reducedMotion} />
+          </div>
+          <div className="hero-copy">
+            <p className="hero-statement">
+              {zh ? (
+                <>
+                  从想法，
+                  <br />
+                  到真实运行的系统。
+                </>
+              ) : (
+                <>
+                  Good ideas.
+                  <br />
+                  Engineered into reality.
+                </>
+              )}
+            </p>
+            <p className="hero-description">
+              {zh
+                ? "我是 Xiwei，一名软件工程师。构建全栈产品、AI 平台与实时系统。"
+                : "I’m Xiwei, a software engineer building full-stack products, AI platforms, and real-time systems."}
+            </p>
+            <div className="hero-actions">
+              <a className="pill-button" href="#work">
+                {zh ? "探索作品" : "Explore my work"}
+                <Arrow diagonal />
+              </a>
+              <a
+                className="resume-link"
+                href={resume}
+                target="_blank"
+                rel="noreferrer"
               >
-                {copy.ui.actions.downloadResume}
-                <ArrowIcon down />
-              </motion.a>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="hero-map-wrap"
-            style={reduceMotion ? undefined : { y: mapY, scale: mapScale }}
-            initial={{ opacity: 0, rotate: 1.5 }}
-            animate={{ opacity: 1, rotate: 0 }}
-            transition={{ duration: 0.85, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <SystemMap />
-            <span className="hero-map-caption"><i /> planning → integration → production</span>
-          </motion.div>
-        </div>
-
-        <div className="proof-rail" aria-label={copy.ui.labels.selectedImpact}>
-          {copy.impact.map((item) => (
-            <AnimatedMetric key={item.id} value={item.value} label={item.label} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Capabilities({ copy }) {
-  return (
-    <section className="section capability-section" id="profile">
-      <div className="section-shell">
-        <Reveal className="section-heading">
-          <div>
-            <p className="section-kicker">{copy.ui.sectionLabels.profile}</p>
-            <h2>{copy.capabilities.title}</h2>
-          </div>
-          <p>{copy.capabilities.intro}</p>
-        </Reveal>
-
-        <div className="capability-grid">
-          {copy.capabilities.items.map((item, index) => (
-            <Reveal as="article" className="capability-card" delay={index * 0.09} key={item.id}>
-              <div className="capability-index">
-                <span>{item.index}</span>
-                <span>{item.tags.join(" / ")}</span>
-              </div>
-              <div className="capability-icon"><CapabilityIcon type={item.id} /></div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Experience({ copy }) {
-  return (
-    <section className="section experience-section" id="experience">
-      <div className="section-shell">
-        <Reveal className="section-heading">
-          <div>
-            <p className="section-kicker">{copy.ui.sectionLabels.experience}</p>
-            <h2>{copy.experienceIntro.title}</h2>
-          </div>
-          <p>{copy.experienceIntro.text}</p>
-        </Reveal>
-
-        <div className="experience-list">
-          {copy.experiences.map((role, index) => (
-            <Reveal as="article" className="experience-card" key={role.id}>
-              <span className="experience-number">{String(index + 1).padStart(2, "0")}</span>
-              <div className="experience-meta">
-                <time dateTime={role.start}>{role.period}</time>
-                <span className="location">{role.location}</span>
-                <h3>{role.role}</h3>
-                <p className="company">{role.company}</p>
-                <div className="experience-highlight">
-                  <strong>{role.highlight.value}</strong>
-                  <span>{role.highlight.label}</span>
-                </div>
-              </div>
-              <div className="experience-body">
-                <ul>
-                  {role.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-                </ul>
-                {role.metrics.length > 0 && (
-                  <div className="metric-row">
-                    {role.metrics.map((metric) => (
-                      <span className="metric-chip" key={metric.value + metric.label}>
-                        {metric.value} {metric.label}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                <div className="tag-list">
-                  {role.tech.map((technology) => <span key={technology}>{technology}</span>)}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Projects({ copy }) {
-  const [filter, setFilter] = useState("all");
-  const projects = useMemo(
-    () => copy.projects.filter((project) => filter === "all" || project.category === filter),
-    [copy.projects, filter],
-  );
-
-  useEffect(() => setFilter("all"), [copy.locale]);
-
-  return (
-    <section className="section projects-section" id="work">
-      <div className="section-shell">
-        <Reveal className="section-heading">
-          <div>
-            <p className="section-kicker">{copy.ui.sectionLabels.work}</p>
-            <h2>{copy.projectsIntro.title}</h2>
-          </div>
-          <p>{copy.projectsIntro.text}</p>
-        </Reveal>
-
-        <div className="filter-bar" role="group" aria-label="Filter projects">
-          {copy.ui.projectFilters.map((item) => (
-            <button
-              className={"filter-button" + (filter === item.id ? " is-active" : "")}
-              type="button"
-              aria-pressed={filter === item.id}
-              onClick={() => setFilter(item.id)}
-              key={item.id}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        <motion.div className="project-grid" layout>
-          <AnimatePresence mode="popLayout">
-            {projects.map((project) => (
-              <motion.article
-                className="project-card"
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.96, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.94, y: -12 }}
-                transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -7 }}
-              >
-                <div className="project-visual"><ProjectVisual id={project.id} /></div>
-                <div className="project-copy">
-                  <div className="project-topline">
-                    <span>{project.index} / {project.categoryLabel}</span>
-                    <strong>{project.metric}</strong>
-                  </div>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="tag-list">
-                    {project.tech.map((technology) => <span key={technology}>{technology}</span>)}
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function Background({ copy }) {
-  const spoken = copy.spokenLanguages.map((item) => item.language + " — " + item.level).join(" · ");
-  return (
-    <section className="section background-section" id="background">
-      <div className="section-shell">
-        <Reveal className="section-heading">
-          <div>
-            <p className="section-kicker">{copy.ui.sectionLabels.background}</p>
-            <h2>{copy.backgroundIntro.title}</h2>
-          </div>
-          <p>{copy.backgroundIntro.text}</p>
-        </Reveal>
-
-        <div className="background-grid">
-          <Reveal className="background-panel">
-            <div className="panel-header">
-              <span>{copy.ui.labels.education}</span>
-              <a className="panel-link" href={RESUME_PATH} target="_blank" rel="noopener noreferrer">
-                {copy.ui.actions.viewResume}
-                <ArrowIcon />
+                {zh ? "简历" : "Résumé"}
+                <Arrow diagonal />
               </a>
             </div>
-            {copy.education.map((school) => (
-              <article className="education-item" key={school.id}>
-                <time dateTime={school.start}>{school.period}</time>
-                <div>
-                  <p>{school.school}</p>
-                  <h3>{school.degree}</h3>
-                  <span>{school.detail}</span>
+          </div>
+          <div className="scene-label">
+            <span className="cross-mark">+</span>
+            <span>
+              {zh ? "形态研究 001" : "FORM STUDY 001"}
+              <small>
+                {motionOff
+                  ? zh
+                    ? "静态形态 · 动效已暂停"
+                    : "STILL FORM · MOTION PAUSED"
+                  : touchInput
+                    ? zh
+                      ? "动态 3D · 向下探索"
+                      : "LIVE 3D · SCROLL TO EXPLORE"
+                    : zh
+                      ? "交互式 3D · 拖动探索"
+                      : "INTERACTIVE 3D · DRAG TO EXPLORE"}
+              </small>
+            </span>
+          </div>
+          <button
+            className="motion-button hero-motion"
+            aria-label={
+              motionOff
+                ? zh
+                  ? "开启动效"
+                  : "Resume motion"
+                : zh
+                  ? "暂停动效"
+                  : "Pause motion"
+            }
+            aria-pressed={!!motionOff}
+            disabled={!!reducedMotion}
+            onClick={() => setPaused(!paused)}
+          >
+            <span>{motionOff ? "▷" : "Ⅱ"}</span>
+            {reducedMotion
+              ? zh
+                ? "已减少动态"
+                : "REDUCED MOTION"
+              : motionOff
+                ? zh
+                  ? "开启动效"
+                  : "RESUME MOTION"
+                : zh
+                  ? "暂停动效"
+                  : "PAUSE MOTION"}
+          </button>
+          <div className="hero-bottom">
+            <a href="#work" className="scroll-link">
+              <span>↓</span>
+              {zh ? "向下探索" : "SCROLL TO DISCOVER"}
+            </a>
+            <span className="hero-study">
+              WATERLOO MENG <span>/</span> SOFTWARE ENGINEERING
+            </span>
+            <span className="bottom-edition">PORTFOLIO / 2026</span>
+          </div>
+        </section>
+
+        <div className="ticker" aria-hidden="true">
+          <div>
+            {Array.from({ length: 2 }, (_, i) => (
+              <span key={i}>
+                FULL-STACK ENGINEERING <i>✳</i> AI EXPERIENCES <i>✳</i>{" "}
+                REAL-TIME SYSTEMS <i>✳</i>{" "}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <section
+          className="section work-section"
+          id="work"
+          aria-labelledby="work-title"
+        >
+          <div className="section-top reveal">
+            <span className="eyebrow">
+              01 / {zh ? "精选作品" : "SELECTED WORK"}
+            </span>
+            <span className="section-note">2024 — 2026</span>
+          </div>
+          <div className="section-heading reveal">
+            <h2 id="work-title">
+              {zh ? (
+                <>
+                  从构想到<span>交付。</span>
+                </>
+              ) : (
+                <>
+                  Built to<span>come alive.</span>
+                </>
+              )}
+            </h2>
+            <p>
+              {zh
+                ? "从生成式 AI 到工业视觉。把复杂的系统，变成可用的产品。"
+                : "From generative AI to industrial vision. Turning complex systems into things people can use."}
+            </p>
+          </div>
+          <div className="case-grid">
+            {data.featured.map((item, index) => (
+              <article
+                key={item.id}
+                className={`case-study case-${index} reveal`}
+              >
+                <ProjectVisual index={index} />
+                <div className="case-info">
+                  <span className="eyebrow">{item.eyebrow}</span>
+                  <div className="case-title-row">
+                    <h3>{item.title}</h3>
+                    <span className="circle-arrow">
+                      <Arrow diagonal />
+                    </span>
+                  </div>
+                  <p>{item.summary}</p>
+                  <Tags items={item.tech.slice(0, 4)} />
                 </div>
+                <button
+                  className="case-open"
+                  onClick={() => setSelected(item.id)}
+                  aria-label={`${zh ? "查看案例" : "View case study"}: ${item.title}`}
+                />
               </article>
             ))}
-          </Reveal>
-
-          <Reveal className="background-panel" delay={0.08}>
-            <div className="panel-header">
-              <span>{copy.ui.labels.technicalToolkit}</span>
-              <span>Stack / 2026</span>
-            </div>
-            {copy.skills.map((group) => (
-              <div className="skill-group" key={group.id}>
-                <h3>{group.label}</h3>
-                <p>{group.items.join(" · ")}</p>
-              </div>
-            ))}
-            <div className="skill-group">
-              <h3>{copy.ui.labels.spokenLanguages}</h3>
-              <p>{spoken}</p>
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Contact({ copy }) {
-  return (
-    <section className="section contact-section" id="contact">
-      <div className="section-shell">
-        <Reveal className="contact-card">
-          <div>
-            <p className="section-kicker">{copy.ui.sectionLabels.contact}</p>
-            <h2>{copy.contact.title}</h2>
           </div>
-          <div className="contact-bottom">
-            <p>{copy.contact.intro}</p>
-            <div className="contact-links">
-              {copy.contact.links.map((link) => (
-                <a
-                  className="contact-link"
-                  href={link.id === "resume" ? RESUME_PATH : link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  key={link.id}
+        </section>
+
+        <section
+          className="section experience-section"
+          id="experience"
+          aria-labelledby="experience-title"
+        >
+          <div className="section-top reveal">
+            <span className="eyebrow">
+              02 / {zh ? "职业经历" : "THE JOURNEY"}
+            </span>
+            <a
+              className="text-link"
+              href={resume}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {data.ui.actions.viewResume}
+              <Arrow diagonal />
+            </a>
+          </div>
+          <div className="section-heading reveal">
+            <h2 id="experience-title">
+              {zh ? (
+                <>
+                  在实践中<span>不断构建。</span>
+                </>
+              ) : (
+                <>
+                  Always learning.<span>Always building.</span>
+                </>
+              )}
+            </h2>
+            <p>
+              {zh
+                ? "五段经历，一条贯穿前端、后端、AI 与工业系统的工程路径。"
+                : "Five roles. One continuous thread of building across the stack."}
+            </p>
+          </div>
+          <div className="experience-list reveal">
+            {data.experiences.map((item, index) => (
+              <details key={item.id} className="experience-row">
+                <summary>
+                  <span className="row-index">0{index + 1}</span>
+                  <span className="role-main">
+                    <span className="company">
+                      {item.id === "hit-robotics"
+                        ? zh
+                          ? "哈工大机器人研究院"
+                          : "HIT Robotics Institute"
+                        : item.company}
+                    </span>
+                    <span className="role-title">{item.role}</span>
+                  </span>
+                  <span className="role-meta">
+                    <span>{item.period}</span>
+                    <span>{item.location}</span>
+                  </span>
+                  <span className="expand-icon">+</span>
+                </summary>
+                <div className="role-details">
+                  <div className="role-impact">
+                    <b>{item.highlight.value}</b>
+                    <span>{item.highlight.label}</span>
+                  </div>
+                  <div>
+                    <ul>
+                      {item.bullets.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                    <Tags items={item.tech} />
+                  </div>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section
+          id="experiments"
+          className="section experiments-section"
+          aria-labelledby="experiments-title"
+        >
+          <div className="section-top reveal">
+            <span className="eyebrow">
+              03 / {zh ? "自主探索" : "OFF THE CLOCK"}
+            </span>
+            <span className="section-note">
+              {zh ? "独立项目与技术实验" : "SIDE PROJECTS & EXPERIMENTS"}
+            </span>
+          </div>
+          <div className="section-heading reveal">
+            <h2 id="experiments-title">
+              {zh ? (
+                <>
+                  保持<span>好奇。</span>
+                </>
+              ) : (
+                <>
+                  Curiosity,<span>in code.</span>
+                </>
+              )}
+            </h2>
+            <div
+              className="filters"
+              aria-label={zh ? "项目分类" : "Project filters"}
+            >
+              {data.ui.projectFilters.map((item) => (
+                <button
+                  key={item.id}
+                  aria-pressed={filter === item.id}
+                  onClick={() => setFilter(item.id)}
                 >
-                  <span><span>{link.label}</span><strong>{link.value}</strong></span>
-                  <ArrowIcon />
-                </a>
+                  {item.label}
+                </button>
               ))}
             </div>
           </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
+          <div className="project-list">
+            {data.projects
+              .filter((item) => filter === "all" || item.category === filter)
+              .map((item) => (
+                <details className="project-row" key={item.id}>
+                  <summary>
+                    <span
+                      className={`project-glyph glyph-${item.category}`}
+                      aria-hidden="true"
+                    >
+                      {item.category === "gpu"
+                        ? "▦"
+                        : item.category === "ai"
+                          ? "≋"
+                          : "⌘"}
+                    </span>
+                    <span className="project-row-title">
+                      <span className="eyebrow">{item.categoryLabel}</span>
+                      <strong className="project-name">{item.title}</strong>
+                    </span>
+                    <span className="project-metric">{item.metric}</span>
+                    <span className="expand-icon">+</span>
+                  </summary>
+                  <div className="project-description">
+                    <p>{item.description}</p>
+                    <Tags items={item.tech} />
+                  </div>
+                </details>
+              ))}
+          </div>
+        </section>
 
-function App() {
-  const [locale, setLocale] = useState(() => {
-    try {
-      return localStorage.getItem("language") === "zh" ? "zh" : "en";
-    } catch {
-      return "en";
-    }
-  });
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || "dark");
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("profile");
-  const isMobile = useMediaQuery("(max-width: 900px)");
-  const copy = getContent(locale);
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 180, damping: 28, mass: 0.35 });
+        <section
+          className="section about-section"
+          id="background"
+          aria-labelledby="about-title"
+        >
+          <div className="section-top reveal">
+            <span className="eyebrow">
+              04 / {zh ? "关于我" : "BEHIND THE WORK"}
+            </span>
+            <span className="section-note">
+              {zh
+                ? "工程思维，持续探索。"
+                : "AN ENGINEER’S MIND. A BUILDER’S INSTINCT."}
+            </span>
+          </div>
+          <div className="about-grid">
+            <div className="about-intro reveal">
+              <h2 id="about-title">
+                {zh ? (
+                  <>
+                    理解细节。
+                    <br />
+                    <em>连接全局。</em>
+                  </>
+                ) : (
+                  <>
+                    Think deeply.
+                    <br />
+                    <em>Build broadly.</em>
+                  </>
+                )}
+              </h2>
+              <p>{data.hero.lede}</p>
+              <p>
+                {zh
+                  ? "目前在滑铁卢大学攻读电气与计算机工程硕士，专注软件工程。电子科学背景，让我习惯跨越软件与真实世界的边界。"
+                  : "At the University of Waterloo, I’m pursuing an MEng in Electrical & Computer Engineering, focused on Software Engineering. An electronics background keeps me curious about where software meets the real world."}
+              </p>
+              <a
+                className="text-link"
+                href={data.contact.githubHref}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {zh ? "在 GitHub 上继续了解" : "More on GitHub"}
+                <Arrow diagonal />
+              </a>
+            </div>
+            <div className="education-list reveal">
+              <h3 className="eyebrow">{data.ui.labels.education}</h3>
+              {data.education.map((item) => (
+                <div className="education-item" key={item.id}>
+                  <span className="education-year">{item.period}</span>
+                  <h3>{item.school}</h3>
+                  <p>{item.degree}</p>
+                  <span>{item.detail}</span>
+                </div>
+              ))}
+              <div className="spoken-languages">
+                {data.spokenLanguages.map((item) => (
+                  <span key={item.id}>
+                    {item.language}
+                    <small>{item.level}</small>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="toolkit reveal">
+            <h3 className="eyebrow">{data.ui.labels.technicalToolkit}</h3>
+            <div className="skill-grid">
+              {data.skills.map((item) => (
+                <div className="skill-group" key={item.id}>
+                  <h4>{item.label}</h4>
+                  <p>{item.items.join(" / ")}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 24);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile) setMenuOpen(false);
-  }, [isMobile]);
-
-  useEffect(() => {
-    document.body.classList.toggle("menu-open", menuOpen && isMobile);
-    const handleKey = (event) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.body.classList.remove("menu-open");
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [isMobile, menuOpen]);
-
-  useEffect(() => {
-    document.documentElement.lang = copy.locale;
-    document.title = copy.meta.title;
-    const description = document.querySelector('meta[name="description"]');
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const ogDescription = document.querySelector('meta[property="og:description"]');
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]');
-    description?.setAttribute("content", copy.meta.description);
-    ogTitle?.setAttribute("content", copy.meta.title);
-    ogDescription?.setAttribute("content", copy.meta.description);
-    twitterTitle?.setAttribute("content", copy.meta.title);
-    twitterDescription?.setAttribute("content", copy.meta.description);
-    try {
-      localStorage.setItem("language", locale);
-    } catch {
-      // Persistence is optional.
-    }
-  }, [copy, locale]);
-
-  useEffect(() => {
-    const sections = copy.ui.nav
-      .map((item) => document.getElementById(item.id))
-      .filter(Boolean);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) setActiveSection(visible[0].target.id);
-      },
-      { rootMargin: "-30% 0px -56% 0px", threshold: [0, 0.2, 0.6] },
-    );
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, [copy.ui.nav]);
-
-  const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.dataset.theme = next;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "dark" ? "#090d18" : "#f2f0e9");
-    try {
-      localStorage.setItem("theme", next);
-    } catch {
-      // Persistence is optional.
-    }
-  };
-
-  return (
-    <MotionConfig reducedMotion="user">
-      <a className="skip-link" href="#main">{copy.ui.skipToContent}</a>
-      <motion.div className="scroll-progress" style={{ scaleX: progress }} />
-      <Header
-        copy={copy}
-        activeSection={activeSection}
-        scrolled={scrolled}
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        isMobile={isMobile}
-        locale={locale}
-        onLanguage={() => {
-          setLocale((current) => current === "en" ? "zh" : "en");
-          setMenuOpen(false);
-        }}
-        theme={theme}
-        onTheme={toggleTheme}
-      />
-
-      <main id="main">
-        <Hero copy={copy} />
-        <Capabilities copy={copy} />
-        <Experience copy={copy} />
-        <Projects copy={copy} />
-        <Background copy={copy} />
-        <Contact copy={copy} />
+        <section
+          className="contact-section section"
+          id="contact"
+          aria-labelledby="contact-title"
+        >
+          <div className="section-top">
+            <span className="eyebrow">
+              05 / {zh ? "下一个想法" : "THE NEXT GOOD IDEA"}
+            </span>
+            <span className="contact-spark" aria-hidden="true">
+              ✳
+            </span>
+          </div>
+          <a className="contact-heading" href={data.contact.emailHref}>
+            <h2 id="contact-title">
+              {zh ? (
+                <>
+                  一起创造<span>下一步。</span>
+                </>
+              ) : (
+                <>
+                  Let’s make<span>it happen.</span>
+                </>
+              )}
+            </h2>
+            <Arrow diagonal />
+          </a>
+          <div className="contact-bottom">
+            <a href={data.contact.emailHref}>{data.contact.email}</a>
+            <div>
+              <a
+                href={data.contact.githubHref}
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+                <Arrow diagonal />
+              </a>
+              <a href={resume} target="_blank" rel="noreferrer">
+                {zh ? "简历" : "Résumé"}
+                <Arrow diagonal />
+              </a>
+              <a href={data.contact.phoneHref}>{data.contact.phone}</a>
+            </div>
+          </div>
+        </section>
       </main>
-
-      <footer className="site-footer">
-        <div className="footer-shell">
-          <span>© {new Date().getFullYear()} Xiwei Wang</span>
-          <p>{copy.ui.footerNote}</p>
-          <nav className="footer-links" aria-label="Footer">
-            <a href="mailto:wangxiwei2002@gmail.com">Email</a>
-            <a href="https://github.com/wxw2002a" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="#home">{copy.ui.actions.backToTop} ↑</a>
-          </nav>
-        </div>
+      <footer>
+        <a className="wordmark" href="#profile">
+          xw<span className="wordmark-star">✳</span>
+        </a>
+        <span>© {new Date().getFullYear()} XIWEI WANG</span>
+        <a className="back-top" href="#profile">
+          {data.ui.actions.backToTop} ↑
+        </a>
       </footer>
-    </MotionConfig>
+      <CaseDialog
+        selected={selected}
+        data={data}
+        zh={zh}
+        onClose={() => setSelected(null)}
+      />
+    </>
   );
 }
-
-export default App;

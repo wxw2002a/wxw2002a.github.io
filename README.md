@@ -1,6 +1,8 @@
 # Xiwei Wang — Portfolio
 
-A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/), built with Vite and Motion.
+A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/), built with Vite, Three.js, and Motion. The September 2026 redesign combines editorial typography with an interactive chrome sculpture, animated project studies, and expandable experience and project details.
+
+Content is maintained in `app/src/content.js` (English and Chinese). Current experience and the downloadable `Xiwei-Wang-Resume.pdf` reflect the latest September 2026 résumé; four independent projects and additional tools from the previous site remain available. Project artwork is labeled as conceptual, not proprietary product screenshots.
 
 ## Local development
 
@@ -14,3 +16,9 @@ A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/
     npm test
 
 The Vite source lives in app/. A production build writes the deployable index.html and hashed assets to the repository root so GitHub Pages can serve them directly from main.
+
+The sculpture loads Three.js separately, caps device pixel ratio, and stops rendering while off screen, in a background tab, or when motion is paused. System reduced-motion preferences are respected. WebGL-unavailable devices receive an SVG fallback. Dark appearance is the default; language and optional light appearance are stored locally.
+
+For manual visual checks, start `npm run preview -- --host 127.0.0.1 --port 4175`, then run `node scripts/capture-preview.mjs`. Desktop, mobile, Chinese, light-theme, and dialog screenshots are written to the ignored `.visual-qa/` directory. Set `PREVIEW_URL` to inspect another deployment.
+
+Deployment: build and test, commit source and generated root assets plus the PDF, then push `main`. Verify the corresponding GitHub Pages workflow and compare the online asset names and PDF SHA-256 against the local build.

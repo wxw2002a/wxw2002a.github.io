@@ -18,7 +18,7 @@ export const content = {
     locale: "en",
     localeName: "English",
     meta: {
-      title: "Xiwei Wang — Full-Stack & AI Product Engineer",
+      title: "Xiwei Wang — Software Engineer",
       description:
         "Xiwei Wang builds full-stack products, AI platforms, mobile applications, backend services, and real-time computer-vision systems.",
     },
@@ -79,93 +79,80 @@ export const content = {
     hero: {
       eyebrow: "FULL-STACK / AI PRODUCT / REAL-TIME SYSTEMS",
       name: "XIWEI WANG",
-      headlineLead: "I build products",
-      headlineAccent: "that ship.",
-      headline: "From product intent to production systems.",
-      lede:
-        "Across mobile, web, backend, AI, cloud, and performance-sensitive computer vision, I connect technical direction with hands-on delivery.",
+      headlineLead: "I build software",
+      headlineAccent: "from end to end.",
+      headline: "Full-stack products. AI platforms. Real-time systems.",
+      lede: "Software engineer based in Ontario, Canada. I build AI platforms, connected applications, and real-time systems from interface to infrastructure.",
       study:
-        "MEng in Electrical & Computer Engineering (Software Engineering) · University of Waterloo · 2025—2026",
+        "University of Waterloo · MEng, Electrical & Computer Engineering (Software Engineering) · Expected Dec 2026",
     },
     impact: [
       {
         id: "workstreams",
         value: "6",
         label: "cross-functional workstreams",
-        detail: "Led across frontend, backend, AI/ML, design, and product",
+        detail: "Coordinated across engineering, design, and product",
       },
       {
         id: "response-time",
         value: "−25%",
         label: "average response time",
-        detail: "Through API and database optimization",
+        detail: "Through multithreaded API and data-access refactoring",
       },
       {
         id: "vision-throughput",
         value: "600",
-        label: "images per second",
-        detail: "Processed from live camera feeds in C++ / Qt",
+        label: "images per second, peak",
+        detail: "Real-time teacup defect detection in C++ / Qt",
       },
     ],
     capabilities: {
       title: "Product thinking. Engineering depth.",
       intro:
-        "I am an Electrical and Computer Engineering MEng candidate at the University of Waterloo. My work spans product planning, cross-platform applications, backend services, AI pipelines, cloud deployment, and real-time industrial software.",
+        "I am an Electrical and Computer Engineering MEng candidate at the University of Waterloo. My work spans cross-platform applications, concurrent backend services, AI pipelines, cloud deployment, and real-time industrial software.",
       items: [
         {
           id: "product-delivery",
           index: "01",
           title: "Product delivery",
-          text:
-            "Translate product requirements into technical priorities, coordinate milestones, resolve cross-team blockers, and carry releases through integration.",
-          tags: ["Planning", "Coordination", "Delivery"],
+          text: "Align implementation priorities across engineering, design, and product, and streamline CI/CD and containerized deployment to deliver working software.",
+          tags: ["Coordination", "CI/CD", "Delivery"],
         },
         {
           id: "full-stack-products",
           index: "02",
           title: "Full-stack products",
-          text:
-            "Build mobile and web experiences with React, React Native, and Flutter, backed by Java/Spring Boot, Node.js/Express, Django, and structured data systems.",
+          text: "Build mobile and web experiences with React, React Native, and Flutter, backed by Java/Spring Boot, Node.js/Express, Django, and structured data systems.",
           tags: ["Web", "Mobile", "Backend"],
         },
         {
           id: "ai-real-time",
           index: "03",
           title: "AI & real-time systems",
-          text:
-            "Connect LLM and image-generation services in the cloud, and engineer performance-sensitive C++/Qt computer-vision applications on Linux.",
+          text: "Connect LLM and image-generation services in the cloud, and engineer performance-sensitive C++/Qt computer-vision applications on Linux.",
           tags: ["AI", "Cloud", "Computer vision"],
         },
       ],
     },
     experienceIntro: {
-      title: "From product direction to production delivery.",
-      text:
-        "Five roles across AI products, mobile platforms, backend systems, and industrial automation.",
+      title: "Built across disciplines.",
+      text: "Five roles across AI products, mobile platforms, backend systems, and industrial automation.",
     },
     experiences: [
       {
         id: "ipmd",
         company: "IPMD, Inc.",
-        role: "Technical Manager Intern",
+        role: "Software Engineering Intern",
         start: "2026-05",
         end: "2026-08",
         period: "May 2026 — Aug 2026",
         location: "California, United States · Remote",
-        highlight: { value: "35%", label: "faster MVP delivery" },
-        metrics: [
-          { value: "70+", label: "image-card assets" },
-          { value: "5", label: "product categories" },
-          { value: "40%", label: "better prompt consistency" },
-          { value: "50%", label: "less manual configuration time" },
-          { value: "30%", label: "shorter iteration cycles" },
-          { value: "6", label: "cross-functional workstreams" },
-          { value: "35%", label: "faster MVP delivery" },
-        ],
+        highlight: { value: "6", label: "cross-functional workstreams" },
+        metrics: [{ value: "6", label: "cross-functional workstreams" }],
         bullets: [
-          "Built and deployed an end-to-end AI image-generation platform using React, TypeScript, Node.js/Express, Qwen/Gemini, Stable Diffusion 1.5, Docker, and Microsoft Azure, supporting card selections, text input, image uploads, prompt generation, and artwork generation.",
-          "Standardized prompt-generation workflows and 70+ image-card assets across 5 product categories, improving prompt consistency by 40%, reducing manual configuration time by 50%, and shortening iteration cycles by 30%.",
-          "Led 6 cross-functional workstreams across frontend, backend, AI/ML, design, and product, translating product requirements into technical priorities, coordinating development milestones, resolving cross-team blockers, and accelerating MVP delivery by 35%.",
+          "Built and deployed an end-to-end AI image-generation platform on Microsoft Azure, integrating React/TypeScript, Node.js/Express, Qwen/Gemini, and an internal Stable Diffusion 1.5 inference pipeline for multimodal artwork generation.",
+          "Containerized the React frontend, Node.js backend, Qwen service, and Stable Diffusion inference service with Docker, enabling reproducible deployment across AI and application services.",
+          "Streamlined CI/CD workflows and coordinated six cross-functional workstreams across engineering, design, and product to align implementation priorities and deliver the MVP.",
         ],
         tech: [
           "React",
@@ -175,12 +162,13 @@ export const content = {
           "Stable Diffusion 1.5",
           "Docker",
           "Microsoft Azure",
+          "CI/CD",
         ],
       },
       {
         id: "folobotics",
         company: "FoloBotics",
-        role: "Full-Stack Developer Intern",
+        role: "Full-Stack Developer",
         start: "2026-01",
         end: "2026-04",
         period: "Jan 2026 — Apr 2026",
@@ -188,8 +176,8 @@ export const content = {
         highlight: { value: "−25%", label: "average response time" },
         metrics: [{ value: "25%", label: "lower average response time" }],
         bullets: [
-          "Developed Java/Spring Boot backend services and REST APIs for user, task, recommendation, and warehouse workflows consumed by Flutter clients.",
-          "Designed PostgreSQL, MySQL, and Redis data flows and optimized API/database interactions, reducing average response time by 25% and improving backend performance.",
+          "Developed scalable Java/Spring Boot backend services and REST APIs for user, task, recommendation, and warehouse workflows consumed by Flutter clients.",
+          "Refactored Java/Spring Boot API and data-access layers with a multithreaded architecture, mitigating race conditions and improving thread-safe operations across PostgreSQL and Redis, reducing average response time by 25%.",
         ],
         tech: [
           "Java",
@@ -197,8 +185,8 @@ export const content = {
           "REST APIs",
           "Flutter",
           "PostgreSQL",
-          "MySQL",
           "Redis",
+          "Multithreading",
         ],
       },
       {
@@ -210,10 +198,12 @@ export const content = {
         period: "Sep 2025 — Dec 2025",
         location: "Ontario, Canada",
         highlight: { value: "5+", label: "booking and shift workflows" },
-        metrics: [{ value: "5+", label: "booking and shift-management workflows" }],
+        metrics: [
+          { value: "5+", label: "booking and shift-management workflows" },
+        ],
         bullets: [
           "Built and shipped a multi-role React Native application using TypeScript and JavaScript, Node.js/Express, MongoDB, and Google Cloud, supporting production releases to the App Store and Google Play.",
-          "Implemented 5+ booking and shift-management workflows through REST API integration, translating operational requirements into reliable end-to-end product functionality.",
+          "Implemented 5+ booking and shift-management workflows through REST API integration, ensuring reliable state synchronization and data consistency across user roles.",
         ],
         tech: [
           "React Native",
@@ -227,16 +217,17 @@ export const content = {
       },
       {
         id: "hit-robotics",
-        company: "Harbin Institute of Technology Robot Technology Research Institute",
+        company:
+          "Harbin Institute of Technology Robot Technology Research Institute",
         role: "Industrial Vision Platform Development Intern",
-        start: "2025-06",
+        start: "2025-05",
         end: "2025-08",
-        period: "Jun 2025 — Aug 2025",
+        period: "May 2025 — Aug 2025",
         location: "China",
-        highlight: { value: "600", label: "images per second" },
-        metrics: [{ value: "600", label: "images processed per second" }],
+        highlight: { value: "600", label: "images per second, peak" },
+        metrics: [{ value: "600", label: "images per second, peak" }],
         bullets: [
-          "Built a real-time C++/Qt computer-vision application on Linux that processed up to 600 images per second from live camera feeds, debugging performance-sensitive components and integrating application modules.",
+          "Built a real-time C++/Qt computer-vision application on Linux for teacup defect detection, processing up to 600 images per second from live camera feeds while optimizing memory management and integrating application modules.",
           "Developed a Python/Django REST backend for detection logging, parameter synchronization, and offline frame analysis, connecting vision outputs to structured application services.",
         ],
         tech: ["C++", "Qt", "Linux", "Python", "Django", "REST APIs"],
@@ -245,23 +236,70 @@ export const content = {
         id: "sinopec",
         company: "Sinopec Group",
         role: "Application Intern at the Information Center",
-        start: "2024-07",
-        end: "2024-08",
-        period: "Jul 2024 — Aug 2024",
+        start: "2024-06",
+        end: "2024-12",
+        period: "Jun 2024 — Dec 2024",
         location: "China",
-        highlight: { value: "RCS", label: "warehouse automation" },
-        metrics: [],
-        bullets: [
-          "Implemented QR/2D-code recognition in Python with Pyzbar and integrated recognition results with backend services for reliable unmanned-warehouse operations.",
-          "Integrated and tested software components for an unmanned warehouse digital storage system and Robot Control System (RCS), supporting application and automation workflows.",
+        highlight: { value: "5,000+", label: "storage locations visualized" },
+        metrics: [
+          { value: "5,000+", label: "storage locations" },
+          { value: "<80 ms", label: "real-time synchronization latency" },
         ],
-        tech: ["Python", "Pyzbar", "RCS", "Backend services"],
+        bullets: [
+          "Developed a real-time 2D warehouse visualization component using React and Canvas/SVG, rendering 5,000+ storage locations with live status highlighting and heatmap analytics while maintaining smooth UI performance.",
+          "Built real-time data synchronization using WebSocket (Socket.io), streaming PDA scan events and AGV position updates to the React dashboard with under 80 ms latency.",
+        ],
+        tech: [
+          "React",
+          "Canvas / SVG",
+          "WebSocket",
+          "Socket.io",
+          "Real-time data",
+        ],
+      },
+    ],
+    featured: [
+      {
+        id: "ai-image-platform",
+        title: "From prompt to image.",
+        eyebrow: "01 / AI IMAGE PLATFORM · IPMD",
+        summary:
+          "A multimodal artwork platform connecting React, language models, and an internal Stable Diffusion pipeline. Containerized services and CI/CD bring the experience to Azure.",
+        metric: { value: "6", label: "cross-functional workstreams" },
+        tech: [
+          "React",
+          "TypeScript",
+          "Qwen / Gemini",
+          "Stable Diffusion",
+          "Docker",
+          "Azure",
+        ],
+        experienceId: "ipmd",
+      },
+      {
+        id: "warehouse-visualization",
+        title: "A warehouse, live.",
+        eyebrow: "02 / REAL-TIME VISUALIZATION · SINOPEC",
+        summary:
+          "A React and Canvas/SVG dashboard for 5,000+ storage locations. Live status, heatmaps, PDA scans, and AGV positions stay synchronized through Socket.io with under 80 ms latency.",
+        metric: { value: "5,000+", label: "storage locations" },
+        tech: ["React", "Canvas / SVG", "WebSocket", "Socket.io"],
+        experienceId: "sinopec",
+      },
+      {
+        id: "industrial-vision",
+        title: "Vision at full speed.",
+        eyebrow: "03 / INDUSTRIAL VISION · HIT",
+        summary:
+          "A real-time C++/Qt application for teacup defect detection, with optimized memory management and a Django backend for detection logs, parameter synchronization, and offline frame analysis.",
+        metric: { value: "600", label: "images per second, peak" },
+        tech: ["C++", "Qt", "Linux", "Python", "Django"],
+        experienceId: "hit-robotics",
       },
     ],
     projectsIntro: {
       title: "Engineering beyond the happy path.",
-      text:
-        "Selected systems, GPU, and applied AI work preserved from my engineering portfolio.",
+      text: "Further experiments in systems performance, GPU computing, and applied AI.",
     },
     projects: [
       {
@@ -311,8 +349,7 @@ export const content = {
     ],
     backgroundIntro: {
       title: "Education meets engineering practice.",
-      text:
-        "Graduate software engineering study backed by an electronic-systems foundation and a practical full-stack toolkit.",
+      text: "Graduate software engineering study backed by an electronic-systems foundation and a practical full-stack toolkit.",
     },
     education: [
       {
@@ -320,7 +357,7 @@ export const content = {
         school: "University of Waterloo",
         start: "2025-09",
         end: "2026-12",
-        period: "Sep 2025 — Dec 2026",
+        period: "Sep 2025 — Dec 2026 (Expected)",
         degree: "Master of Engineering in Electrical and Computer Engineering",
         detail: "Software Engineering",
       },
@@ -338,7 +375,15 @@ export const content = {
       {
         id: "languages",
         label: "Languages",
-        items: ["Java", "TypeScript", "JavaScript", "Python", "C / C++", "SQL"],
+        items: [
+          "Java",
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "C / C++",
+          "SQL",
+          "HTML / CSS",
+        ],
       },
       {
         id: "frontend-mobile",
@@ -356,6 +401,7 @@ export const content = {
           "Microsoft Azure",
           "Google Cloud",
           "Docker",
+          "CI/CD",
         ],
       },
       {
@@ -367,13 +413,21 @@ export const content = {
           "MongoDB",
           "Redis",
           "Qwen / Gemini",
-          "Stable Diffusion 1.5",
+          "Stable Diffusion",
         ],
       },
       {
         id: "project-toolkit",
         label: "Additional project tools",
-        items: ["Kotlin", "HTML / CSS", "Git", "Linux", "Bash", "Qt", "CUDA", "TensorFlow / YAMNet"],
+        items: [
+          "Kotlin",
+          "Git",
+          "Linux",
+          "Bash",
+          "Qt",
+          "CUDA",
+          "TensorFlow / YAMNet",
+        ],
       },
     ],
     spokenLanguages: [
@@ -428,9 +482,9 @@ export const content = {
     locale: "zh-CN",
     localeName: "中文",
     meta: {
-      title: "王曦威 — 全栈与 AI 产品工程师",
+      title: "Xiwei Wang — 软件工程师",
       description:
-        "王曦威专注于全栈产品、AI 平台、移动应用、后端服务与实时计算机视觉系统。",
+        "Xiwei Wang 专注于全栈产品、AI 平台、移动应用、后端服务与实时计算机视觉系统。",
     },
     ui: {
       skipToContent: "跳到主要内容",
@@ -489,92 +543,80 @@ export const content = {
     hero: {
       eyebrow: "全栈 / AI 产品 / 实时系统",
       name: "XIWEI WANG",
-      headlineLead: "我把产品构想",
-      headlineAccent: "变成生产系统。",
-      headline: "从产品构想到生产系统。",
-      lede:
-        "横跨移动端、Web、后端、AI、云服务与高性能计算机视觉，我把技术方向转化为真正交付的产品。",
+      headlineLead: "从界面到系统，",
+      headlineAccent: "让软件落地。",
+      headline: "全栈产品。AI 平台。实时系统。",
+      lede: "现居加拿大安大略省的软件工程师。从用户界面到基础设施，我构建 AI 平台、互联应用与实时系统。",
       study:
-        "滑铁卢大学 · 电气与计算机工程硕士（软件工程方向）· 2025—2026",
+        "滑铁卢大学 · 电气与计算机工程硕士（软件工程方向）· 预计 2026 年 12 月毕业",
     },
     impact: [
       {
         id: "workstreams",
         value: "6",
         label: "个跨职能工作流",
-        detail: "覆盖前端、后端、AI/ML、设计与产品",
+        detail: "协调工程、设计与产品团队共同推进",
       },
       {
         id: "response-time",
         value: "−25%",
         label: "平均响应时间",
-        detail: "通过 API 与数据库交互优化实现",
+        detail: "通过多线程 API 与数据访问层重构实现",
       },
       {
         id: "vision-throughput",
         value: "600",
-        label: "张图像 / 秒",
-        detail: "以 C++ / Qt 实时处理相机画面",
+        label: "张图像 / 秒，峰值",
+        detail: "以 C++ / Qt 实时检测茶杯缺陷",
       },
     ],
     capabilities: {
       title: "产品思维，工程深度。",
       intro:
-        "我正在滑铁卢大学攻读电气与计算机工程硕士。我的工作覆盖产品规划、跨平台应用、后端服务、AI 流程、云端部署与工业实时软件。",
+        "我正在滑铁卢大学攻读电气与计算机工程硕士。我的工作覆盖跨平台应用、并发后端服务、AI 流程、云端部署与工业实时软件。",
       items: [
         {
           id: "product-delivery",
           index: "01",
           title: "产品交付",
-          text:
-            "将产品需求转化为技术优先级，协调开发里程碑、解决跨团队阻塞，并推动版本完成集成。",
-          tags: ["规划", "协作", "交付"],
+          text: "协调工程、设计与产品团队的实现优先级，优化 CI/CD 流程与容器化部署，推动软件完成交付。",
+          tags: ["协作", "CI/CD", "交付"],
         },
         {
           id: "full-stack-products",
           index: "02",
           title: "全栈产品",
-          text:
-            "使用 React、React Native 与 Flutter 构建 Web 和移动端体验，并以 Java/Spring Boot、Node.js/Express、Django 与结构化数据系统提供后端支持。",
+          text: "使用 React、React Native 与 Flutter 构建 Web 和移动端体验，并以 Java/Spring Boot、Node.js/Express、Django 与结构化数据系统提供后端支持。",
           tags: ["Web", "移动端", "后端"],
         },
         {
           id: "ai-real-time",
           index: "03",
           title: "AI 与实时系统",
-          text:
-            "在云端连接大语言模型与图像生成服务，并在 Linux 上开发对性能敏感的 C++/Qt 计算机视觉应用。",
+          text: "在云端连接大语言模型与图像生成服务，并在 Linux 上开发对性能敏感的 C++/Qt 计算机视觉应用。",
           tags: ["AI", "云服务", "计算机视觉"],
         },
       ],
     },
     experienceIntro: {
-      title: "从产品方向到生产交付。",
+      title: "跨领域的工程实践。",
       text: "五段经历，覆盖 AI 产品、移动平台、后端系统与工业自动化。",
     },
     experiences: [
       {
         id: "ipmd",
         company: "IPMD, Inc.",
-        role: "技术经理实习生",
+        role: "软件工程实习生",
         start: "2026-05",
         end: "2026-08",
         period: "2026年5月—8月",
         location: "美国加利福尼亚州 · 远程",
-        highlight: { value: "35%", label: "MVP 交付提速" },
-        metrics: [
-          { value: "70+", label: "个图像卡片素材" },
-          { value: "5", label: "个产品类别" },
-          { value: "40%", label: "提示词一致性提升" },
-          { value: "50%", label: "手动配置时间减少" },
-          { value: "30%", label: "迭代周期缩短" },
-          { value: "6", label: "个跨职能工作流" },
-          { value: "35%", label: "MVP 交付提速" },
-        ],
+        highlight: { value: "6", label: "个跨职能工作流" },
+        metrics: [{ value: "6", label: "个跨职能工作流" }],
         bullets: [
-          "使用 React、TypeScript、Node.js/Express、Qwen/Gemini、Stable Diffusion 1.5、Docker 与 Microsoft Azure 构建并部署端到端 AI 图像生成平台，支持卡片选择、文本输入、图像上传、提示词生成与艺术作品生成。",
-          "标准化提示词生成流程，并整理覆盖 5 个产品类别的 70+ 个图像卡片素材，使提示词一致性提升 40%、手动配置时间减少 50%、迭代周期缩短 30%。",
-          "带领覆盖前端、后端、AI/ML、设计与产品的 6 个跨职能工作流，将产品需求转化为技术优先级，协调开发里程碑、解决跨团队阻塞，使 MVP 交付提速 35%。",
+          "在 Microsoft Azure 上构建并部署端到端 AI 图像生成平台，集成 React/TypeScript、Node.js/Express、Qwen/Gemini 与内部 Stable Diffusion 1.5 推理流程，支持多模态艺术作品生成。",
+          "使用 Docker 将 React 前端、Node.js 后端、Qwen 服务与 Stable Diffusion 推理服务容器化，实现多个 AI 与应用服务的可复现部署。",
+          "优化 CI/CD 流程，协调工程、设计与产品团队的 6 个跨职能工作流，对齐实现优先级并完成 MVP 交付。",
         ],
         tech: [
           "React",
@@ -584,12 +626,13 @@ export const content = {
           "Stable Diffusion 1.5",
           "Docker",
           "Microsoft Azure",
+          "CI/CD",
         ],
       },
       {
         id: "folobotics",
         company: "FoloBotics",
-        role: "全栈开发实习生",
+        role: "全栈开发工程师",
         start: "2026-01",
         end: "2026-04",
         period: "2026年1月—4月",
@@ -597,8 +640,8 @@ export const content = {
         highlight: { value: "−25%", label: "平均响应时间" },
         metrics: [{ value: "25%", label: "平均响应时间降低" }],
         bullets: [
-          "开发 Java/Spring Boot 后端服务与 REST API，为 Flutter 客户端的用户、任务、推荐与仓库工作流提供支持。",
-          "设计 PostgreSQL、MySQL 与 Redis 数据流，并优化 API/数据库交互，使平均响应时间降低 25%，提升后端性能。",
+          "开发可扩展的 Java/Spring Boot 后端服务与 REST API，为 Flutter 客户端的用户、任务、推荐与仓库工作流提供支持。",
+          "以多线程架构重构 Java/Spring Boot API 与数据访问层，缓解竞态条件，提升 PostgreSQL 与 Redis 操作的线程安全性，使平均响应时间降低 25%。",
         ],
         tech: [
           "Java",
@@ -606,8 +649,8 @@ export const content = {
           "REST APIs",
           "Flutter",
           "PostgreSQL",
-          "MySQL",
           "Redis",
+          "多线程",
         ],
       },
       {
@@ -622,7 +665,7 @@ export const content = {
         metrics: [{ value: "5+", label: "个预约与排班管理工作流" }],
         bullets: [
           "使用 React Native、TypeScript、JavaScript、Node.js/Express、MongoDB 与 Google Cloud 构建并发布多角色应用，支持 App Store 与 Google Play 的生产版本发布。",
-          "通过 REST API 集成实现 5+ 个预约与排班管理工作流，将运营需求转化为可靠的端到端产品功能。",
+          "通过 REST API 集成实现 5+ 个预约与排班管理工作流，确保不同用户角色之间的状态同步与数据一致性。",
         ],
         tech: [
           "React Native",
@@ -638,14 +681,14 @@ export const content = {
         id: "hit-robotics",
         company: "哈尔滨工业大学机器人技术研究所",
         role: "工业视觉平台开发实习生",
-        start: "2025-06",
+        start: "2025-05",
         end: "2025-08",
-        period: "2025年6月—8月",
+        period: "2025年5月—8月",
         location: "中国",
-        highlight: { value: "600", label: "张图像 / 秒" },
-        metrics: [{ value: "600", label: "每秒处理图像数" }],
+        highlight: { value: "600", label: "张图像 / 秒，峰值" },
+        metrics: [{ value: "600", label: "每秒处理图像数，峰值" }],
         bullets: [
-          "在 Linux 上构建实时 C++/Qt 计算机视觉应用，可从相机实时画面中每秒处理多达 600 张图像，并调试性能敏感组件、集成应用模块。",
+          "在 Linux 上构建用于茶杯缺陷检测的实时 C++/Qt 计算机视觉应用，可从相机实时画面中每秒处理多达 600 张图像，并优化内存管理、集成应用模块。",
           "开发 Python/Django REST 后端，用于检测日志、参数同步与离线帧分析，将视觉输出连接至结构化应用服务。",
         ],
         tech: ["C++", "Qt", "Linux", "Python", "Django", "REST APIs"],
@@ -654,22 +697,64 @@ export const content = {
         id: "sinopec",
         company: "中国石化集团",
         role: "信息中心应用实习生",
-        start: "2024-07",
-        end: "2024-08",
-        period: "2024年7月—8月",
+        start: "2024-06",
+        end: "2024-12",
+        period: "2024年6月—12月",
         location: "中国",
-        highlight: { value: "RCS", label: "仓储自动化" },
-        metrics: [],
-        bullets: [
-          "使用 Python 与 Pyzbar 实现 QR/二维条码识别，并将识别结果接入后端服务，以支持可靠的无人仓库运行。",
-          "集成并测试无人仓库数字存储系统与机器人控制系统（RCS）的软件组件，为应用及自动化工作流提供支持。",
+        highlight: { value: "5,000+", label: "个仓储库位可视化" },
+        metrics: [
+          { value: "5,000+", label: "个仓储库位" },
+          { value: "<80 ms", label: "实时同步延迟" },
         ],
-        tech: ["Python", "Pyzbar", "RCS", "后端服务"],
+        bullets: [
+          "使用 React 与 Canvas/SVG 开发实时二维仓储可视化组件，渲染 5,000+ 个库位，提供实时状态高亮与热力图分析，并保持流畅的界面性能。",
+          "使用 WebSocket（Socket.io）实现实时数据同步，将 PDA 扫描事件与 AGV 位置更新传输至 React 看板，延迟低于 80 ms。",
+        ],
+        tech: ["React", "Canvas / SVG", "WebSocket", "Socket.io", "实时数据"],
+      },
+    ],
+    featured: [
+      {
+        id: "ai-image-platform",
+        title: "从提示词，到图像。",
+        eyebrow: "01 / AI 图像平台 · IPMD",
+        summary:
+          "连接 React、大语言模型与内部 Stable Diffusion 推理流程的多模态创作平台，通过容器化服务与 CI/CD 部署至 Azure。",
+        metric: { value: "6", label: "个跨职能工作流" },
+        tech: [
+          "React",
+          "TypeScript",
+          "Qwen / Gemini",
+          "Stable Diffusion",
+          "Docker",
+          "Azure",
+        ],
+        experienceId: "ipmd",
+      },
+      {
+        id: "warehouse-visualization",
+        title: "让仓储，实时可见。",
+        eyebrow: "02 / 实时可视化 · 中国石化",
+        summary:
+          "基于 React 与 Canvas/SVG 的仓储看板，呈现 5,000+ 个库位。实时状态、热力图、PDA 扫描与 AGV 位置通过 Socket.io 同步，延迟低于 80 ms。",
+        metric: { value: "5,000+", label: "个仓储库位" },
+        tech: ["React", "Canvas / SVG", "WebSocket", "Socket.io"],
+        experienceId: "sinopec",
+      },
+      {
+        id: "industrial-vision",
+        title: "高速视觉，捕捉缺陷。",
+        eyebrow: "03 / 工业视觉 · 哈工大",
+        summary:
+          "面向茶杯缺陷检测的实时 C++/Qt 应用，通过优化内存管理提升处理效率，并以 Django 后端支持检测日志、参数同步与离线帧分析。",
+        metric: { value: "600", label: "张图像 / 秒，峰值" },
+        tech: ["C++", "Qt", "Linux", "Python", "Django"],
+        experienceId: "hit-robotics",
       },
     ],
     projectsIntro: {
       title: "面向真实约束的工程实践。",
-      text: "保留自原工程作品集的系统、GPU 与应用 AI 精选项目。",
+      text: "继续探索系统性能、GPU 计算与应用 AI。",
     },
     projects: [
       {
@@ -727,7 +812,7 @@ export const content = {
         school: "滑铁卢大学",
         start: "2025-09",
         end: "2026-12",
-        period: "2025年9月—2026年12月",
+        period: "2025年9月—2026年12月（预计）",
         degree: "电气与计算机工程硕士",
         detail: "软件工程方向",
       },
@@ -745,7 +830,15 @@ export const content = {
       {
         id: "languages",
         label: "编程语言",
-        items: ["Java", "TypeScript", "JavaScript", "Python", "C / C++", "SQL"],
+        items: [
+          "Java",
+          "TypeScript",
+          "JavaScript",
+          "Python",
+          "C / C++",
+          "SQL",
+          "HTML / CSS",
+        ],
       },
       {
         id: "frontend-mobile",
@@ -763,6 +856,7 @@ export const content = {
           "Microsoft Azure",
           "Google Cloud",
           "Docker",
+          "CI/CD",
         ],
       },
       {
@@ -774,13 +868,21 @@ export const content = {
           "MongoDB",
           "Redis",
           "Qwen / Gemini",
-          "Stable Diffusion 1.5",
+          "Stable Diffusion",
         ],
       },
       {
         id: "project-toolkit",
         label: "其他项目工具",
-        items: ["Kotlin", "HTML / CSS", "Git", "Linux", "Bash", "Qt", "CUDA", "TensorFlow / YAMNet"],
+        items: [
+          "Kotlin",
+          "Git",
+          "Linux",
+          "Bash",
+          "Qt",
+          "CUDA",
+          "TensorFlow / YAMNet",
+        ],
       },
     ],
     spokenLanguages: [
@@ -791,7 +893,8 @@ export const content = {
     contact: {
       ...sharedContact,
       title: "一起做出经得住检验的产品。",
-      intro: "如需沟通全栈、AI 产品或系统工程方向的合作，邮件是最快的联系方式。",
+      intro:
+        "如需沟通全栈、AI 产品或系统工程方向的合作，邮件是最快的联系方式。",
       links: [
         {
           id: "email",
@@ -833,7 +936,11 @@ export const content = {
 
 export const getContent = (locale = defaultLocale) => {
   const normalizedLocale = locale.toLowerCase().split("-")[0];
-  return content[supportedLocales.includes(normalizedLocale) ? normalizedLocale : defaultLocale];
+  return content[
+    supportedLocales.includes(normalizedLocale)
+      ? normalizedLocale
+      : defaultLocale
+  ];
 };
 
 export default content;

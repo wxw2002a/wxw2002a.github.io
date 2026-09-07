@@ -8,7 +8,9 @@ if (dirname(assetsDirectory) !== repositoryRoot) {
   throw new Error("Refusing to clean assets outside the repository root.");
 }
 
-const generatedAsset = /^index-[A-Za-z0-9_-]+\.(?:css|js)(?:\.map)?$/;
+// Vite uses an eight-character content hash for entry points and lazy chunks.
+// Keep static media and un-hashed JavaScript/CSS files intact.
+const generatedAsset = /^[A-Za-z0-9_.-]+-[A-Za-z0-9_-]{8}\.(?:css|js)(?:\.map)?$/;
 
 try {
   const entries = await readdir(assetsDirectory, { withFileTypes: true });
