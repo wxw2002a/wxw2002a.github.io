@@ -61,6 +61,18 @@ test("shows the revised résumé and preserves the additional engineering projec
   expect(errors).toEqual([]);
 });
 
+test("the AI case study shows its loaded concept workbench without the old ring artwork", async ({ page }) => {
+  await page.goto("/#work");
+  const visual = page.locator(".ai-visual");
+  await expect(visual.locator(".ai-workbench")).toBeVisible();
+  await expect(visual.locator(".latent-art")).toHaveCount(0);
+  await expect(visual).toContainText("CONCEPT UI");
+  const preview = visual.locator(".ai-generated-preview img");
+  await expect(preview).toBeVisible();
+  await expect.poll(() => preview.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
+  await expectNoOverflow(page);
+});
+
 test("case studies open accessible dialogs and restore focus when dismissed", async ({ page }) => {
   await page.goto("/#work");
   const caseStudies = page.locator("#work button.case-open");

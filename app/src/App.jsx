@@ -100,28 +100,84 @@ function ReadingProgress({ zh }) {
   );
 }
 
-function ProjectVisual({ index }) {
+function ProjectVisual({ index, zh }) {
   if (index === 0)
     return (
       <div className="project-visual ai-visual" aria-hidden="true">
-        <div className="art-caption">
-          <span>INPUT → INFERENCE → IMAGE</span>
-          <span>01 / GENERATIVE</span>
+        <div className="ai-workbench">
+          <div className="ai-toolbar">
+            <span className="ai-studio-title">
+              <span>✳</span> Image studio
+            </span>
+            <span className="ai-toolbar-label">
+              {zh ? "创意工作台" : "CREATIVE WORKSPACE"}
+            </span>
+            <span className="ai-window-dots">
+              <i />
+              <i />
+              <i />
+            </span>
+          </div>
+          <div className="ai-workspace-body">
+            <div className="ai-prompt-panel">
+              <span className="ai-prompt-label">
+                {zh ? "你的想法" : "YOUR PROMPT"}
+                <span>01</span>
+              </span>
+              <p className="ai-prompt-text">
+                {zh
+                  ? "海边的石灰岩建筑，平静的海面，温暖的午后光线。"
+                  : "A quiet coastal pavilion. Warm limestone, still water, afternoon light."}
+                <span className="ai-text-caret" />
+              </p>
+              <div className="ai-options">
+                <span>
+                  {zh ? "风格" : "Style"}
+                  <b>{zh ? "建筑摄影" : "Architecture"}</b>
+                </span>
+                <span>
+                  {zh ? "光线" : "Light"}
+                  <b>{zh ? "自然光" : "Natural"}</b>
+                </span>
+              </div>
+              <span className="ai-generate">
+                {zh ? "让想法成像" : "Make it visible"}
+                <Arrow diagonal />
+              </span>
+              <span className="ai-pipeline">
+                PROMPT <span>→</span> INFERENCE <span>→</span> IMAGE
+              </span>
+            </div>
+            <div className="ai-result-panel">
+              <div className="ai-generated-preview">
+                <img
+                  src="/assets/ai-architecture-preview.jpg"
+                  alt=""
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span className="ai-preview-badge">
+                  {zh ? "AI 概念预览" : "AI CONCEPT PREVIEW"}
+                </span>
+                <span className="ai-preview-expand">
+                  <Arrow diagonal />
+                </span>
+              </div>
+              <div className="ai-result-footer">
+                <span>
+                  <i className="signal-dot" />
+                  {zh ? "从文字，到画面。" : "From a few words, a new world."}
+                </span>
+                <span>01 / 01</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="latent-art">
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
-        <div className="prompt-line">
-          <span className="signal-dot" /> A thought, made visible.<span>↵</span>
-        </div>
-        <span className="visual-note">CONCEPT VISUAL / NOT PRODUCT UI</span>
+        <span className="visual-note">
+          CONCEPT UI · NOT A PRODUCT SCREENSHOT
+        </span>
       </div>
     );
   if (index === 1)
@@ -590,7 +646,7 @@ export default function App() {
                 key={item.id}
                 className={`case-study case-${index} reveal`}
               >
-                <ProjectVisual index={index} />
+                <ProjectVisual index={index} zh={zh} />
                 <div className="case-info">
                   <span className="eyebrow">{item.eyebrow}</span>
                   <div className="case-title-row">

@@ -29,6 +29,9 @@ await page.waitForFunction(
     ) > 0,
 );
 await page.screenshot({ path: `${output}/desktop-work.png` });
+await page
+  .locator(".case-0")
+  .screenshot({ path: `${output}/ai-card-dark.png` });
 await page.locator(".case-study").first().click();
 await page.screenshot({ path: `${output}/desktop-dialog.png` });
 await page.keyboard.press("Escape");
@@ -50,11 +53,20 @@ await page
   .click();
 await page.evaluate(() => window.scrollTo(0, 0));
 await page.screenshot({ path: `${output}/desktop-light.png` });
+await page.locator(".case-0").scrollIntoViewIfNeeded();
+await page
+  .locator(".case-0")
+  .screenshot({ path: `${output}/ai-card-light.png` });
 await page.getByRole("button", { name: "Use dark theme", exact: true }).click();
+await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
 await page.setViewportSize({ width: 390, height: 844 });
 await page.waitForTimeout(200);
 await page.screenshot({ path: `${output}/mobile-hero.png` });
 await page.screenshot({ path: `${output}/mobile-full.png`, fullPage: true });
+await page.locator(".case-0").scrollIntoViewIfNeeded();
+await page
+  .locator(".case-0")
+  .screenshot({ path: `${output}/ai-card-mobile.png` });
 await page.evaluate(() =>
   window.scrollTo({
     top: (document.documentElement.scrollHeight - window.innerHeight) / 2,
