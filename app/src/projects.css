@@ -1,0 +1,211 @@
+.github-profile-link,
+.github-archive-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 10px/1.7 var(--mono);
+  color: var(--muted);
+}
+.github-profile-link svg,
+.github-project-actions svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+.github-project-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 24px;
+}
+.github-project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.github-project-filters button {
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font: 10px/1.5 var(--mono);
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.github-project-filters button[aria-pressed="true"] {
+  background: var(--acid);
+  color: #19210b;
+  border-color: var(--acid);
+}
+.github-project-count {
+  font: 10px/1.5 var(--mono);
+  color: var(--muted);
+}
+.github-project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.github-project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 29px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  transition:
+    border-color 0.25s,
+    translate 0.25s,
+    box-shadow 0.25s;
+  animation: github-card-enter 0.35s ease both;
+}
+.github-project-card:hover,
+.github-project-card:focus-within {
+  border-color: color-mix(in srgb, var(--acid) 55%, var(--line));
+  translate: 0 -4px;
+  box-shadow: 0 15px 35px #0002;
+}
+.github-project-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 25px;
+  font: 8px/1.7 var(--mono);
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.github-project-affiliation {
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  color: var(--text);
+  white-space: nowrap;
+}
+.github-project-card h3 {
+  margin: 22px 0 7px;
+  font: 500 clamp(22px, 1.8vw, 30px) / 1.15 var(--display);
+  letter-spacing: -0.045em;
+  overflow-wrap: anywhere;
+}
+.github-repo-name {
+  font: 9px/1.7 var(--mono);
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.github-project-summary {
+  margin: 23px 0;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.github-project-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.github-project-tech span {
+  border: 1px solid var(--line);
+  padding: 5px 7px;
+  font: 8px/1.5 var(--mono);
+  color: var(--muted);
+}
+.github-project-note {
+  margin: 0 0 22px;
+  font: 9px/1.9 var(--mono);
+  color: var(--muted);
+}
+.github-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 19px;
+  margin-top: auto;
+  padding-top: 17px;
+  border-top: 1px solid var(--line);
+}
+.github-project-actions a,
+.github-project-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 38px;
+  padding: 0;
+  font: 9px/1.6 var(--mono);
+  color: var(--text);
+  background: none;
+}
+.github-project-actions button {
+  flex-basis: 100%;
+  color: var(--acid);
+}
+[data-theme="light"] .github-project-actions button {
+  color: #465907;
+}
+.github-project-actions svg {
+  transition: translate 0.2s;
+}
+.github-project-actions a:hover svg,
+.github-project-actions button:hover svg {
+  translate: 2px -2px;
+}
+.github-archive-link {
+  margin-top: 30px;
+  min-height: 44px;
+}
+@keyframes github-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+[data-motion="paused"] .github-project-card {
+  animation: none;
+}
+@media (max-width: 1100px) {
+  .github-project-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .github-project-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .github-project-card {
+    padding: 23px;
+  }
+  .github-project-filters button {
+    padding: 10px 12px;
+    font-size: 9px;
+  }
+  .github-projects-section .section-top {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .github-projects-section .section-heading {
+    margin-bottom: 30px;
+  }
+  .github-project-count {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .github-project-card {
+    animation: none;
+    transition: none;
+  }
+  .github-project-card:hover,
+  .github-project-card:focus-within {
+    translate: none;
+  }
+}

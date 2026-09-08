@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { getContent } from "./content.js";
 import SculptureScene from "./components/SculptureScene.jsx";
+import GithubProjects from "./components/GithubProjects.jsx";
 import usePortfolioMotion from "./usePortfolioMotion.js";
 
 const resume = "/Xiwei-Wang-Resume.pdf";
@@ -538,6 +539,7 @@ export default function App() {
   const nav = [
     { id: "work", label: zh ? "作品" : "Work" },
     { id: "experience", label: zh ? "经历" : "Experience" },
+    { id: "projects", label: zh ? "项目" : "Projects" },
     { id: "background", label: zh ? "关于" : "About" },
   ];
   return (
@@ -938,6 +940,8 @@ export default function App() {
           </div>
         </section>
 
+        <GithubProjects zh={zh} onOpenCase={setSelected} />
+
         <section
           id="experiments"
           className="section experiments-section"
@@ -945,7 +949,7 @@ export default function App() {
         >
           <div className="section-top reveal">
             <span className="eyebrow">
-              03 / {zh ? "自主探索" : "OFF THE CLOCK"}
+              04 / {zh ? "自主探索" : "OFF THE CLOCK"}
             </span>
             <span className="section-note">
               {zh ? "独立项目与技术实验" : "SIDE PROJECTS & EXPERIMENTS"}
@@ -1017,7 +1021,7 @@ export default function App() {
         >
           <div className="section-top reveal">
             <span className="eyebrow">
-              04 / {zh ? "关于我" : "BEHIND THE WORK"}
+              05 / {zh ? "关于我" : "BEHIND THE WORK"}
             </span>
             <span className="section-note">
               {zh
@@ -1098,7 +1102,7 @@ export default function App() {
         >
           <div className="section-top">
             <span className="eyebrow">
-              05 / {zh ? "下一个想法" : "THE NEXT GOOD IDEA"}
+              06 / {zh ? "下一个想法" : "THE NEXT GOOD IDEA"}
             </span>
             <span className="contact-spark" aria-hidden="true">
               ✳
