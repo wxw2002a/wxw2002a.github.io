@@ -105,7 +105,7 @@ test("all six GitHub cards open substantive introductions in the shared work dia
   expect(errors).toEqual([]);
 });
 
-test("project introductions distinguish GitHub README material from the code-based Bitcoin explanation", async ({
+test("project introductions retain real GitHub references and use neutral Bitcoin source labels", async ({
   page,
 }) => {
   await page.goto("/#projects");
@@ -115,11 +115,6 @@ test("project introductions distinguish GitHub README material from the code-bas
     const source = dialog.locator(".project-intro-source");
     await expect(source).toHaveAttribute("data-source-kind", project.source);
     await expect(source).toContainText("GitHub");
-    await expect(source).toContainText(
-      project.source === "readme"
-        ? /README/
-        : /source code|code review|repository code/i,
-    );
     const reference = source.locator("a");
     expect(await reference.count()).toBeGreaterThanOrEqual(1);
     await expect(reference.first()).toHaveAttribute(
@@ -128,8 +123,18 @@ test("project introductions distinguish GitHub README material from the code-bas
     );
     await expect(reference.first()).toHaveAttribute("target", "_blank");
     if (project.source === "readme") {
+      await expect(source).toContainText("README");
       await expect(reference.first()).toHaveAttribute("href", /README/i);
     } else {
+      await expect(source.locator("span")).toHaveText("Project overview");
+      await expect(reference.first()).toHaveText("GitHub source");
+      await expect(reference.first()).toHaveAttribute(
+        "href",
+        "https://github.com/wxw2002a/Bitcoin-project/blob/main/Client.java",
+      );
+      await expect(dialog).not.toContainText(
+        /No README|written from repository code|暂无\s*README|根据代码整理|根据源码整理/i,
+      );
       await expect(dialog).toContainText(/prototype|scaffold/i);
     }
     await page.keyboard.press("Escape");
@@ -243,14 +248,12 @@ test("card surfaces and keyboard controls open introductions and every dismissal
     [project, "https://github.com/wxw2002a/cineflow"],
     [projects[3], "https://wxw2002a.github.io/ic-fa/"],
   ]) {
-    await page
-      .context()
-      .route(url, (route) =>
-        route.fulfill({
-          contentType: "text/html",
-          body: "<title>Link destination</title>",
-        }),
-      );
+    await page.context().route(url, (route) =>
+      route.fulfill({
+        contentType: "text/html",
+        body: "<title>Link destination</title>",
+      }),
+    );
     const popupPromise = page.waitForEvent("popup");
     await cardFor(page, targetProject).locator(`a[href="${url}"]`).click();
     const popup = await popupPromise;
@@ -291,6 +294,18 @@ test("Chinese introductions remain readable at 320px in light mode and reduced m
     await expect(dialog.locator(".project-intro-source")).toContainText(
       /[\u3400-\u9fff]/,
     );
+    if (project.source === "code") {
+      const source = dialog.locator(".project-intro-source");
+      await expect(source.locator("span")).toHaveText("项目介绍");
+      await expect(source.locator("a")).toHaveText("GitHub 源码");
+      await expect(source.locator("a")).toHaveAttribute(
+        "href",
+        "https://github.com/wxw2002a/Bitcoin-project/blob/main/Client.java",
+      );
+      await expect(dialog).not.toContainText(
+        /No README|written from repository code|暂无\s*README|根据代码整理|根据源码整理/i,
+      );
+    }
     await expect(dialog.locator(".tags")).toContainText(project.tech);
     await expectNoOverflow(page);
     await dialog.locator(".dialog-close").click();

@@ -46,12 +46,12 @@ export const projectDetailsTools = {
           en: [
             "The public mining handler currently returns a fixed nonce of 43; it does not implement a distributed nonce search.",
             "The cancel operation is a placeholder, and the server scaffolding does not demonstrate worker coordination or job scheduling.",
-            "This is a learning and integration prototype, not a production mining pool; the repository has no README or validated performance results.",
+            "This is a learning and integration prototype, not a production mining pool; no validated performance results are provided.",
           ],
           zh: [
             "公开的挖矿处理器目前固定返回 nonce 43，尚未实现分布式 nonce 搜索。",
             "cancel 操作仍为空实现，现有服务框架也未展示工作节点协调或任务调度。",
-            "项目定位为学习与接口联调原型，而非生产矿池；仓库暂无 README 或经过验证的性能结果。",
+            "项目定位为学习与接口联调原型，而非生产矿池；尚未提供经过验证的性能结果。",
           ],
         },
       },

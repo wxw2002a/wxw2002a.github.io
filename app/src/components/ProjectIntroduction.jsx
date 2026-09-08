@@ -1,3 +1,6 @@
+import ProjectImageGallery from "./ProjectImageGallery.jsx";
+import { projectImages } from "../projectImages.js";
+
 const LinkArrow = () => (
   <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
     <path d="M4 16 16 4M5 4h11v11" stroke="currentColor" strokeWidth="1.3" />
@@ -16,15 +19,15 @@ export default function ProjectIntroduction({ project, detail, zh, children }) {
               ? "介绍依据 GitHub README · 中文译文"
               : "Introduction from GitHub README"
             : zh
-              ? "GitHub 仓库暂无 README · 根据代码整理"
-              : "GitHub · No README · written from repository code"}
+              ? "项目介绍"
+              : "Project overview"}
         </span>
         <a href={detail.sourceUrl} target="_blank" rel="noreferrer">
           {detail.sourceKind === "readme"
             ? "GitHub README"
             : zh
-              ? "查看依据"
-              : "View evidence"}
+              ? "GitHub 源码"
+              : "GitHub source"}
           <LinkArrow />
         </a>
       </p>
@@ -34,6 +37,7 @@ export default function ProjectIntroduction({ project, detail, zh, children }) {
         ))}
       </span>
       {children}
+      <ProjectImageGallery images={projectImages[project.id]} zh={zh} />
       {detail.sections.map((section, index) => (
         <section
           className="project-intro-section"

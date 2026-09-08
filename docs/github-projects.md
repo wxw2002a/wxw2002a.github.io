@@ -20,6 +20,21 @@ All six GitHub cards open local project introductions using the work-case modal,
 
 Rechecked 2026-09-08. The introductory paragraphs for the five repositories with README files preserve complete original English sentences, with corresponding Chinese translations. Their feature, implementation, and scope sections are curated summaries, not a claim to reproduce the entire README. CineFlow's incomplete opening sentence fragment is omitted. The LowPass overview omits a broad claim about processing all input samples because the implementation uses a default 500-sample sliding window; its original short-signal recommendation is preserved.
 
-Bitcoin has no README. Its introduction is explicitly labelled as written from repository code, with a direct evidence link to `Client.java`; the mining and cancellation limitations were checked against `MiningPoolServiceHandler.java`. Do not imply working distributed mining or validated throughput.
+Bitcoin's introduction was checked against repository code, with a direct evidence link to `Client.java`; the mining and cancellation limitations were checked against `MiningPoolServiceHandler.java`. Its visible source caption uses the neutral "Project overview" / "项目介绍" label, without editorial notes about missing README content. Do not imply working distributed mining or validated throughput.
 
 The reviewed bilingual data is stored in `app/src/projectDetailsProducts.js` and `app/src/projectDetailsTools.js`. No external Markdown is executed or rendered as raw HTML, and no GitHub API calls are needed when opening introductions. The IPMD project introduction includes the existing video1/video2/video3 gallery; the original work-case shortcut remains available.
+
+## README screenshots
+
+Checked 2026-09-08 against each repository's default `main` branch. Six original PNG files are copied without edits to `assets/projects/`; their local Git blob hashes matched the GitHub contents API. `app/src/projectImages.js` records the corresponding GitHub image links, dimensions, alternate text, and bilingual captions. Images only mount with an open introduction and use native lazy loading. They are not cropped; both the image and the original-image text link open the local, original-resolution file in a new tab.
+
+| Repository | README image path | Dimensions | SHA256 of original PNG |
+| --- | --- | --- | --- |
+| arts-generation-platform | `docs/demo.png` | 1440 × 1000 | `7802eac51e4d0ed92658b6527a79fe5ce3ec73a4a40c1311ce7f5d1bb46143e9` |
+| arts-generation-platform | `docs/preview.png` | 1440 × 1000 | `826ff98e29e4e71095e18c9168e7e616aa0eac218dc668ef938dc31a0e8aafa1` |
+| cineflow | `docs/images/overview.png` | 1440 × 1814 | `d1c480cde027f60439c3d6c5e4703eb84650d936886691a98fcce464d50225f0` |
+| second-hand-hub | `docs/images/marketplace.png` | 1440 × 1060 | `e24b43a992a30804a34408c2627a79d9c45d4b62c3f077f678b3f929d8c0ca27` |
+| second-hand-hub | `docs/images/chat.png` | 1440 × 1000 | `3a4551b5b761854f2b38504be0079c2dc2e59edad734bb3d428271f548c68ced` |
+| second-hand-hub | `docs/images/checkout.png` | 1440 × 1000 | `74eef6e37d19d98a821576732f5d06fd04fe0418e48e1245ae2842b11e9cf66c` |
+
+Arts' `preview.png` is explicitly linked from the README rather than embedded. Second Hand Hub's chat and checkout screenshots are included inside its README's collapsible details. Bitcoin has no README; ic-fa and LowPass have no README screenshots. No unrelated images are added to those projects. CI/license badges and Mermaid code blocks are excluded. The existing IPMD video gallery remains before the screenshots.
