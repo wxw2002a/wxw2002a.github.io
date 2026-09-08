@@ -42,7 +42,7 @@ test("GitHub Projects links all six pinned repositories and attributes the art p
 
   for (const repository of repositories) {
     const card = projects.locator(`[data-project="${repository}"]`);
-    await expect(card.getByRole("heading", { level: 3 })).toHaveText(/\S/);
+    await expect(card.getByRole("heading")).toHaveText(/\S/);
     const source = card.locator(
       `a[href="https://github.com/wxw2002a/${repository}"]`,
     );
@@ -71,7 +71,9 @@ test("GitHub category filters update their live count without losing the origina
     ["IPMD", ["arts-generation-platform"]],
     ["All", repositories],
   ]) {
-    const filter = projects.getByRole("button", { name: label, exact: true });
+    const filter = projects
+      .locator(".github-project-filters")
+      .getByRole("button", { name: label, exact: true });
     await filter.click();
     await expect(filter).toHaveAttribute("aria-pressed", "true");
     await expectProjectSet(projects, expected);
@@ -116,7 +118,9 @@ test("Projects navigation and deep links work in Chinese and both themes at 320p
   await expect(projects).toBeInViewport();
   for (const label of ["全部", "产品应用", "系统与工具", "IPMD"]) {
     await expect(
-      projects.getByRole("button", { name: label, exact: true }),
+      projects
+        .locator(".github-project-filters")
+        .getByRole("button", { name: label, exact: true }),
     ).toBeVisible();
   }
   await expect(projects.locator(".github-project-card")).toHaveCount(6);
@@ -155,7 +159,10 @@ test("the IPMD project opens the existing video1 case and restores focus after d
   ).toHaveAttribute("aria-pressed", "true");
   const video = dialog.locator("video.case-video");
   await expect(video).toHaveAttribute("src", "/assets/ipmd/video1.mp4");
-  await expect(video).toHaveAttribute("poster", "/assets/ipmd/video1-poster.jpg");
+  await expect(video).toHaveAttribute(
+    "poster",
+    "/assets/ipmd/video1-poster.jpg",
+  );
   await expect(video).toHaveAttribute("controls", "");
   await expect
     .poll(() => video.evaluate((element) => element.readyState))

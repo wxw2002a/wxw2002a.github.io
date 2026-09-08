@@ -20,6 +20,41 @@
   gap: 16px;
   padding-bottom: 24px;
 }
+.project-group {
+  min-width: 0;
+  scroll-margin-top: 110px;
+}
+.project-group-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  margin-bottom: 25px;
+}
+.project-group-heading h3 {
+  margin: 0;
+  font: 500 clamp(27px, 2.5vw, 36px) / 1.15 var(--display);
+  letter-spacing: -0.04em;
+}
+.project-group-description {
+  max-width: 500px;
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.university-projects {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+.university-projects .filters {
+  margin-top: 0;
+}
+.university-projects .filters button {
+  min-height: 44px;
+}
 .github-project-filters {
   display: flex;
   flex-wrap: wrap;
@@ -86,7 +121,7 @@
   color: var(--text);
   white-space: nowrap;
 }
-.github-project-card h3 {
+.github-project-card h4 {
   margin: 22px 0 7px;
   font: 500 clamp(22px, 1.8vw, 30px) / 1.15 var(--display);
   letter-spacing: -0.045em;
@@ -155,8 +190,10 @@
   translate: 2px -2px;
 }
 .github-archive-link {
-  margin-top: 30px;
   min-height: 44px;
+}
+.github-archive-link:hover {
+  color: var(--text);
 }
 @keyframes github-card-enter {
   from {
@@ -177,6 +214,16 @@
   }
 }
 @media (max-width: 700px) {
+  .project-group {
+    scroll-margin-top: 85px;
+  }
+  .project-group-heading {
+    gap: 10px 20px;
+  }
+  .university-projects {
+    margin-top: 42px;
+    padding-top: 34px;
+  }
   .github-project-grid {
     grid-template-columns: 1fr;
     gap: 14px;

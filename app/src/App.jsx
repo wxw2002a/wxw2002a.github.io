@@ -791,79 +791,73 @@ export default function App() {
           </div>
         </section>
 
-        <GithubProjects zh={zh} onOpenCase={setSelected} />
-
-        <section
-          id="experiments"
-          className="section experiments-section"
-          aria-labelledby="experiments-title"
-        >
-          <div className="section-top reveal">
-            <span className="eyebrow">
-              04 / {zh ? "自主探索" : "OFF THE CLOCK"}
-            </span>
-            <span className="section-note">
-              {zh ? "独立项目与技术实验" : "SIDE PROJECTS & EXPERIMENTS"}
-            </span>
-          </div>
-          <div className="section-heading reveal">
-            <h2 id="experiments-title">
-              {zh ? (
-                <>
-                  保持<span>好奇。</span>
-                </>
-              ) : (
-                <>
-                  Curiosity,<span>in code.</span>
-                </>
-              )}
-            </h2>
-            <div
-              className="filters"
-              aria-label={zh ? "项目分类" : "Project filters"}
-            >
-              {data.ui.projectFilters.map((item) => (
-                <button
-                  key={item.id}
-                  aria-pressed={filter === item.id}
-                  onClick={() => setFilter(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
+        <GithubProjects zh={zh} onOpenCase={setSelected}>
+          <section
+            id="experiments"
+            className="project-group university-projects experiments-section"
+            aria-labelledby="experiments-title"
+          >
+            <div className="project-group-heading reveal">
+              <div>
+                <h3 id="experiments-title">
+                  {zh ? "大学项目" : "University Projects"}
+                </h3>
+                <p className="project-group-description">
+                  {zh
+                    ? "大学期间的项目实践，涵盖系统性能、GPU 计算与应用 AI。"
+                    : "University work in systems performance, GPU computing, and applied AI."}
+                </p>
+              </div>
+              <div
+                className="filters"
+                role="group"
+                aria-label={
+                  zh ? "大学项目分类" : "University project categories"
+                }
+              >
+                {data.ui.projectFilters.map((item) => (
+                  <button
+                    key={item.id}
+                    aria-pressed={filter === item.id}
+                    onClick={() => setFilter(item.id)}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="project-list">
-            {data.projects
-              .filter((item) => filter === "all" || item.category === filter)
-              .map((item) => (
-                <details className="project-row" key={item.id}>
-                  <summary>
-                    <span
-                      className={`project-glyph glyph-${item.category}`}
-                      aria-hidden="true"
-                    >
-                      {item.category === "gpu"
-                        ? "▦"
-                        : item.category === "ai"
-                          ? "≋"
-                          : "⌘"}
-                    </span>
-                    <span className="project-row-title">
-                      <span className="eyebrow">{item.categoryLabel}</span>
-                      <strong className="project-name">{item.title}</strong>
-                    </span>
-                    <span className="project-metric">{item.metric}</span>
-                    <span className="expand-icon">+</span>
-                  </summary>
-                  <div className="project-description">
-                    <p>{item.description}</p>
-                    <Tags items={item.tech} />
-                  </div>
-                </details>
-              ))}
-          </div>
-        </section>
+            <div className="project-list">
+              {data.projects
+                .filter((item) => filter === "all" || item.category === filter)
+                .map((item) => (
+                  <details className="project-row" key={item.id}>
+                    <summary>
+                      <span
+                        className={`project-glyph glyph-${item.category}`}
+                        aria-hidden="true"
+                      >
+                        {item.category === "gpu"
+                          ? "▦"
+                          : item.category === "ai"
+                            ? "≋"
+                            : "⌘"}
+                      </span>
+                      <span className="project-row-title">
+                        <span className="eyebrow">{item.categoryLabel}</span>
+                        <strong className="project-name">{item.title}</strong>
+                      </span>
+                      <span className="project-metric">{item.metric}</span>
+                      <span className="expand-icon">+</span>
+                    </summary>
+                    <div className="project-description">
+                      <p>{item.description}</p>
+                      <Tags items={item.tech} />
+                    </div>
+                  </details>
+                ))}
+            </div>
+          </section>
+        </GithubProjects>
 
         <section
           className="section about-section"
@@ -872,7 +866,7 @@ export default function App() {
         >
           <div className="section-top reveal">
             <span className="eyebrow">
-              05 / {zh ? "关于我" : "BEHIND THE WORK"}
+              04 / {zh ? "关于我" : "BEHIND THE WORK"}
             </span>
             <span className="section-note">
               {zh
@@ -953,7 +947,7 @@ export default function App() {
         >
           <div className="section-top">
             <span className="eyebrow">
-              06 / {zh ? "下一个想法" : "THE NEXT GOOD IDEA"}
+              05 / {zh ? "下一个想法" : "THE NEXT GOOD IDEA"}
             </span>
             <span className="contact-spark" aria-hidden="true">
               ✳

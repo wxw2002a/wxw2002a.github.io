@@ -7,7 +7,7 @@ const LinkArrow = () => (
   </svg>
 );
 
-export default function GithubProjects({ zh, onOpenCase }) {
+export default function GithubProjects({ zh, onOpenCase, children }) {
   const [filter, setFilter] = useState("all");
   const locale = zh ? "zh" : "en";
   const filters = [
@@ -55,103 +55,113 @@ export default function GithubProjects({ zh, onOpenCase }) {
         </h2>
         <p>
           {zh
-            ? "精选 GitHub 项目，涵盖产品应用、AI、交互工具与系统实验。IPMD 项目单独标注，点击即可查看源码或相关案例。"
-            : "Selected GitHub projects across products, AI, interactive tools, and systems. IPMD work is clearly labelled, with code and case studies to explore."}
+            ? "汇集 GitHub 作品与大学项目，涵盖产品应用、AI 与系统工程。IPMD 项目单独标注，点击即可查看源码或相关案例。"
+            : "GitHub builds and university projects across products, AI, and systems. IPMD work is clearly labelled, with code and case studies to explore."}
         </p>
       </div>
-      <div className="github-project-toolbar">
-        <div
-          className="github-project-filters"
-          role="group"
-          aria-label={zh ? "GitHub 项目分类" : "GitHub project categories"}
-        >
-          {filters.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              aria-pressed={filter === item.id}
-              onClick={() => setFilter(item.id)}
-            >
-              {item.label}
-            </button>
-          ))}
+      <section
+        id="github-projects"
+        className="project-group"
+        aria-labelledby="github-group-title"
+      >
+        <div className="project-group-heading reveal">
+          <h3 id="github-group-title">
+            {zh ? "GitHub 项目" : "GitHub Projects"}
+          </h3>
+          <a className="github-archive-link" href="#experiments">
+            {zh ? "大学项目" : "University Projects"}
+            <span aria-hidden="true">↓</span>
+          </a>
         </div>
-        <span
-          className="github-project-count"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {zh ? `${projects.length} 个项目` : `${projects.length} projects`}
-        </span>
-      </div>
-      <div className="github-project-grid">
-        {projects.map((project) => (
-          <article
-            key={project.id}
-            className="github-project-card"
-            data-project={project.id}
+        <div className="github-project-toolbar">
+          <div
+            className="github-project-filters"
+            role="group"
+            aria-label={zh ? "GitHub 项目分类" : "GitHub project categories"}
           >
-            <div className="github-project-meta">
-              <span>{project.label[locale]}</span>
-              {project.affiliation && (
-                <span className="github-project-affiliation">
-                  {project.affiliation}
-                </span>
-              )}
-            </div>
-            <h3>{project.title}</h3>
-            <span className="github-repo-name">{project.id}</span>
-            <p className="github-project-summary">
-              {project.description[locale]}
-            </p>
-            <div
-              className="github-project-tech"
-              aria-label={zh ? "技术栈" : "Technologies"}
-            >
-              {project.tech.map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
-            </div>
-            {project.note && (
-              <p className="github-project-note">{project.note[locale]}</p>
-            )}
-            <div className="github-project-actions">
-              <a
-                href={project.repo}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`${zh ? "查看源码" : "View source"}: ${project.title}`}
+            {filters.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-pressed={filter === item.id}
+                onClick={() => setFilter(item.id)}
               >
-                {zh ? "源码" : "Source"} <LinkArrow />
-              </a>
-              {project.demo && (
+                {item.label}
+              </button>
+            ))}
+          </div>
+          <span
+            className="github-project-count"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {zh ? `${projects.length} 个项目` : `${projects.length} projects`}
+          </span>
+        </div>
+        <div className="github-project-grid">
+          {projects.map((project) => (
+            <article
+              key={project.id}
+              className="github-project-card"
+              data-project={project.id}
+            >
+              <div className="github-project-meta">
+                <span>{project.label[locale]}</span>
+                {project.affiliation && (
+                  <span className="github-project-affiliation">
+                    {project.affiliation}
+                  </span>
+                )}
+              </div>
+              <h4>{project.title}</h4>
+              <span className="github-repo-name">{project.id}</span>
+              <p className="github-project-summary">
+                {project.description[locale]}
+              </p>
+              <div
+                className="github-project-tech"
+                aria-label={zh ? "技术栈" : "Technologies"}
+              >
+                {project.tech.map((tech) => (
+                  <span key={tech}>{tech}</span>
+                ))}
+              </div>
+              {project.note && (
+                <p className="github-project-note">{project.note[locale]}</p>
+              )}
+              <div className="github-project-actions">
                 <a
-                  href={project.demo}
+                  href={project.repo}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={`${zh ? "交互演示" : "Interactive demo"}: ${project.title}`}
+                  aria-label={`${zh ? "查看源码" : "View source"}: ${project.title}`}
                 >
-                  {zh ? "交互演示" : "Interactive demo"} <LinkArrow />
+                  {zh ? "源码" : "Source"} <LinkArrow />
                 </a>
-              )}
-              {project.caseId && (
-                <button
-                  type="button"
-                  onClick={() => onOpenCase(project.caseId)}
-                >
-                  {zh ? "查看 IPMD 案例" : "View IPMD case"} <LinkArrow />
-                </button>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
-      <a className="github-archive-link" href="#experiments">
-        {zh
-          ? "继续查看独立项目与技术实验"
-          : "More independent projects & experiments"}{" "}
-        <span aria-hidden="true">↓</span>
-      </a>
+                {project.demo && (
+                  <a
+                    href={project.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${zh ? "交互演示" : "Interactive demo"}: ${project.title}`}
+                  >
+                    {zh ? "交互演示" : "Interactive demo"} <LinkArrow />
+                  </a>
+                )}
+                {project.caseId && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenCase(project.caseId)}
+                  >
+                    {zh ? "查看 IPMD 案例" : "View IPMD case"} <LinkArrow />
+                  </button>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      {children}
     </section>
   );
 }

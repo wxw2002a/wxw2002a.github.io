@@ -14,4 +14,4 @@ Verified public demos returning HTTP 200:
 - https://wxw2002a.github.io/arts-generation-platform/
 - https://wxw2002a.github.io/ic-fa/
 
-The remaining projects link only to their repositories. Existing four independent technical experiments remain in their original section, after the new Projects section.
+The remaining GitHub projects link only to their repositories. The unified `#projects` section contains this six-repository GitHub group and a University Projects group for the four existing projects. The owner identified those four as university projects; no specific institution or course affiliation is inferred. Their original `#experiments` anchor, category filters, and expandable details are preserved within the combined section. `arts-generation-platform` remains explicitly associated with IPMD. About and Contact follow as sections 04 and 05.
