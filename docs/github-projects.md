@@ -14,4 +14,12 @@ Verified public demos returning HTTP 200:
 - https://wxw2002a.github.io/arts-generation-platform/
 - https://wxw2002a.github.io/ic-fa/
 
-The remaining GitHub projects link only to their repositories. The unified `#projects` section contains this six-repository GitHub group and a University Projects group for the four existing projects. The owner identified those four as university projects; no specific institution or course affiliation is inferred. Their original `#experiments` anchor, category filters, and expandable details are preserved within the combined section. `arts-generation-platform` remains explicitly associated with IPMD. About and Contact follow as sections 04 and 05.
+All six GitHub cards open local project introductions using the work-case modal, with separate source and available demo links. The unified `#projects` section contains this six-repository GitHub group and a University Projects group for the four existing projects. The owner identified those four as university projects; no specific institution or course affiliation is inferred. Their original `#experiments` anchor, category filters, and expandable details are preserved within the combined section. `arts-generation-platform` remains explicitly associated with IPMD. About and Contact follow as sections 04 and 05.
+
+## Introduction provenance
+
+Rechecked 2026-09-08. The introductory paragraphs for the five repositories with README files preserve complete original English sentences, with corresponding Chinese translations. Their feature, implementation, and scope sections are curated summaries, not a claim to reproduce the entire README. CineFlow's incomplete opening sentence fragment is omitted. The LowPass overview omits a broad claim about processing all input samples because the implementation uses a default 500-sample sliding window; its original short-signal recommendation is preserved.
+
+Bitcoin has no README. Its introduction is explicitly labelled as written from repository code, with a direct evidence link to `Client.java`; the mining and cancellation limitations were checked against `MiningPoolServiceHandler.java`. Do not imply working distributed mining or validated throughput.
+
+The reviewed bilingual data is stored in `app/src/projectDetailsProducts.js` and `app/src/projectDetailsTools.js`. No external Markdown is executed or rendered as raw HTML, and no GitHub API calls are needed when opening introductions. The IPMD project introduction includes the existing video1/video2/video3 gallery; the original work-case shortcut remains available.

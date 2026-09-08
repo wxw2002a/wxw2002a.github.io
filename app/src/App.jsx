@@ -3,6 +3,9 @@ import { useReducedMotion } from "motion/react";
 import { getContent } from "./content.js";
 import Hero from "./components/Hero.jsx";
 import GithubProjects from "./components/GithubProjects.jsx";
+import ProjectIntroduction from "./components/ProjectIntroduction.jsx";
+import { githubProjects } from "./githubProjects.js";
+import { projectDetails } from "./projectDetails.js";
 import usePortfolioMotion from "./usePortfolioMotion.js";
 
 const resume = "/Xiwei-Wang-Resume.pdf";
@@ -372,6 +375,10 @@ function CaseVideoGallery({ videos, zh }) {
 function CaseDialog({ selected, data, onClose, zh }) {
   const ref = useRef(null);
   const featured = data.featured.find((item) => item.id === selected);
+  const project = githubProjects.find(
+    (item) => `project:${item.id}` === selected,
+  );
+  const projectCase = data.featured.find((item) => item.id === project?.caseId);
   const role = data.experiences.find(
     (item) => item.id === featured?.experienceId,
   );
@@ -382,6 +389,7 @@ function CaseDialog({ selected, data, onClose, zh }) {
         .querySelectorAll(".case-video")
         .forEach((player) => player.pause());
       dialog.showModal();
+      dialog.scrollTop = 0;
       document.body.style.overflow = "hidden";
     }
     if (!selected && dialog.open) dialog.close();
@@ -394,54 +402,86 @@ function CaseDialog({ selected, data, onClose, zh }) {
       ref={ref}
       className="case-dialog"
       aria-labelledby="case-title"
-      onClose={onClose}
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      onClose={() => {
+        // Native close events are queued. Ignore an old event if another
+        // selection has already reopened this shared dialog.
+        if (!ref.current.open) onClose();
+      }}
       onClick={(e) => {
-        if (e.target === e.currentTarget) ref.current.close();
+        if (e.target === e.currentTarget) onClose();
       }}
     >
-      {featured && (
+      {(featured || project) && (
         <div className="dialog-content">
           <button
             className="dialog-close"
-            onClick={() => ref.current.close()}
+            onClick={onClose}
             aria-label={zh ? "关闭案例" : "Close case study"}
           >
             ×
           </button>
-          <span className="eyebrow">{featured.eyebrow}</span>
-          <h2 id="case-title">{featured.title}</h2>
-          {featured.videos && (
-            <CaseVideoGallery
-              key={featured.id}
-              videos={featured.videos}
+          <span className="eyebrow">
+            {project
+              ? [project.label[zh ? "zh" : "en"], project.affiliation]
+                  .filter(Boolean)
+                  .join(" · ")
+              : featured.eyebrow}
+          </span>
+          <h2 id="case-title">{project ? project.title : featured.title}</h2>
+          {project ? (
+            <ProjectIntroduction
+              project={project}
+              detail={projectDetails[project.id]}
               zh={zh}
-            />
+            >
+              {projectCase?.videos && (
+                <CaseVideoGallery
+                  key={project.id}
+                  videos={projectCase.videos}
+                  zh={zh}
+                />
+              )}
+            </ProjectIntroduction>
+          ) : (
+            <>
+              {featured.videos && (
+                <CaseVideoGallery
+                  key={featured.id}
+                  videos={featured.videos}
+                  zh={zh}
+                />
+              )}
+              {featured.video && (
+                <CaseVideo key={featured.id} video={featured.video} zh={zh} />
+              )}
+              <p className="dialog-summary">{featured.summary}</p>
+              <div className="dialog-role">
+                <span>{role.company}</span>
+                <span>{role.role}</span>
+                <span>{role.period}</span>
+              </div>
+              <h3>{zh ? "我的工作" : "My contribution"}</h3>
+              <ul>
+                {role.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+              <Tags items={featured.tech} />
+              <a
+                className="text-link"
+                href={resume}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {data.ui.actions.viewResume}
+                <Arrow diagonal />
+              </a>
+            </>
           )}
-          {featured.video && (
-            <CaseVideo key={featured.id} video={featured.video} zh={zh} />
-          )}
-          <p className="dialog-summary">{featured.summary}</p>
-          <div className="dialog-role">
-            <span>{role.company}</span>
-            <span>{role.role}</span>
-            <span>{role.period}</span>
-          </div>
-          <h3>{zh ? "我的工作" : "My contribution"}</h3>
-          <ul>
-            {role.bullets.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
-            ))}
-          </ul>
-          <Tags items={featured.tech} />
-          <a
-            className="text-link"
-            href={resume}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {data.ui.actions.viewResume}
-            <Arrow diagonal />
-          </a>
         </div>
       )}
     </dialog>
@@ -791,7 +831,11 @@ export default function App() {
           </div>
         </section>
 
-        <GithubProjects zh={zh} onOpenCase={setSelected}>
+        <GithubProjects
+          zh={zh}
+          onOpenCase={setSelected}
+          onOpenProject={(id) => setSelected(`project:${id}`)}
+        >
           <section
             id="experiments"
             className="project-group university-projects experiments-section"

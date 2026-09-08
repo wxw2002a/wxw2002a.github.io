@@ -87,6 +87,7 @@
 }
 .github-project-card {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -160,12 +161,14 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 6px 19px;
-  margin-top: auto;
+  margin-top: 0;
   padding-top: 17px;
   border-top: 1px solid var(--line);
 }
 .github-project-actions a,
 .github-project-actions button {
+  position: relative;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 9px;
@@ -194,6 +197,92 @@
 }
 .github-archive-link:hover {
   color: var(--text);
+}
+.github-project-intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding: 16px 0;
+  min-height: 52px;
+  background: none;
+  color: var(--acid);
+  font: 11px/1.6 var(--mono);
+  text-align: left;
+}
+/* Expand the single accessible introduction button across the card.
+   Source/demo controls stay above it, with their own independent actions. */
+.github-project-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.github-project-intro:focus-visible {
+  outline: none;
+}
+.github-project-intro:focus-visible::after {
+  outline: 2px solid var(--acid);
+  outline-offset: 4px;
+}
+.github-project-intro svg {
+  width: 18px;
+  height: 18px;
+}
+[data-theme="light"] .github-project-intro {
+  color: #465907;
+}
+[data-theme="light"] .github-project-intro:focus-visible::after {
+  outline-color: #465907;
+}
+.project-introduction {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.project-introduction .dialog-summary {
+  white-space: pre-line;
+}
+.project-intro-source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  justify-content: space-between;
+  margin: 22px 0;
+  padding-block: 14px;
+  border-block: 1px solid var(--line);
+  color: var(--muted);
+  font: 9px/1.8 var(--mono);
+}
+.project-intro-source a,
+.project-intro-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text);
+  min-height: 36px;
+}
+.project-intro-source svg,
+.project-intro-actions svg {
+  width: 13px;
+  height: 13px;
+  flex: 0 0 auto;
+}
+.project-intro-section {
+  margin-top: 30px;
+}
+.project-intro-section h3 {
+  font: 500 19px/1.4 var(--display);
+  letter-spacing: -0.02em;
+}
+.project-intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
 }
 @keyframes github-card-enter {
   from {

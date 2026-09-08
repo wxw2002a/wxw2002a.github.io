@@ -7,7 +7,12 @@ const LinkArrow = () => (
   </svg>
 );
 
-export default function GithubProjects({ zh, onOpenCase, children }) {
+export default function GithubProjects({
+  zh,
+  onOpenCase,
+  onOpenProject,
+  children,
+}) {
   const [filter, setFilter] = useState("all");
   const locale = zh ? "zh" : "en";
   const filters = [
@@ -55,8 +60,8 @@ export default function GithubProjects({ zh, onOpenCase, children }) {
         </h2>
         <p>
           {zh
-            ? "汇集 GitHub 作品与大学项目，涵盖产品应用、AI 与系统工程。IPMD 项目单独标注，点击即可查看源码或相关案例。"
-            : "GitHub builds and university projects across products, AI, and systems. IPMD work is clearly labelled, with code and case studies to explore."}
+            ? "汇集 GitHub 作品与大学项目，涵盖产品应用、AI 与系统工程。点击卡片查看项目介绍，进一步了解功能、实现与源码；IPMD 项目单独标注。"
+            : "GitHub builds and university projects across products, AI, and systems. Open a card to explore the project, its implementation, and source code. IPMD work is clearly labelled."}
         </p>
       </div>
       <section
@@ -129,6 +134,20 @@ export default function GithubProjects({ zh, onOpenCase, children }) {
               {project.note && (
                 <p className="github-project-note">{project.note[locale]}</p>
               )}
+              <button
+                className="github-project-intro"
+                type="button"
+                aria-label={
+                  zh
+                    ? `查看介绍：${project.title}`
+                    : `View introduction: ${project.title}`
+                }
+                aria-haspopup="dialog"
+                onClick={() => onOpenProject(project.id)}
+              >
+                {zh ? "查看介绍" : "View introduction"}
+                <LinkArrow />
+              </button>
               <div className="github-project-actions">
                 <a
                   href={project.repo}
