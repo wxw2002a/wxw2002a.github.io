@@ -8,11 +8,15 @@ export default function SculptureScene({
 }) {
   const hostRef = useRef(null);
   const settingsRef = useRef({ paused, reducedMotion, exploded });
+  const manualAssemblyRef = useRef(false);
   const reconcileRef = useRef(null);
   const [rendererType, setRendererType] = useState("fallback");
   const gradientId = useId().replace(/:/g, "");
 
   useEffect(() => {
+    if (settingsRef.current.exploded !== exploded) {
+      manualAssemblyRef.current = true;
+    }
     settingsRef.current = { paused, reducedMotion, exploded };
     if (reconcileRef.current) reconcileRef.current();
     else if (hostRef.current) {
@@ -347,12 +351,16 @@ export default function SculptureScene({
             Math.pow(Math.sin(Math.max(0, elapsed - 2.1) * 0.62), 6) * 0.25;
           const requested = settingsRef.current.exploded
             ? 1
-            : Math.max(
-                intro,
-                breath,
-                hovered ? 0.28 : 0,
-                Math.min(scrollAmount * 0.85, 0.85),
-              );
+            : // A deliberate control selection takes precedence over decorative
+              // scroll/hover movement, including scrolling a mobile button into view.
+              manualAssemblyRef.current
+              ? 0
+              : Math.max(
+                  intro,
+                  breath,
+                  hovered ? 0.28 : 0,
+                  Math.min(scrollAmount * 0.85, 0.85),
+                );
           explosion = immediate
             ? settingsRef.current.exploded
               ? 1

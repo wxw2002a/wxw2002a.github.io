@@ -2,6 +2,8 @@
 
 A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/), built with Vite, Three.js, and Motion. The September 2026 redesign combines editorial typography with an interactive modular silver cube, animated project studies, and expandable experience and project details. A slim accent reading-progress line and percentage/back-to-top control track the current page length, including expanded content.
 
+The first screen centers the owner's engineering philosophy: “Good engineering is problem-solving with constraints.” The original English supporting paragraph is preserved, with a corresponding Chinese translation. Its two-column editorial layout separates the text from the interactive cube and stacks naturally on mobile.
+
 Content is maintained in `app/src/content.js` (English and Chinese). Current experience and the downloadable `Xiwei-Wang-Resume.pdf` reflect the latest September 2026 résumé; four independent projects and additional tools from the previous site remain available. Project artwork is labeled as conceptual, not proprietary product screenshots.
 
 The Projects section at `#projects` showcases six pinned GitHub repositories with bilingual summaries, category filters, source links, and verified public demo links. `arts-generation-platform` is explicitly labelled as IPMD work and opens the existing video case study. Project data lives in `app/src/githubProjects.js`; evidence and demo limitations are recorded in `docs/github-projects.md`. The original four technical experiments are preserved below this section.
@@ -26,6 +28,8 @@ The Vite source lives in app/. A production build writes the deployable index.ht
 The sculpture loads Three.js separately, caps device pixel ratio, and stops rendering while off screen, in a background tab, or when motion is paused. System reduced-motion preferences are respected. WebGL-unavailable devices receive an SVG fallback. Dark appearance is the default; language and optional light appearance are stored locally.
 
 Motion includes a staggered title entrance, scroll-responsive cube disassembly, an accessible explode/assemble button, light packets along the cube frame, pointer-responsive project cards, an AI image scan/reveal, warehouse route indicators, and a vision waveform. Pointer effects are disabled on touch devices. Pausing motion freezes the scene, while the cube button can still change its static state.
+
+Once the cube's explicit explode/assemble control is used, its chosen assembly state takes precedence over automatic scroll/hover disassembly. The remaining light, pointer-orientation, and floating motion continues until paused.
 
 For manual visual checks, start `npm run preview -- --host 127.0.0.1 --port 4175`, then run `node scripts/capture-preview.mjs`. Desktop, mobile, Chinese, light-theme, and dialog screenshots are written to the ignored `.visual-qa/` directory. Set `PREVIEW_URL` to inspect another deployment.
 

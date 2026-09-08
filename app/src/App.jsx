@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { getContent } from "./content.js";
-import SculptureScene from "./components/SculptureScene.jsx";
+import Hero from "./components/Hero.jsx";
 import GithubProjects from "./components/GithubProjects.jsx";
 import usePortfolioMotion from "./usePortfolioMotion.js";
 
@@ -616,165 +616,16 @@ export default function App() {
       </header>
 
       <main id="main">
-        <section id="profile" className="hero" aria-labelledby="hero-name">
-          <div className="hero-topline">
-            <span>
-              <i className="signal-dot" />{" "}
-              {zh ? "加拿大 · 安大略" : "ONTARIO, CANADA"}
-            </span>
-            <span>
-              {zh
-                ? "界面 / 智能 / 系统"
-                : "INTERFACES / INTELLIGENCE / SYSTEMS"}
-            </span>
-          </div>
-          <h1 id="hero-name" aria-label="Xiwei Wang">
-            {Array.from("XIWEI WANG").map((letter, index) => (
-              <span className="hero-letter-mask" key={index} aria-hidden="true">
-                <span
-                  className="hero-letter"
-                  style={{ "--letter-index": index }}
-                >
-                  {letter === " " ? "\u00a0" : letter}
-                </span>
-              </span>
-            ))}
-            <span className="name-period" aria-hidden="true">
-              ✳
-            </span>
-          </h1>
-          <div className="hero-scene">
-            <SculptureScene
-              paused={paused}
-              reducedMotion={!!reducedMotion}
-              exploded={exploded}
-            />
-          </div>
-          <div className="hero-copy">
-            <p className="hero-statement">
-              {zh ? (
-                <>
-                  从想法，
-                  <br />
-                  到真实运行的系统。
-                </>
-              ) : (
-                <>
-                  Good ideas.
-                  <br />
-                  Engineered into reality.
-                </>
-              )}
-            </p>
-            <p className="hero-description">
-              {zh
-                ? "我是 Xiwei，一名软件工程师。构建全栈产品、AI 平台与实时系统。"
-                : "I’m Xiwei, a software engineer building full-stack products, AI platforms, and real-time systems."}
-            </p>
-            <div className="hero-actions">
-              <a className="pill-button" href="#work" data-magnetic>
-                {zh ? "探索作品" : "Explore my work"}
-                <Arrow diagonal />
-              </a>
-              <a
-                className="resume-link"
-                href={resume}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {zh ? "简历" : "Résumé"}
-                <Arrow diagonal />
-              </a>
-            </div>
-          </div>
-          <div className="scene-label">
-            <span className="cross-mark">+</span>
-            <span>
-              {zh ? "形态研究 001" : "FORM STUDY 001"}
-              <small>
-                {motionOff
-                  ? zh
-                    ? "静态形态 · 动效已暂停"
-                    : "STILL FORM · MOTION PAUSED"
-                  : touchInput
-                    ? zh
-                      ? "动态 3D · 向下探索"
-                      : "LIVE 3D · SCROLL TO EXPLORE"
-                    : zh
-                      ? "交互式 3D · 拖动探索"
-                      : "INTERACTIVE 3D · DRAG TO EXPLORE"}
-              </small>
-            </span>
-          </div>
-          <button
-            className="cube-control"
-            aria-pressed={exploded}
-            aria-label={
-              exploded
-                ? zh
-                  ? "组装方块"
-                  : "Assemble cube"
-                : zh
-                  ? "拆解方块"
-                  : "Explode cube"
-            }
-            onClick={() => setExploded(!exploded)}
-            data-magnetic
-          >
-            <span
-              className={
-                exploded ? "cube-control-icon is-exploded" : "cube-control-icon"
-              }
-              aria-hidden="true"
-            >
-              <i />
-              <i />
-              <i />
-              <i />
-            </span>
-            <span>
-              {exploded ? (zh ? "组装" : "ASSEMBLE") : zh ? "拆解" : "EXPLODE"}
-            </span>
-          </button>
-          <button
-            className="motion-button hero-motion"
-            aria-label={
-              motionOff
-                ? zh
-                  ? "开启动效"
-                  : "Resume motion"
-                : zh
-                  ? "暂停动效"
-                  : "Pause motion"
-            }
-            aria-pressed={!!motionOff}
-            disabled={!!reducedMotion}
-            onClick={() => setPaused(!paused)}
-          >
-            <span>{motionOff ? "▷" : "Ⅱ"}</span>
-            {reducedMotion
-              ? zh
-                ? "已减少动态"
-                : "REDUCED MOTION"
-              : motionOff
-                ? zh
-                  ? "开启动效"
-                  : "RESUME MOTION"
-                : zh
-                  ? "暂停动效"
-                  : "PAUSE MOTION"}
-          </button>
-          <div className="hero-bottom">
-            <a href="#work" className="scroll-link">
-              <span>↓</span>
-              {zh ? "向下探索" : "SCROLL TO DISCOVER"}
-            </a>
-            <span className="hero-study">
-              WATERLOO MENG <span>/</span> SOFTWARE ENGINEERING
-            </span>
-            <span className="bottom-edition">PORTFOLIO / 2026</span>
-          </div>
-        </section>
+        <Hero
+          zh={zh}
+          paused={paused}
+          reducedMotion={!!reducedMotion}
+          exploded={exploded}
+          touchInput={touchInput}
+          resume={resume}
+          onToggleExploded={() => setExploded(!exploded)}
+          onToggleMotion={() => setPaused(!paused)}
+        />
 
         <div className="ticker" aria-hidden="true">
           <div>
