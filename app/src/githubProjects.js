@@ -1,5 +1,14 @@
-// Curated from the owner's six pinned public repositories, checked 2026-09-08.
+// Curated from the owner's six pinned public repositories, checked 2026-09-09.
 // Repository evidence and demo limitations are documented in docs/github-projects.md.
+const projectOrder = [
+  "cineflow",
+  "arts-generation-platform",
+  "second-hand-hub",
+  "ic-fa",
+  "Bitcoin-project",
+  "LowPassFilter_Tool",
+];
+
 export const githubProjects = [
   {
     id: "arts-generation-platform",
@@ -12,6 +21,8 @@ export const githubProjects = [
       zh: "IPMD 艺术生成平台，将视觉卡片、文字及参考图片连接到 Qwen 与 Stable Diffusion，采用 React/Express 技术栈，并完成 Docker 容器化及 Azure 验证。",
     },
     tech: ["React", "TypeScript", "Express", "Qwen", "Stable Diffusion"],
+    caseStudy:
+      "https://github.com/wxw2002a/arts-generation-platform/blob/main/docs/CASE_STUDY.md",
     demo: "https://wxw2002a.github.io/arts-generation-platform/",
     note: {
       en: "Public demo: prompt building and sample outputs, not live inference.",
@@ -36,10 +47,16 @@ export const githubProjects = [
     category: "products",
     label: { en: "FULL-STACK · AI", zh: "全栈 · AI" },
     description: {
-      en: "Cinema discovery and transactional seat reservations with a PyTorch recommender and grounded AI chat. A Docker-based service stack supports simulated checkout and ticketing.",
-      zh: "电影推荐与事务式座位预订平台，结合 PyTorch 推荐模型及基于影片数据的 AI 对话，支持 Docker 部署、模拟结算与出票。",
+      en: "A Spring Boot booking system with transactional seat ownership and idempotent requests, paired with a trained PyTorch recommender. Explore the reservation invariants, model experiments, and reproducible verification.",
+      zh: "使用 Spring Boot 事务管理座位归属，以幂等请求处理重试，并结合实际训练的 PyTorch 推荐器。项目提供预订一致性设计、模型实验和可复现验证。",
     },
     tech: ["React", "Spring Boot", "PyTorch", "MySQL", "Docker"],
+    caseStudy:
+      "https://github.com/wxw2002a/cineflow/blob/main/docs/CASE_STUDY.md",
+    note: {
+      en: "Synthetic screenings and simulated payment. Model evaluation is offline.",
+      zh: "使用模拟场次与模拟付款；模型评估为离线实验。",
+    },
   },
   {
     id: "ic-fa",
@@ -67,6 +84,8 @@ export const githubProjects = [
       zh: "二手交易平台，支持买卖双方聊天、商品草稿及模拟结算；消息通过事务保存，并提供重复发送防护与断线恢复。",
     },
     tech: ["React", "Express", "Prisma", "SQLite", "Socket.IO"],
+    caseStudy:
+      "https://github.com/wxw2002a/second-hand-hub/blob/main/docs/CASE_STUDY.md",
   },
   {
     id: "LowPassFilter_Tool",
@@ -79,7 +98,9 @@ export const githubProjects = [
     },
     tech: ["Python", "NumPy", "Matplotlib", "Signal Processing"],
   },
-].map((project) => ({
-  ...project,
-  repo: `https://github.com/wxw2002a/${project.id}`,
-}));
+]
+  .sort((a, b) => projectOrder.indexOf(a.id) - projectOrder.indexOf(b.id))
+  .map((project) => ({
+    ...project,
+    repo: `https://github.com/wxw2002a/${project.id}`,
+  }));

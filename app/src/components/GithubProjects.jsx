@@ -60,8 +60,8 @@ export default function GithubProjects({
         </h2>
         <p>
           {zh
-            ? "汇集 GitHub 作品与大学项目，涵盖产品应用、AI 与系统工程。点击卡片查看项目介绍，进一步了解功能、实现与源码；IPMD 项目单独标注。"
-            : "GitHub builds and university projects across products, AI, and systems. Open a card to explore the project, its implementation, and source code. IPMD work is clearly labelled."}
+            ? "从事务式预订、AI 推理流程到可靠聊天，查看完整应用的设计、源码和验证依据。三个主要项目提供技术案例；下方保留系统工具与大学项目。IPMD 项目单独标注。"
+            : "Transactional booking, AI inference workflows, and reliable chat. Explore the design, code, and verification behind three complete applications, followed by systems tools and university projects. IPMD work is clearly labelled."}
         </p>
       </div>
       <section
@@ -157,6 +157,16 @@ export default function GithubProjects({
                 >
                   {zh ? "源码" : "Source"} <LinkArrow />
                 </a>
+                {project.caseStudy && (
+                  <a
+                    href={project.caseStudy}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`${zh ? "技术案例" : "Engineering case study"}: ${project.title}`}
+                  >
+                    {zh ? "技术案例" : "Case study"} <LinkArrow />
+                  </a>
+                )}
                 {project.demo && (
                   <a
                     href={project.demo}

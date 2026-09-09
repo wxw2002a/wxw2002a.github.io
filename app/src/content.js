@@ -421,6 +421,7 @@ export const content = {
         id: "data-ai",
         label: "Data & AI",
         items: [
+          "PyTorch",
           "PostgreSQL",
           "MySQL",
           "MongoDB",
@@ -883,6 +884,7 @@ export const content = {
         id: "data-ai",
         label: "数据与 AI",
         items: [
+          "PyTorch",
           "PostgreSQL",
           "MySQL",
           "MongoDB",

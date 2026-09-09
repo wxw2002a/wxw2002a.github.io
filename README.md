@@ -1,5 +1,19 @@
 # Xiwei Wang — Portfolio
 
+I am a software engineer in Ontario and a University of Waterloo MEng candidate in Electrical and Computer Engineering, with graduation expected in December 2026. My work spans Java and TypeScript applications, AI inference services, and industrial real-time software.
+
+## Selected engineering work
+
+| Project | Technical focus | Review the implementation |
+| --- | --- | --- |
+| [CineFlow](https://github.com/wxw2002a/cineflow) | Transactional booking, idempotency, and a trained PyTorch recommender | [Design and verification](https://github.com/wxw2002a/cineflow/blob/main/docs/CASE_STUDY.md) |
+| [Arts Generation Platform · IPMD](https://github.com/wxw2002a/arts-generation-platform) | Asynchronous Qwen/Stable Diffusion inference, service boundaries, and Azure deployment | [Inference and credit lifecycle](https://github.com/wxw2002a/arts-generation-platform/blob/main/docs/CASE_STUDY.md) |
+| [Second Hand Hub](https://github.com/wxw2002a/second-hand-hub) | Persistent messaging, duplicate-send protection, and reconnect recovery | [Message lifecycle and tradeoffs](https://github.com/wxw2002a/second-hand-hub/blob/main/docs/CASE_STUDY.md) |
+
+The case studies link to source and verification, and distinguish local tests, recorded cloud checks, and simulated product flows. The [bilingual portfolio](https://wxw2002a.github.io/#projects) includes screenshots, project introductions, and additional systems work. Contact: [email](mailto:wangxiwei2002@gmail.com).
+
+## About this website
+
 A bilingual React portfolio for [wxw2002a.github.io](https://wxw2002a.github.io/), built with Vite, Three.js, and Motion. The September 2026 redesign combines editorial typography with an interactive modular silver cube, animated project studies, and expandable experience and project details. A slim accent reading-progress line and percentage/back-to-top control track the current page length, including expanded content.
 
 The first screen centers the owner's engineering philosophy: “Good engineering is problem-solving with constraints.” The original English supporting paragraph is preserved, with a corresponding Chinese translation. Its two-column editorial layout separates the text from the interactive cube and stacks naturally on mobile.
@@ -15,6 +29,8 @@ Project introductions include the original screenshots embedded in or explicitly
 The HIT industrial-vision case dialog includes the supplied detection demo (`assets/hit-detection-demo.mp4`) and a poster frame from that recording. The player loads only when this case opens, uses native inline/full-screen controls without autoplay, and releases playback when the dialog closes. Other project visuals remain conceptual.
 
 IPMD's expanded experience and the “From prompt to image” case dialog share three supplied recordings: `assets/ipmd/video1.mp4` is the Creating Without Words overview, `video2.mp4` is the emotion-card workflow, and `video3.mp4` is the floating-card demo. Both galleries use the labels video1, video2, and video3, open on the overview, and mount only the selected player. Switching videos, collapsing the experience, or closing the dialog stops its playback. Opening a dialog pauses background video, and starting a player pauses any other player. Posters are frames from the corresponding recordings; the original video bytes are preserved.
+
+The September 9 update puts CineFlow, the IPMD platform, and Second Hand Hub first and adds direct engineering-case links to both cards and introductions. CineFlow's bilingual details now describe its user-disjoint recommendation experiment and isolated MySQL verification. Existing screenshots, videos, themes, motion controls, and university projects remain in their original presentation.
 
 ## Local development
 

@@ -1,6 +1,6 @@
-// Owner-authored README introductions, checked against GitHub on 2026-09-08.
+// Owner-authored README introductions, checked against GitHub on 2026-09-09.
 // English overviews retain complete source sentences; section bullets summarize
-// the README. CineFlow's incomplete sentence fragment is intentionally omitted.
+// the README and its linked engineering evidence.
 export const projectDetailsProducts = {
   "arts-generation-platform": {
     sourceUrl:
@@ -96,6 +96,21 @@ export const projectDetailsProducts = {
             "MySQL 在修改预订前锁定对应场次；有条件的座位更新与事务回滚，确保一次选座要么全部成功，要么全部失败。",
             "会话级幂等机制处理重复请求；过期、支付和取消依据数据库中的预订状态，而不是 Redis TTL。",
             "Spring Boot 管理预订，FastAPI 提供推荐与检索，pgvector 保存影片知识；实时库存和价格来自业务查询，而非 AI 输出。",
+          ],
+        },
+      },
+      {
+        title: { en: "Experiments and verification", zh: "实验与验证" },
+        bullets: {
+          en: [
+            "An isolated MySQL scenario runs two backend instances, checks concurrent seat claims and idempotent retries against stored ownership, and interrupts both API processes to exercise restart recovery.",
+            "A separate cold-start experiment fits item embeddings on training users only, then evaluates unseen users with 1, 3, or 5 initial likes using the same scoring function as the service.",
+            "The experiment compares Recall, NDCG, and catalog coverage with a popularity baseline. Its report records user splits, exclusions, and variation across training seeds; the case study links to code and evidence.",
+          ],
+          zh: [
+            "独立 MySQL 验证场景运行两个后端实例，将并发抢座与幂等重试的结果和数据库归属记录核对，并中断两个 API 进程以验证重启恢复。",
+            "独立的冷启动实验仅使用训练用户拟合物品向量，再给未见用户提供 1、3 或 5 个初始喜好，通过与服务共用的评分函数进行评估。",
+            "实验与热门推荐基线比较 Recall、NDCG 和目录覆盖率，记录用户划分、排除情况及不同训练种子的结果变化；技术案例链接到对应代码与验证依据。",
           ],
         },
       },

@@ -36,6 +36,19 @@ export default function ProjectIntroduction({ project, detail, zh, children }) {
           <span key={tech}>{tech}</span>
         ))}
       </span>
+      {project.caseStudy && (
+        <div className="project-intro-actions">
+          <a
+            className="text-link"
+            href={project.caseStudy}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {zh ? "技术案例：设计、代码与验证" : "Case study: design, code, and verification"}
+            <LinkArrow />
+          </a>
+        </div>
+      )}
       {children}
       <ProjectImageGallery images={projectImages[project.id]} zh={zh} />
       {detail.sections.map((section, index) => (

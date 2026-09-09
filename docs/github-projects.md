@@ -1,6 +1,12 @@
 # GitHub project curation
 
-Checked on 2026-09-08 against the six pinned public repositories on https://github.com/wxw2002a. The portfolio uses a reviewed static list, not a runtime GitHub API dependency. Update `app/src/githubProjects.js` when repository content changes.
+Checked on 2026-09-09 against the six pinned public repositories on https://github.com/wxw2002a. The portfolio uses a reviewed static list, not a runtime GitHub API dependency. Update `app/src/githubProjects.js` when repository content changes.
+
+## Engineering review paths
+
+The three complete applications appear first: CineFlow, Arts Generation Platform, and Second Hand Hub. Each card and introduction links directly to its repository's `docs/CASE_STUDY.md`, where a reviewer can follow the design decisions into code, tests, and recorded evidence. These are ordinary external links; opening a card still works without GitHub or a project backend. The remaining tools stay available in the same grid and filters.
+
+CineFlow's card emphasizes transactional seat ownership and actual PyTorch training. PyTorch is also listed in the site's technical toolkit, supported by `ml/cineflow_ml/train.py` and its model code. Simulation and offline-evaluation scope stay visible. Ordering the project cards does not imply production traffic or change the owner's GitHub pinned order.
 
 - **arts-generation-platform**: https://github.com/wxw2002a/arts-generation-platform/blob/main/README.md and `frontend/package.json`. The owner explicitly identifies this as IPMD work. Its public Pages demo is a browser-only prompt builder/reference preview/sample gallery, not live model inference. The portfolio's IPMD case remains the destination for the owner's three videos.
 - **Bitcoin-project**: no README or homepage. https://github.com/wxw2002a/Bitcoin-project/blob/main/Client.java, `a1.thrift`, `Calibrator.java`, and `MiningPoolServiceHandler.java` support describing a Java/bitcoinj/Thrift learning prototype. The mining handler returns a constant and cancellation is a stub; do not present a completed distributed mining pool.
@@ -18,7 +24,7 @@ All six GitHub cards open local project introductions using the work-case modal,
 
 ## Introduction provenance
 
-Rechecked 2026-09-08. The introductory paragraphs for the five repositories with README files preserve complete original English sentences, with corresponding Chinese translations. Their feature, implementation, and scope sections are curated summaries, not a claim to reproduce the entire README. CineFlow's incomplete opening sentence fragment is omitted. The LowPass overview omits a broad claim about processing all input samples because the implementation uses a default 500-sample sliding window; its original short-signal recommendation is preserved.
+Rechecked 2026-09-09. The introductory paragraphs for the five repositories with README files preserve complete original English sentences, with corresponding Chinese translations. Their feature, implementation, and scope sections are curated summaries, not a claim to reproduce the entire README. CineFlow's experiments section also summarizes the linked ML protocol and isolated multi-instance verification guide. The LowPass overview omits a broad claim about processing all input samples because the implementation uses a default 500-sample sliding window; its original short-signal recommendation is preserved.
 
 Bitcoin's introduction was checked against repository code, with a direct evidence link to `Client.java`; the mining and cancellation limitations were checked against `MiningPoolServiceHandler.java`. Its visible source caption uses the neutral "Project overview" / "项目介绍" label, without editorial notes about missing README content. Do not imply working distributed mining or validated throughput.
 
