@@ -81,17 +81,12 @@ test("the editorial hero presents the exact engineering philosophy and working d
   await expect(hero.locator(".hero-philosophy")).toHaveText(philosophy);
   await expect(hero.locator(".hero-description")).toHaveText(description);
 
-  const resume = hero.getByRole("link", { name: "Résumé", exact: true });
-  await expect(resume).toHaveAttribute(
-    "href",
-    /Xiwei-Wang-Resume\.pdf(?:\?.*)?$/,
-  );
-  await expect(resume).toHaveAttribute("target", "_blank");
-  await expect(resume).toHaveAttribute("rel", /\bnoreferrer\b/);
-  const response = await page.request.get(await resume.getAttribute("href"));
-  expect(response.ok()).toBe(true);
-  expect(response.headers()["content-type"]).toContain("application/pdf");
-  expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  await expect(
+    hero.getByRole("link", { name: /résumé|resume|简历/i, includeHidden: true }),
+  ).toHaveCount(0);
+  await expect(
+    hero.locator('a[href*="Xiwei-Wang-Resume.pdf" i]'),
+  ).toHaveCount(0);
 
   await hero
     .getByRole("link", { name: "Explore my work", exact: true })

@@ -8,7 +8,6 @@ import { githubProjects } from "./githubProjects.js";
 import { projectDetails } from "./projectDetails.js";
 import usePortfolioMotion from "./usePortfolioMotion.js";
 
-const resume = "/Xiwei-Wang-Resume.pdf";
 const Arrow = ({ diagonal = false, ...props }) => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
     <path
@@ -471,15 +470,6 @@ function CaseDialog({ selected, data, onClose, zh }) {
                 ))}
               </ul>
               <Tags items={featured.tech} />
-              <a
-                className="text-link"
-                href={resume}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {data.ui.actions.viewResume}
-                <Arrow diagonal />
-              </a>
             </>
           )}
         </div>
@@ -662,7 +652,6 @@ export default function App() {
           reducedMotion={!!reducedMotion}
           exploded={exploded}
           touchInput={touchInput}
-          resume={resume}
           onToggleExploded={() => setExploded(!exploded)}
           onToggleMotion={() => setPaused(!paused)}
         />
@@ -745,15 +734,6 @@ export default function App() {
             <span className="eyebrow">
               02 / {zh ? "职业经历" : "THE JOURNEY"}
             </span>
-            <a
-              className="text-link"
-              href={resume}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {data.ui.actions.viewResume}
-              <Arrow diagonal />
-            </a>
           </div>
           <div className="section-heading reveal">
             <h2 id="experience-title">
@@ -1020,10 +1000,6 @@ export default function App() {
                 rel="noreferrer"
               >
                 GitHub
-                <Arrow diagonal />
-              </a>
-              <a href={resume} target="_blank" rel="noreferrer">
-                {zh ? "简历" : "Résumé"}
                 <Arrow diagonal />
               </a>
               <a href={data.contact.phoneHref}>{data.contact.phone}</a>

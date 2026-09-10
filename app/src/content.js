@@ -7,7 +7,6 @@ const sharedContact = {
   websiteHref: "https://wxw2002a.github.io/",
   github: "@wxw2002a",
   githubHref: "https://github.com/wxw2002a",
-  resumeHref: "Xiwei-Wang-Resume.pdf",
 };
 
 const ipmdVideos = [1, 2, 3].map((number) => ({
@@ -48,8 +47,6 @@ export const content = {
       },
       actions: {
         explore: "Explore my work",
-        downloadResume: "Download résumé",
-        viewResume: "View full résumé",
         viewDetails: "View role details",
         hideDetails: "Hide role details",
         startConversation: "Start a conversation",
@@ -78,7 +75,6 @@ export const content = {
         phone: "Phone",
         website: "Website",
         github: "GitHub",
-        resume: "Résumé",
       },
       footerNote: "Designed and engineered with intention.",
     },
@@ -481,13 +477,6 @@ export const content = {
           href: sharedContact.githubHref,
           external: true,
         },
-        {
-          id: "resume",
-          label: "Résumé",
-          value: "View PDF",
-          href: sharedContact.resumeHref,
-          external: true,
-        },
       ],
     },
   },
@@ -520,8 +509,6 @@ export const content = {
       },
       actions: {
         explore: "查看我的经历",
-        downloadResume: "下载简历",
-        viewResume: "查看完整简历",
         viewDetails: "查看职位详情",
         hideDetails: "收起职位详情",
         startConversation: "发起联系",
@@ -550,7 +537,6 @@ export const content = {
         phone: "电话",
         website: "网站",
         github: "GitHub",
-        resume: "简历",
       },
       footerNote: "用心设计，也用心实现。",
     },
@@ -942,13 +928,6 @@ export const content = {
           label: "GitHub",
           value: sharedContact.github,
           href: sharedContact.githubHref,
-          external: true,
-        },
-        {
-          id: "resume",
-          label: "简历",
-          value: "查看 PDF",
-          href: sharedContact.resumeHref,
           external: true,
         },
       ],

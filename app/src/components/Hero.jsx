@@ -12,7 +12,6 @@ export default function Hero({
   reducedMotion,
   exploded,
   touchInput,
-  resume,
   onToggleExploded,
   onToggleMotion,
 }) {
@@ -80,15 +79,6 @@ export default function Hero({
           <div className="hero-actions">
             <a className="pill-button" href="#work" data-magnetic>
               {zh ? "探索作品" : "Explore my work"}
-              <Arrow />
-            </a>
-            <a
-              className="resume-link"
-              href={resume}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {zh ? "简历" : "Résumé"}
               <Arrow />
             </a>
           </div>

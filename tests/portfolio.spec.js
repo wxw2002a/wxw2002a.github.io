@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import { expect, test } from "@playwright/test";
 
 async function expectNoOverflow(page) {
@@ -9,7 +7,14 @@ async function expectNoOverflow(page) {
   ).toBeLessThanOrEqual(1);
 }
 
-test("shows the revised résumé and preserves the additional engineering projects", async ({ page }) => {
+async function expectNoResumeLinks(page) {
+  await expect(page.locator('a[href*="Xiwei-Wang-Resume.pdf" i]')).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: /résumé|resume|简历/i, includeHidden: true }),
+  ).toHaveCount(0);
+}
+
+test("shows professional experience and engineering projects without résumé links", async ({ page }) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
@@ -24,6 +29,7 @@ test("shows the revised résumé and preserves the additional engineering projec
   await expect(page.locator(".sculpture-scene")).toHaveAttribute("data-renderer", /^(webgl|fallback)$/);
   await expect(page.locator("#work button.case-open")).toHaveCount(3);
   await expect(page.locator("details.experience-row")).toHaveCount(5);
+  await expectNoResumeLinks(page);
 
   const ipmd = page.locator("details.experience-row").filter({ hasText: "IPMD, Inc." });
   if ((await ipmd.getAttribute("open")) === null) await ipmd.locator("summary").click();
@@ -84,6 +90,7 @@ test("case studies open accessible dialogs and restore focus when dismissed", as
     await expect(dialog).toBeVisible();
     await expect(dialog.getByRole("heading").first()).toBeVisible();
     await expect(dialog).toContainText(["IPMD", "Sinopec", "600"][index]);
+    await expectNoResumeLinks(page);
     await page.keyboard.press("Escape");
     await expect(dialog).toBeHidden();
     await expect(trigger).toBeFocused();
@@ -116,7 +123,7 @@ test("filters the retained project archive and navigates on narrow screens", asy
   await expectNoOverflow(page);
 });
 
-test("language and theme changes persist and expose the updated Chinese résumé", async ({ page }) => {
+test("language and theme changes persist and show Chinese experience without résumé links", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await page.getByRole("button", { name: "Use light theme", exact: true }).click();
@@ -131,9 +138,11 @@ test("language and theme changes persist and expose the updated Chinese résumé
   await expect(sinopec).toContainText("2024年6月—12月");
   await expect(sinopec).toContainText("5,000+");
   await expect(page.locator("#background")).toContainText("预计");
+  await expectNoResumeLinks(page);
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expectNoResumeLinks(page);
   await expectNoOverflow(page);
 });
 
@@ -248,13 +257,13 @@ test("reading progress follows scroll position and expandable page content", asy
   await expectNoOverflow(page);
 });
 
-test("the résumé download serves the exact production PDF", async ({ request }) => {
+test("the removed résumé URL no longer serves a PDF or appears in the page fallback", async ({ request }) => {
+  const homepage = await request.get("/");
+  expect(homepage.ok()).toBeTruthy();
+  expect(await homepage.text()).not.toContain("Xiwei-Wang-Resume.pdf");
+
   const response = await request.get("/Xiwei-Wang-Resume.pdf");
-  expect(response.ok()).toBeTruthy();
-  expect(response.headers()["content-type"]).toContain("application/pdf");
-  const served = await response.body();
-  expect(served.subarray(0, 5).toString()).toBe("%PDF-");
-  const committed = await readFile(new URL("../Xiwei-Wang-Resume.pdf", import.meta.url));
-  const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
-  expect(sha256(served)).toBe(sha256(committed));
+  // Vite preview may return its HTML fallback with 200 instead of a static-host 404.
+  expect(response.headers()["content-type"] ?? "").not.toContain("application/pdf");
+  expect((await response.body()).subarray(0, 5).toString()).not.toBe("%PDF-");
 });
